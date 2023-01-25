@@ -1,6 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-
-var storage = GetStorage();
+import 'package:picktask/main.dart';
 
 String token = storage.read('token');
 String userId = storage.read('id');

@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/account/bank_detail.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -31,7 +30,7 @@ class Register extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+        padding: EdgeInsets.symmetric(horizontal: w * 0.06),
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
@@ -40,22 +39,107 @@ class Register extends StatelessWidget {
                 space(h * 0.1),
                 Text(
                   "We can't wait for you to join us!",
-                  style: GoogleFonts.cabin(
+                  style: GoogleFonts.poppins(
                       foreground: Paint()..shader = linearGradient,
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
                 ),
                 space(h * 0.1),
                 space(h * 0.02),
-                nameFormField(),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Box decoration takes a gradient
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Color(0xFF2B252A),
+                          Color(0xFF1F2131),
+                        ],
+                      ),
+                    ),
+                    child: nameFormField()),
                 space(h * 0.02),
-                mobileFormField(),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Box decoration takes a gradient
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Color(0xFF2B252A),
+                          Color(0xFF1F2131),
+                        ],
+                      ),
+                    ),
+                    child: mobileFormField()),
                 space(h * 0.02),
-                emailFormField(),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Box decoration takes a gradient
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Color(0xFF2B252A),
+                          Color(0xFF1F2131),
+                        ],
+                      ),
+                    ),
+                    child: emailFormField()),
                 space(h * 0.02),
-                passwordFormField(),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Box decoration takes a gradient
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Color(0xFF2B252A),
+                          Color(0xFF1F2131),
+                        ],
+                      ),
+                    ),
+                    child: passwordFormField()),
                 space(h * 0.02),
-                refferalFormField(),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Box decoration takes a gradient
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Color(0xFF2B252A),
+                          Color(0xFF1F2131),
+                        ],
+                      ),
+                    ),
+                    child: refferalFormField()),
                 space(h * 0.02),
                 Obx((() => onboardingController.isLoading.value == true
                     ? loader
@@ -81,7 +165,7 @@ class Register extends StatelessWidget {
                   children: [
                     Text(
                       "Already have an account?",
-                      style: GoogleFonts.cabin(
+                      style: GoogleFonts.poppins(
                           color: kWhiteColor,
                           fontSize: w * 0.04,
                           fontWeight: FontWeight.w400),
@@ -95,7 +179,7 @@ class Register extends StatelessWidget {
                       },
                       child: Text(
                         "Login",
-                        style: GoogleFonts.cabin(
+                        style: GoogleFonts.poppins(
                             foreground: Paint()..shader = linearGradient,
                             fontSize: 18,
                             fontWeight: FontWeight.w600),
@@ -106,7 +190,7 @@ class Register extends StatelessWidget {
                 space(h * 0.1),
                 Text(
                   "Terms of use & Privacy Policy",
-                  style: GoogleFonts.cabin(
+                  style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w400),
@@ -137,18 +221,18 @@ class Register extends StatelessWidget {
         FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]+|\s"))
       ],
 
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Full Name ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -206,18 +290,18 @@ class Register extends StatelessWidget {
 
       maxLength: 10,
 
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.phone,
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Mobile Number ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -268,18 +352,18 @@ class Register extends StatelessWidget {
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: emailController,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Email ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -329,18 +413,20 @@ class Register extends StatelessWidget {
       //     AutovalidateMode.onUserInteraction,
       controller: passwordController,
 
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
+      obscureText: true,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
+
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Password ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -381,18 +467,18 @@ class Register extends StatelessWidget {
   TextFormField refferalFormField() {
     return TextFormField(
       controller: refferalController,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
-        hintText: "Refferal Code ",
-        hintStyle: TextStyle(
+        hintText: "Refferal Code (Optional)",
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(

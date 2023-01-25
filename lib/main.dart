@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 
 import 'package:picktask/screens/home/home_nav.dart';
@@ -20,6 +21,8 @@ void main() async {
   OnboardingController();
 }
 
+var storage = GetStorage();
+
 class Picktask extends StatefulWidget {
   const Picktask({Key? key}) : super(key: key);
 
@@ -34,7 +37,9 @@ class _PicktaskState extends State<Picktask> {
         // initialBinding: AllControllerBinding(),
 
         debugShowCheckedModeBanner: true,
-        theme: ThemeData(scaffoldBackgroundColor: kBackgroundColor),
+        theme: ThemeData(
+            scaffoldBackgroundColor: Colors.black,
+            appBarTheme: AppBarTheme(backgroundColor: Colors.black)),
         title: "Picktask",
         home: const Spalsh());
   }

@@ -11,6 +11,7 @@ import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/home/home_nav.dart';
 import 'package:picktask/screens/onboarding/login_with_otp.dart';
 import 'package:picktask/screens/onboarding/register.dart';
+import 'package:picktask/testing/color_change.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
@@ -44,20 +45,21 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: w * 0.06),
       child: SingleChildScrollView(
         child: Obx((() => Form(
               key: formKey,
               child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  space(h * 0.03),
-                  Lottie.asset(
-                    'assets/icons/llogin.json',
-                  ),
+                  space(h * 0.25),
+                  // Lottie.asset(
+                  //   'assets/icons/llogin.json',
+                  // ),
                   Text(
                     "Login",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.05,
                         fontWeight: FontWeight.w700),
@@ -65,15 +67,49 @@ class _LoginState extends State<Login> {
                   space(h * 0.01),
                   Text(
                     "Please login to continue",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.03,
                         fontWeight: FontWeight.w400),
                   ),
                   space(h * 0.02),
-                  emailFormField(),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        // Box decoration takes a gradient
+                        gradient: LinearGradient(
+                          // Where the linear gradient begins and ends
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          // Add one stop for each color. Stops should increase from 0 to 1
+                          // stops: [0.1, 0.4, 0.7, 0.9],
+                          colors: const [
+                            // Colors are easy thanks to Flutter's Colors class.
+                            Color(0xFF2B252A),
+                            Color(0xFF1F2131),
+                          ],
+                        ),
+                      ),
+                      child: emailFormField()),
                   space(h * 0.02),
-                  passwordFormField(),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        // Box decoration takes a gradient
+                        gradient: LinearGradient(
+                          // Where the linear gradient begins and ends
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          // Add one stop for each color. Stops should increase from 0 to 1
+                          // stops: [0.1, 0.4, 0.7, 0.9],
+                          colors: const [
+                            // Colors are easy thanks to Flutter's Colors class.
+                            Color(0xFF2B252A),
+                            Color(0xFF1F2131),
+                          ],
+                        ),
+                      ),
+                      child: passwordFormField()),
                   space(h * 0.02),
                   onboardingController.isLoading.value
                       ? loader
@@ -82,6 +118,7 @@ class _LoginState extends State<Login> {
                           height: h * 0.08,
                           text: "Login",
                           press: () {
+                            // Get.to(() => MyApp());
                             if (formKey.currentState!.validate()) {
                               Get.offAll(HomeNav(index: 0.obs));
 
@@ -106,7 +143,7 @@ class _LoginState extends State<Login> {
                       ),
                       Text(
                         "OR",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             color: kWhiteColor,
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w400),
@@ -116,7 +153,7 @@ class _LoginState extends State<Login> {
                       ),
                       Container(
                         height: 0.5,
-                        width: w * 0.4,
+                        width: w * 0.35,
                         color: kWhiteColor,
                       )
                     ],
@@ -136,7 +173,7 @@ class _LoginState extends State<Login> {
                         },
                         child: Text(
                           "Login With OTP",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               color: kWhiteColor,
                               fontSize: w * 0.04,
                               fontWeight: FontWeight.w400),
@@ -148,7 +185,7 @@ class _LoginState extends State<Login> {
                     children: [
                       Text(
                         "Don't have an account?",
-                        style: GoogleFonts.cabin(
+                        style: GoogleFonts.poppins(
                             color: kWhiteColor,
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w400),
@@ -162,14 +199,15 @@ class _LoginState extends State<Login> {
                         },
                         child: Text(
                           "Register Now",
-                          style: GoogleFonts.cabin(
+                          style: GoogleFonts.poppins(
                               foreground: Paint()..shader = linearGradient,
-                              fontSize: 18,
+                              fontSize: w * 0.04,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
                   ),
+                  space(h * 0.1),
                 ],
               ),
             ))),
@@ -192,18 +230,18 @@ class _LoginState extends State<Login> {
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       // controller: emailController,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Email ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -241,7 +279,7 @@ class _LoginState extends State<Login> {
     return TextFormField(
       controller: passwordController,
       obscureText: obsecure.value,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
@@ -270,11 +308,11 @@ class _LoginState extends State<Login> {
 
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Password ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(

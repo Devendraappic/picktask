@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:picktask/main.dart';
 import 'package:picktask/screens/home/home_nav.dart';
 import 'package:picktask/screens/account/bank_detail.dart';
 import 'package:picktask/screens/onboarding/otp.dart';
@@ -63,6 +64,7 @@ class OnboardingController extends GetxController {
         // Get.offAll(() => HomeNav(
         //       index: 0.obs,
         //     ));
+        print("mytoken: ${data['data']["token"]}");
         Get.snackbar("Welcome to Picktask", "", colorText: kWhiteColor);
 
         print("id ${data['data']["Data"]['id'].toString()}");
@@ -134,7 +136,7 @@ class OnboardingController extends GetxController {
             () => Otp(
                   number: mobile,
                 ),
-            transition: Transition.rightToLeft);
+            transition: Transition.fadeIn);
         Get.snackbar(data['message'], "", colorText: kWhiteColor);
 
         isLoading.value = false;

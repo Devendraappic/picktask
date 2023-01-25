@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:picktask/screens/account/account.dart';
 import 'package:picktask/screens/earning/earning.dart';
 import 'package:picktask/screens/home/home.dart';
+import 'package:picktask/screens/leads/category.dart';
 import 'package:picktask/screens/leads/leads.dart';
+import 'package:picktask/screens/leads/savings.dart';
 import 'package:picktask/screens/task/task.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/images.dart';
@@ -37,24 +39,33 @@ class _ProfileScreenState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
-      child: Scaffold(
-        body: GetBuilder<ProfileController>(
-          init: ProfileController(),
-          builder: (s) => IndexedStack(
-            index: s.selectedIndex,
-            children: const <Widget>[
-              Home(),
-              Leads(),
-              Task(),
-              Earning(),
-              Account()
-            ],
+        onWillPop: () => showExitPopup(context),
+        child: Scaffold(
+          body: GetBuilder<ProfileController>(
+            init: ProfileController(),
+            builder: (s) => IndexedStack(
+              index: s.selectedIndex,
+              children: const <Widget>[
+                Home(),
+                Leads(),
+                SavingsAccount(),
+                Earning(),
+                Account()
+              ],
+            ),
           ),
-        ),
-        bottomNavigationBar: SuperFaBottomNavigationBar(),
-      ),
-    );
+          bottomNavigationBar: Theme(
+            data: Theme.of(context).copyWith(
+                // sets the background color of the `BottomNavigationBar`
+                canvasColor: kBlueColor,
+                // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+                primaryColor: Colors.red,
+                textTheme: Theme.of(context)
+                    .textTheme
+                    .copyWith(caption: TextStyle(color: Colors.yellow))),
+            child: SuperFaBottomNavigationBar(),
+          ),
+        ));
   }
 }
 

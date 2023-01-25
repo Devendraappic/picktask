@@ -29,7 +29,7 @@ class LoginWithOtp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: w * 0.06),
       child: SingleChildScrollView(
         child: Obx((() => Form(
               key: formKey,
@@ -42,13 +42,30 @@ class LoginWithOtp extends StatelessWidget {
                   ),
                   Text(
                     "Login To Continue Picktask",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.03,
                         fontWeight: FontWeight.w400),
                   ),
                   space(h * 0.02),
-                  mobileFormField(),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        // Box decoration takes a gradient
+                        gradient: LinearGradient(
+                          // Where the linear gradient begins and ends
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          // Add one stop for each color. Stops should increase from 0 to 1
+                          // stops: [0.1, 0.4, 0.7, 0.9],
+                          colors: const [
+                            // Colors are easy thanks to Flutter's Colors class.
+                            Color(0xFF2B252A),
+                            Color(0xFF1F2131),
+                          ],
+                        ),
+                      ),
+                      child: mobileFormField()),
                   space(h * 0.02),
                   onboardingController.isLoading.value
                       ? loader
@@ -75,7 +92,7 @@ class LoginWithOtp extends StatelessWidget {
                     children: [
                       Container(
                         height: 0.5,
-                        width: w * 0.4,
+                        width: w * 0.38,
                         color: kWhiteColor,
                       ),
                       SizedBox(
@@ -83,7 +100,7 @@ class LoginWithOtp extends StatelessWidget {
                       ),
                       Text(
                         "OR",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             color: kWhiteColor,
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w400),
@@ -93,7 +110,7 @@ class LoginWithOtp extends StatelessWidget {
                       ),
                       Container(
                         height: 0.5,
-                        width: w * 0.4,
+                        width: w * 0.38,
                         color: kWhiteColor,
                       )
                     ],
@@ -113,7 +130,7 @@ class LoginWithOtp extends StatelessWidget {
                         },
                         child: Text(
                           "Login With Password",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               color: kWhiteColor,
                               fontSize: w * 0.04,
                               fontWeight: FontWeight.w400),
@@ -171,18 +188,18 @@ class LoginWithOtp extends StatelessWidget {
 
       maxLength: 10,
 
-      style: TextStyle(
+      style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.phone,
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
         // fillColor: Colors.black,
-        filled: true,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         counterText: '',
         hintText: "Mobile Number ",
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.poppins(
             color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
           borderSide: BorderSide(

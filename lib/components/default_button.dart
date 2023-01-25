@@ -38,7 +38,7 @@ class DefaultButton extends StatelessWidget {
         onPressed: press,
         child: Text(
           text,
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               letterSpacing: 1,
               color: Colors.white,
               fontSize: 18,

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/extra_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomSliderWidget extends StatefulWidget {
@@ -34,10 +35,14 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
     print("list: ${widget.items}");
     return Obx((() => Column(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               child: CarouselSlider(
                 options: CarouselOptions(
+                  aspectRatio: 2.9,
                   autoPlay: true,
                   onPageChanged: (index, reason) {
                     setActiveDot(index);
@@ -56,14 +61,14 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
                           launchYoutube(item.link.toString());
                         },
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          margin: const EdgeInsets.only(left: 10),
                           height: 180,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                               image: NetworkImage(item.banner_pic),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           // child: Image.asset(),
@@ -75,7 +80,7 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,14 +90,6 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
                 })),
           ],
         )));
-  }
-
-  void launchYoutube(var url) async {
-    print("launchingUrl: hgh");
-
-    if (await canLaunch(url.toString())) {
-      await launch(url.toString());
-    }
   }
 }
 

@@ -75,8 +75,9 @@ class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+        padding: EdgeInsets.symmetric(horizontal: w * 0.06),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +91,7 @@ class _OtpState extends State<Otp> {
                 padding: EdgeInsets.only(left: w * 0.04),
                 child: Text(
                   "Verify",
-                  style: GoogleFonts.cabin(
+                  style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.1,
                       fontWeight: FontWeight.w700),
@@ -102,7 +103,7 @@ class _OtpState extends State<Otp> {
                 child: Text(
                   "We have sent an OTP on your phone\n"
                   "number ${widget.number}",
-                  style: GoogleFonts.cabin(
+                  style: GoogleFonts.poppins(
                       height: 1.5,
                       foreground: Paint()..shader = linearGradient,
                       fontSize: w * 0.05,
@@ -117,28 +118,45 @@ class _OtpState extends State<Otp> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(
+                      Container(
                         width: 60,
                         height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Box decoration takes a gradient
+                          gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            // stops: [0.1, 0.4, 0.7, 0.9],
+                            colors: const [
+                              // Colors are easy thanks to Flutter's Colors class.
+                              Color(0xFF2B252A),
+                              Color(0xFF1F2131),
+                            ],
+                          ),
+                        ),
                         child: TextFormField(
                           maxLength: 1,
                           controller: first,
                           focusNode: pin1FocusNode,
                           autofocus: true,
                           obscureText: false,
-                          style: TextStyle(fontSize: 24, color: kWhiteColor),
+                          style: GoogleFonts.poppins(
+                              fontSize: 24, color: kWhiteColor),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             fillColor: kPrimaryColor,
 
                             // fillColor: Colors.black,
-                            filled: true,
+                            filled: false,
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 16),
                             counterText: '',
 
-                            hintStyle: TextStyle(
+                            hintStyle: GoogleFonts.poppins(
                                 color: kWhiteColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
@@ -176,15 +194,32 @@ class _OtpState extends State<Otp> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      Container(
                         width: 60,
                         height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Box decoration takes a gradient
+                          gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            // stops: [0.1, 0.4, 0.7, 0.9],
+                            colors: const [
+                              // Colors are easy thanks to Flutter's Colors class.
+                              Color(0xFF2B252A),
+                              Color(0xFF1F2131),
+                            ],
+                          ),
+                        ),
                         child: TextFormField(
                             maxLength: 1,
                             controller: second,
                             focusNode: pin2FocusNode,
                             obscureText: false,
-                            style: TextStyle(fontSize: 24, color: kWhiteColor),
+                            style: GoogleFonts.poppins(
+                                fontSize: 24, color: kWhiteColor),
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
@@ -195,7 +230,7 @@ class _OtpState extends State<Otp> {
                                   vertical: 20, horizontal: 16),
                               counterText: '',
 
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
@@ -244,17 +279,35 @@ class _OtpState extends State<Otp> {
                                 FocusScope.of(context)
                                     .requestFocus(pin1FocusNode);
                               }
-                            }),
+                            }
+                            ),
                       ),
-                      SizedBox(
+                      Container(
                         width: 60,
                         height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Box decoration takes a gradient
+                          gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            // stops: [0.1, 0.4, 0.7, 0.9],
+                            colors: const [
+                              // Colors are easy thanks to Flutter's Colors class.
+                              Color(0xFF2B252A),
+                              Color(0xFF1F2131),
+                            ],
+                          ),
+                        ),
                         child: TextFormField(
                             maxLength: 1,
                             controller: third,
                             focusNode: pin3FocusNode,
                             obscureText: false,
-                            style: TextStyle(fontSize: 24, color: kWhiteColor),
+                            style: GoogleFonts.poppins(
+                                fontSize: 24, color: kWhiteColor),
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
@@ -265,7 +318,7 @@ class _OtpState extends State<Otp> {
                                   vertical: 20, horizontal: 16),
                               counterText: '',
 
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
@@ -312,15 +365,32 @@ class _OtpState extends State<Otp> {
                               }
                             }),
                       ),
-                      SizedBox(
+                      Container(
                         width: 60,
                         height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Box decoration takes a gradient
+                          gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            // stops: [0.1, 0.4, 0.7, 0.9],
+                            colors: const [
+                              // Colors are easy thanks to Flutter's Colors class.
+                              Color(0xFF2B252A),
+                              Color(0xFF1F2131),
+                            ],
+                          ),
+                        ),
                         child: TextFormField(
                           maxLength: 1,
                           controller: fourth,
                           focusNode: pin4FocusNode,
                           obscureText: false,
-                          style: TextStyle(fontSize: 24, color: kWhiteColor),
+                          style: GoogleFonts.poppins(
+                              fontSize: 24, color: kWhiteColor),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -411,7 +481,7 @@ class _OtpState extends State<Otp> {
                   },
                   child: Text(
                     "Resend OTP",
-                    style: GoogleFonts.cabin(
+                    style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.04,
                         fontWeight: FontWeight.w500),

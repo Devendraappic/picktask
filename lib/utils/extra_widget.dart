@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // loading indicator
 const loader = Center(
@@ -25,7 +26,15 @@ Widget space(double? height, [double? width]) {
   );
 }
 
-// snackbar
+// lauch url
 
+void launchYoutube(var url) async {
+  if (!await launchUrl(Uri.parse(url))) {
+    throw Exception('Could not launch $url');
+  }
+  // print("launchingUrl: hgh");
 
-
+  // if (await canLaunch(url.toString())) {
+  //   await launch(url.toString());
+  // }
+}

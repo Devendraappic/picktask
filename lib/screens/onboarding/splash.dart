@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:picktask/main.dart';
 import 'package:picktask/screens/home/home_nav.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
@@ -35,20 +36,28 @@ class _SpalshState extends State<Spalsh> {
     );
   }
 
-  bool isFirstTime = false;
   getLoginStatus() async {
-    Future.delayed(const Duration(seconds: 2), () {
-      if (isFirstTime == false) {
-        Get.to(() => Login());
-      } else {
-        token.toString() == "" ||
-                token.toString() == "null" ||
-                token.toString() == ''
-            ? Get.offAll(Login())
-            : Get.offAll(() => HomeNav(index: 0.obs));
-        isFirstTime = true;
-        storage.write('isFIrstTime', isFirstTime);
-      }
+    var firstTime = true;
+
+    firstTime = storage.read("isFirstTimeLaunch") ?? true;
+    var myToken = storage.read('token');
+    print("my....token :$myToken^");
+
+    Future.delayed(Duration(seconds: 3), () {
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => IntdroductionScreen()));
+
+      myToken.toString() == "" || myToken.toString() == "null" || myToken == ''
+          ? firstTime != null
+              ? firstTime
+                  ? Get.offAll(() => Login())
+                  : Get.offAll(() => Login())
+              : Get.offAll(() => Login())
+          : myToken.toString() == '72'
+              ? Get.offAll(() => Login())
+              : Get.offAll(() => HomeNav(
+                    index: 0.obs,
+                  ));
     });
   }
 }
