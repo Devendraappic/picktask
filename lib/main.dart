@@ -3,11 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-
-import 'package:picktask/screens/home/home_nav.dart';
 import 'package:picktask/screens/onboarding/splash.dart';
-
-import 'package:picktask/utils/color.dart';
 
 void main() async {
   runApp(const Picktask());
