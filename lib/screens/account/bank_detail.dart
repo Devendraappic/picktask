@@ -136,6 +136,7 @@ class _BankDetailsState extends State<BankDetails> {
                   width: double.infinity,
                   height: h * 0.08,
                   text: "Verify",
+                  radius: 15,
                   press: () {
                     Get.to(() => Kyc(), transition: Transition.rightToLeft);
                   }),

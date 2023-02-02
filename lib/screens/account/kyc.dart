@@ -111,6 +111,7 @@ class _KycState extends State<Kyc> {
                   width: double.infinity,
                   height: h * 0.08,
                   text: "Submit",
+                  radius: 15,
                   press: () {
                     Get.to(() => Kyc());
                   }),

@@ -147,6 +147,7 @@ class Register extends StatelessWidget {
                         width: double.infinity,
                         height: h * 0.08,
                         text: "Register",
+                    radius: 15,
                         press: () {
                           if (formKey.currentState!.validate()) {
                             onboardingController.signupApi(

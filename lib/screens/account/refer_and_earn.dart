@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/black_box.dart';
+import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/components/savings_card.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -101,7 +102,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                     ],
                   ),
                   GradientButton(
-                      height: h * 0.03, width: w * 0.2, text: "Share")
+                      height: h * 0.03, width: w * 0.2, text: "Share",
+                    firstColor: Colors.yellow,
+                    secondColor: Colors.orange,)
                 ]),
           ),
           space(h * 0.02),

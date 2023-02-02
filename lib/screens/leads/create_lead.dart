@@ -162,10 +162,11 @@ class _CreateLeadState extends State<CreateLead> {
                   width: double.infinity,
                   height: h * 0.08,
                   text: "Submit",
+                  radius: 15,
                   press: () {
-                   // if (formKey.currentState!.validate()) {
-                    leadSubmitDialog();
-                   // }
+                   if (formKey.currentState!.validate()) {
+                     showLeadSubmitDialog();
+                   }
                   }),
               space(h * 0.1),
             ],
@@ -174,58 +175,55 @@ class _CreateLeadState extends State<CreateLead> {
       ),
     );
   }
-
-  leadSubmitDialog() {
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12.0),
-        ),
-      ),
-     // title: Text("My title"),
+  showLeadSubmitDialog(){
+    Get.defaultDialog(
+      radius: 12,
       content:Wrap(
         children: [
-          Container(
-            height: w * 0.14,
-            width: w * 0.14,
+          Align(
             alignment: Alignment.center,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: kWhiteColor),
-            child: Center(
-                child: Image.asset(
-                  "assets/images/sbi_logo.png",
-                  width: 50,
-                )),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: kWhiteColor),
+              child: Center(
+                  child: Image.asset(
+                    "assets/images/check.png",
+                    width: 80,
+                  )),
+            ),
           ),
-          Expanded(child: Text('Success! Your lead was submitted successfully. We will validate your lead. It will take some time.')),
+          SizedBox(
+            height: h * 0.1,
+          ),
+          Expanded(child: Text(
+            'Success! Your lead was submitted successfully. We will validate your lead. It will take some time.',
+            textAlign: TextAlign.center,)),
+
+          SizedBox(
+            height: h * 0.1,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: (){
+                Get.back(closeOverlays: true);
+              },
+              child: Container(
+
+                  padding: const EdgeInsets.symmetric(horizontal:15, vertical: 6),
+                  decoration: BoxDecoration(
+                      color: kBlueColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child:Text("Okay", style: TextStyle(color: Colors.white),)
+              ),
+            ),
+          ),
 
         ],
       ),
-      actions: [
-        GestureDetector(
-          onTap: (){
-            Get.back();
-          },
-          child: Container(
-              margin: const EdgeInsets.all(20.0),
-              padding: const EdgeInsets.symmetric(horizontal:15, vertical: 5),
-              decoration: BoxDecoration(
-                  color: kBlueColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child:Text("Okay", style: TextStyle(color: Colors.white),)
-          ),
-        )
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
+
   // full name textfield
 
   TextFormField nameFormField() {

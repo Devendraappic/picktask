@@ -454,6 +454,7 @@ class _OtpState extends State<Otp> {
                       width: double.infinity,
                       height: h * 0.08,
                       text: "Submit",
+                  radius: 15,
                       press: () {
                         String sub =
                             "${first.text}${second.text}${third.text}${fourth.text}";

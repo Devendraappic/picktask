@@ -10,11 +10,13 @@ class DefaultButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.press,
+    required this.radius,
   }) : super(key: key);
   final String text;
   final Function() press;
   final double width;
   final double height;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class DefaultButton extends StatelessWidget {
             Color(0xFF4530CB),
             Color(0xFF4530CB),
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-          borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(radius)),
       child: TextButton(
         style: TextButton.styleFrom(
           shape:

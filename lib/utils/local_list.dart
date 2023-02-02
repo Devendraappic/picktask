@@ -2,32 +2,32 @@
 
 List categoryList = [
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/savings.png",
     "title": "Savings Account",
     "subtitle": "Earn up to ₹400 per account"
   },
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/credit_card.png",
     "title": "Credit Card",
     "subtitle": "Earn up to ₹3000 per card dispach"
   },
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/cash.png",
     "title": "Demat Account",
     "subtitle": "Earn up to ₹600 per account"
   },
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/loan.png",
     "title": "Loans",
     "subtitle": "Earn up to ₹2500 per loan disbursal"
   },
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/merchant_onboarding.png",
     "title": "Merchant Onboarding",
     "subtitle": "Earn up to ₹1000 per day"
   },
   {
-    "image": "assets/images/earn.png",
+    "image": "assets/images/salary.png",
     "title": "Other Tasks",
     "subtitle": "Explore other tasks"
   },

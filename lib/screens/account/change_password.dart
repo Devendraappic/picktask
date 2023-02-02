@@ -43,6 +43,7 @@ class ChangePassword extends StatelessWidget {
               width: double.infinity,
               height: h * 0.07,
               text: "Update Password",
+              radius: 15,
               press: () {})
         ]),
       ),

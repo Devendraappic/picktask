@@ -73,6 +73,7 @@ class LoginWithOtp extends StatelessWidget {
                           width: double.infinity,
                           height: h * 0.08,
                           text: "GET OTP",
+                      radius: 15,
                           press: () {
                             if (mobileController.text.isNotEmpty &&
                                 mobileController.text.length == 10) {

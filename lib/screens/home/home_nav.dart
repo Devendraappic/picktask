@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<HomeNav> {
               children: const <Widget>[
                 Home(),
                 Leads(),
-                SavingsAccount(),
+                Category(),
                 Earning(),
                 Account()
               ],

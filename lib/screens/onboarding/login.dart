@@ -117,6 +117,7 @@ class _LoginState extends State<Login> {
                           width: double.infinity,
                           height: h * 0.08,
                           text: "Login",
+                          radius: 15,
                           press: () {
                             // Get.to(() => MyApp());
                             if (formKey.currentState!.validate()) {
