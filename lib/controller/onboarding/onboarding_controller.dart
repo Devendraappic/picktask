@@ -31,6 +31,7 @@ class OnboardingController extends GetxController {
       isLoading(true);
       var data = jsonDecode(res.body);
       if (data['success'] == true) {
+        await storage.write('is_login', true);
         await storage.write('token', data['data']["token"]);
         await storage.write('id', data['data']["Data"]['id'].toString());
         await storage.write('role', data['data']["Data"]['role'].toString());

@@ -2,16 +2,32 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/leads_card.dart';
+import 'package:picktask/screens/leads/controller/leads_controller.dart';
+import 'package:picktask/screens/leads/create_lead.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
-class Leads extends StatelessWidget {
+
+class Leads extends StatefulWidget {
   const Leads({super.key});
 
   @override
+  State<Leads> createState() => _LeadsState();
+}
+
+class _LeadsState extends State<Leads> {
+  var leadsController= Get.put(LeadsController());
+  @override
+  void initState() {
+
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -24,33 +40,55 @@ class Leads extends StatelessWidget {
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 50,
-              child: ListView.builder(
-                itemCount: 5,
-                 shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int position){
-                return Container(
-                  margin: EdgeInsets.only(right: 5, bottom: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(2))
-                  ),
-                  child: Center(child: Text("All", style: TextStyle(color: Colors.white),)),);
-              }),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 44,
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(23))),
+            child: Obx(() {
+                return ListView.builder(
+                    itemCount:leadsController.filterList.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int position) {
+                      return GestureDetector(
+                        onTap:(){
+                          for (var element in leadsController.filterList) {
+                            element.isSelected=false;
+                          }
+                          leadsController.filterList[position].isSelected= true;
+
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          decoration: leadsController.filterList[position].isSelected?BoxDecoration(
+                              color: kBlueColor,
+                              borderRadius: BorderRadius.all(Radius.circular(23))):null,
+                          child: Center(
+                              child: Text(
+                                leadsController.filterList[position].name,
+                            style: TextStyle(color: leadsController.filterList[position].isSelected?Colors.white:Colors.black),
+                          )),
+                        ),
+                      );
+                    });
+              }
             ),
-            ListView.builder(
-              itemCount: 4,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 20,
               shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
               controller: scrollController,
+              scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: EdgeInsets.only(
@@ -59,34 +97,40 @@ class Leads extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(
-              height: h * 0.1,
-            ),
-            Container(
-                height: w * 0.16,
-                width: w * 0.16,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    // Where the linear gradient begins and ends
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    // Add one stop for each color. Stops should increase from 0 to 1
-                    // stops: [0.1, 0.4, 0.7, 0.9],
-                    colors: const [
-                      // Colors are easy thanks to Flutter's Colors class.
-                      Color(0xFF2B252A),
-                      Color(0xFF1F2131),
-                    ],
-                  ),
-                ),
-                child: Icon(
-                  Icons.add,
-                  size: w * 0.13,
+          ),
+
+          // SizedBox(
+          //   height: h * 0.1,
+          // ),
+          GestureDetector(
+            onTap: (){
+              Get.to(()=>CreateLead());
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 40.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+              decoration: BoxDecoration(
                   color: kBlueColor,
-                )),
-          ],
-        ),
+                  borderRadius: BorderRadius.all(Radius.circular(23))),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Icon(
+                        Icons.add,
+                        size: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Create Lead",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

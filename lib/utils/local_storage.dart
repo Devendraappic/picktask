@@ -12,3 +12,4 @@ String firstName = storage.read('first_name');
 String earning = storage.read('earning');
 String kycStatus = storage.read('kyc_status');
 String refferCode = storage.read("ref_code");
+String isLogin = storage.read("is_login");

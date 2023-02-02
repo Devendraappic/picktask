@@ -32,7 +32,7 @@ class _PicktaskState extends State<Picktask> {
     return GetMaterialApp(
         // initialBinding: AllControllerBinding(),
 
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.black,
             appBarTheme: AppBarTheme(backgroundColor: Colors.black)),
