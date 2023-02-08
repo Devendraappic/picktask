@@ -43,7 +43,8 @@ class LeadsCard extends StatelessWidget {
                 child: Image.asset(
               "assets/images/sbi_logo.png",
               width: 50,
-            )),
+            )
+            ),
           ),
           SizedBox(
             width: 10,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/screens/home/home_nav.dart';
 import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/welcome_tabs/welcome_screen.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/images.dart';
@@ -50,14 +51,16 @@ class _SpalshState extends State<Spalsh> {
       myToken.toString() == "" || myToken.toString() == "null" || myToken == ''
           ? firstTime != null
               ? firstTime
-                  ? Get.offAll(() => Login())
-                  : Get.offAll(() => Login())
-              : Get.offAll(() => Login())
+                  ? Get.offAll(() => WelcomeScreen())
+                  : Get.offAll(() => WelcomeScreen())
+              : Get.offAll(() => WelcomeScreen())
           : myToken.toString() == '72'
-              ? Get.offAll(() => Login())
+              ? Get.offAll(() => WelcomeScreen())
               : Get.offAll(() => HomeNav(
                     index: 0.obs,
                   ));
     });
   }
 }
+
+

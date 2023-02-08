@@ -196,7 +196,7 @@ class _LoginState extends State<Login> {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(() => Register());
+                          Get.offAll(Register());
                         },
                         child: Text(
                           "Register Now",

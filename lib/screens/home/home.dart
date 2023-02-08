@@ -13,6 +13,8 @@ import 'package:picktask/testing/map_testing.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
+import '../notifications/notification_list.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -58,14 +60,19 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(
-                    Icons.notifications,
-                    size: w * 0.1,
-                    color: kWhiteColor,
+              InkWell(
+                onTap: (){
+                  Get.to(()=>NotificationList());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(
+                      Icons.notifications,
+                      size: w * 0.1,
+                      color: kWhiteColor,
+                    ),
                   ),
                 ),
               )

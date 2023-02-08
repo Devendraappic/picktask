@@ -65,10 +65,13 @@ class _TaskDescriptionState extends State<TaskDescription> {
                                 ],
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              runAlignment: WrapAlignment.center,
+                              runSpacing: 5,
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Tracking Time:"),
+                                Text("Tracking Time: "),
                                 GradientButton(
                                   height: h * 0.03,
                                   width: w * 0.17,

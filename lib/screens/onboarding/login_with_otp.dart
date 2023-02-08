@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -153,7 +154,7 @@ class LoginWithOtp extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(() => Register());
+                          Get.offAll(Register());
                         },
                         child: Text(
                           "Register Now",
@@ -192,6 +193,10 @@ class LoginWithOtp extends StatelessWidget {
       style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.phone,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+            RegExp("[0-9]")),
+      ],
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,

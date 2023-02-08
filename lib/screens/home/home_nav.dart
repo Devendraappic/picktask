@@ -86,9 +86,9 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 5.0),
               child: SvgPicture.asset(
                 earning_icon, // explore icon
-                width: 20,
+                width: 18,
                 color: profileController._selectedIndex == 0.obs
-                    ? kPrimaryColor
+                    ? kWhiteColor
                     : kWhiteColor,
               ),
             ),
@@ -103,7 +103,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                   earning_icon, // groups icon
                   width: 18,
                   color: profileController._selectedIndex == 1.obs
-                      ? kPrimaryColor
+                      ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
@@ -117,7 +117,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                   earning_icon, //categories icon
                   width: 18,
                   color: profileController._selectedIndex == 2.obs
-                      ? kPrimaryColor
+                      ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
@@ -131,7 +131,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                   earning_icon, // marketplace icon
                   width: 18,
                   color: profileController._selectedIndex == 3.obs
-                      ? kPrimaryColor
+                      ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
@@ -145,7 +145,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                   account_icon, // account/me icon
                   width: 20,
                   color: profileController._selectedIndex == 4.obs
-                      ? kPrimaryColor
+                      ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
@@ -154,7 +154,10 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               label: "My Account")
         ],
         currentIndex: s.selectedIndex,
-        selectedItemColor: kPrimaryColor,
+        selectedItemColor: kWhiteColor,
+        unselectedItemColor:kWhiteColor ,
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         onTap: (index) => s.onItemTapped(index),
         /* currentIndex: Get.find<ProfileController>().selectedIndex,
         selectedItemColor: Colors.amber[800],

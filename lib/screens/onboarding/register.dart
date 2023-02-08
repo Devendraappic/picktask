@@ -176,7 +176,7 @@ class Register extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.back();
+                        Get.offAll(Login());
                       },
                       child: Text(
                         "Login",
