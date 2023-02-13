@@ -22,7 +22,7 @@ class _SavingsAccountState extends State<SavingsAccount> {
         centerTitle: true,
         title: Text(
           "Savings Account",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

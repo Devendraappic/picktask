@@ -68,7 +68,7 @@ class OnboardingController extends GetxController {
         //       index: 0.obs,
         //     ));
         print("mytoken: ${data['data']["token"]}");
-        Get.snackbar("Welcome to Picktask", "", colorText: kWhiteColor);
+       // Get.snackbar("Welcome to Picktask", "", colorText: kWhiteColor);
 
         print("id ${data['data']["Data"]['id'].toString()}");
 
@@ -194,7 +194,7 @@ class OnboardingController extends GetxController {
       if (data['status'] == true) {
         Get.offAll(HomeNav(index: 0.obs));
 
-        Get.snackbar("Welcome to Picktask", "", colorText: kWhiteColor);
+        //Get.snackbar("Welcome to Picktask", "", colorText: kWhiteColor);
 
         isVerifyLoading.value = false;
       } else {

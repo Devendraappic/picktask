@@ -5,9 +5,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/constants/app_strings.dart';
+import 'package:picktask/controller/accountsController/accounts_controller.dart';
 import 'package:picktask/screens/account/kyc.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class BankDetails extends StatefulWidget {
@@ -18,6 +21,14 @@ class BankDetails extends StatefulWidget {
 }
 
 class _BankDetailsState extends State<BankDetails> {
+
+  var accountsController= Get.put(AccountsController());
+  TextEditingController nameController = TextEditingController();
+  TextEditingController accountNumberController = TextEditingController();
+  TextEditingController confirmAccountNumberController = TextEditingController();
+  TextEditingController ifscController = TextEditingController();
+  TextEditingController bankController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +53,10 @@ class _BankDetailsState extends State<BankDetails> {
               space(h * 0.015),
               Center(
                 child: Text(
-                  "You will recieve your payout only on this account.",
-                  style: GoogleFonts.cabin(
-                      foreground: Paint()..shader = linearGradient,
+                  "You will receive your payout only on this account.",
+                  style: GoogleFonts.poppins(
+                      color:Colors.yellow,
+                      //foreground: Paint()..shader = linearGradient,
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w600),
                 ),
@@ -132,14 +144,48 @@ class _BankDetailsState extends State<BankDetails> {
                 ],
               ),
               space(h * 0.04),
-              DefaultButton(
-                  width: double.infinity,
-                  height: h * 0.08,
-                  text: "Verify",
-                  radius: 15,
-                  press: () {
-                    Get.to(() => Kyc(), transition: Transition.rightToLeft);
-                  }),
+              Obx( () {
+                  return DefaultButton(
+                      width: double.infinity,
+                      height: h * 0.08,
+                      text: accountsController.actionButtonText.value,
+                      radius: 15,
+                      press: () {
+                        if( accountsController.actionButtonText.value==AppStrings.txtVerify){
+                          accountsController.actionButtonText(AppStrings.txtPending);
+                        }
+                        // if (nameController.text == null || nameController.text.isEmpty) {
+                        //   showToastMsg(AppStrings.txtEnterFullName);
+                        //   return ;
+                        // }
+                        // if (accountNumberController.text == null || accountNumberController.text.isEmpty) {
+                        //  showToastMsg(AppStrings.txtEnterAccountNumber);
+                        //   return ;
+                        // }
+                        // if (confirmAccountNumberController.text == null || confirmAccountNumberController.text.isEmpty) {
+                        //   showToastMsg(AppStrings.txtEnterConfirmAccountNumber);
+                        //   return ;
+                        // }
+                        // if (accountNumberController.text != confirmAccountNumberController.text) {
+                        //   showToastMsg(AppStrings.txtConfirmAccountNumberDoesNotMatch);
+                        //   return ;
+                        // }
+                        // if (confirmAccountNumberController.text == null || confirmAccountNumberController.text.isEmpty) {
+                        //   showToastMsg(AppStrings.txtEnterConfirmAccountNumber);
+                        //   return ;
+                        // }
+                        // if (ifscController.text == null || ifscController.text.isEmpty) {
+                        //   showToastMsg(AppStrings.txtEnterIfscCode);
+                        //   return ;
+                        // }
+                        // if (bankController.text == null || bankController.text.isEmpty) {
+                        //   showToastMsg(AppStrings.txtEnterBankName);
+                        //   return ;
+                        // }
+
+                      });
+                }
+              ),
             ],
           ),
         ),
@@ -151,18 +197,10 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField nameFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
-      // controller: emailController,
+      controller: nameController,
 
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -215,18 +253,10 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField accountNumberFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
-      // controller: emailController,
+      controller: accountNumberController,
 
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -279,18 +309,10 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField confirmAccountNumberFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
-      // controller: emailController,
+      controller: confirmAccountNumberController,
 
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -343,18 +365,10 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField ifscCodeFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
-      // controller: emailController,
+      controller: ifscController,
 
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -407,18 +421,10 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField bankNameFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
-      // controller: emailController,
+      controller: bankController,
 
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),

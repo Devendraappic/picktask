@@ -10,6 +10,7 @@ import 'package:picktask/screens/account/bank_detail.dart';
 import 'package:picktask/screens/account/change_password.dart';
 import 'package:picktask/screens/account/help_and_support.dart';
 import 'package:picktask/screens/account/id_card.dart';
+import 'package:picktask/screens/account/kyc.dart';
 import 'package:picktask/screens/account/refer_and_earn.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
@@ -93,7 +94,7 @@ class Account extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => BankDetails());
+                      Get.to(() => Kyc());
                     },
                     child: Container(
                       height: h * 0.03,

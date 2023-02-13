@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/components/gradient_button.dart';
-import 'package:picktask/screens/task/task_controller.dart';
+import 'package:picktask/constants/app_strings.dart';
+import 'package:picktask/controller/taskController/task_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
@@ -27,7 +28,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
         centerTitle: true,
         title: Text(
           "RBL Bank Saving Account",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),
@@ -166,8 +167,8 @@ class _TaskDescriptionState extends State<TaskDescription> {
                   text: taskController.actionButtonText.value,
                   radius: 0,
                   press: () {
-                    if( taskController.actionButtonText.value=="Apply Now"){
-                      taskController.actionButtonText("Pending");
+                    if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
+                      taskController.actionButtonText(AppStrings.txtPending);
                     }
 
                   });

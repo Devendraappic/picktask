@@ -16,7 +16,7 @@ class NotificationList extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Notifications",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

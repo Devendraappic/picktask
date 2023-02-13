@@ -24,7 +24,7 @@ class LeadDetails extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Lead Details",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

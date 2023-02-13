@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class ChangePassword extends StatelessWidget {
@@ -44,7 +45,20 @@ class ChangePassword extends StatelessWidget {
               height: h * 0.07,
               text: "Update Password",
               radius: 15,
-              press: () {})
+              press: () {
+                if (oldPasswordController.text == null || oldPasswordController.text.isEmpty) {
+                  showToastMsg('Please enter old password');
+                  return ;
+                }
+                if (newPasswordController.text == null || newPasswordController.text.isEmpty) {
+                 showToastMsg('Please enter new password');
+                  return ;
+                }
+                if (confirmPasswordController.text == null || confirmPasswordController.text.isEmpty) {
+                 showToastMsg('Please enter confirm password');
+                  return;
+                }
+              })
         ]),
       ),
     );
@@ -58,13 +72,7 @@ class ChangePassword extends StatelessWidget {
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please enter old password';
-        }
 
-        return null;
-      },
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: oldobsecure.value
@@ -131,13 +139,7 @@ class ChangePassword extends StatelessWidget {
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please enter new password';
-        }
 
-        return null;
-      },
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: newobsecure.value
@@ -204,13 +206,7 @@ class ChangePassword extends StatelessWidget {
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please enter confirm password';
-        }
 
-        return null;
-      },
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: oldobsecure.value

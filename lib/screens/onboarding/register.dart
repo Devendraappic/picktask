@@ -10,6 +10,7 @@ import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class Register extends StatelessWidget {
@@ -24,7 +25,7 @@ class Register extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   OnboardingController onboardingController =
-      Get.put(OnboardingController(), permanent: false);
+  Get.put(OnboardingController(), permanent: false);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,8 @@ class Register extends StatelessWidget {
                 Text(
                   "We can't wait for you to join us!",
                   style: GoogleFonts.poppins(
-                      foreground: Paint()..shader = linearGradient,
+                      foreground: Paint()
+                        ..shader = linearGradient,
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
                 ),
@@ -141,25 +143,53 @@ class Register extends StatelessWidget {
                     ),
                     child: refferalFormField()),
                 space(h * 0.02),
-                Obx((() => onboardingController.isLoading.value == true
+                Obx((() =>
+                onboardingController.isLoading.value == true
                     ? loader
                     : DefaultButton(
-                        width: double.infinity,
-                        height: h * 0.08,
-                        text: "Register",
+                    width: double.infinity,
+                    height: h * 0.08,
+                    text: "Register",
                     radius: 15,
-                        press: () {
-                          if (formKey.currentState!.validate()) {
-                            onboardingController.signupApi(
-                                nameController.text.trim(),
-                                mobileController.text.trim(),
-                                emailController.text.trim(),
-                                passwordController.text.trim(),
-                                refferalController.text.trim() == ''
-                                    ? ""
-                                    : refferalController.text.trim());
-                          }
-                        }))),
+                    press: () {
+                      if (nameController.text == null ||
+                          nameController.text.isEmpty) {
+                        showToastMsg('Please enter name');
+                        return;
+                      }
+                      if (mobileController.text == null ||
+                          mobileController.text.isEmpty) {
+                        showToastMsg('Phone number is required');
+                        return;
+                      }
+                      if (mobileController.text.length != 10) {
+                        showToastMsg('Please enter valid phone number');
+                        return;
+                      }
+                      if (emailController.text == null ||
+                          emailController.text.isEmpty) {
+                        showToastMsg('Email address or UniqueId is required');
+                        return;
+                      }
+                      if (!GetUtils.isEmail(emailController.text)) {
+                        showToastMsg('Please enter vaild email address ');
+                        return;
+                      }
+                      if (passwordController.text == null ||
+                          passwordController.text.isEmpty) {
+                        showToastMsg('please enter password');
+                        return;
+                      }
+
+                      onboardingController.signupApi(
+                          nameController.text.trim(),
+                          mobileController.text.trim(),
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          refferalController.text.trim() == ''
+                              ? ""
+                              : refferalController.text.trim());
+                    }))),
                 space(h * 0.01),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -181,7 +211,8 @@ class Register extends StatelessWidget {
                       child: Text(
                         "Login",
                         style: GoogleFonts.poppins(
-                            foreground: Paint()..shader = linearGradient,
+                            foreground: Paint()
+                              ..shader = linearGradient,
                             fontSize: 18,
                             fontWeight: FontWeight.w600),
                       ),
@@ -208,13 +239,6 @@ class Register extends StatelessWidget {
 
   TextFormField nameFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please enter name';
-        }
-
-        return null;
-      },
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: nameController,
@@ -273,15 +297,7 @@ class Register extends StatelessWidget {
 
   TextFormField mobileFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Phone number is required';
-        }
-        if (val.length != 10) {
-          return 'Please enter valid phone number';
-        }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
 
@@ -341,15 +357,7 @@ class Register extends StatelessWidget {
 // email textfield
   TextFormField emailFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        if (!GetUtils.isEmail(val)) {
-          return 'Please enter vaild email address ';
-        }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: emailController,
@@ -401,15 +409,7 @@ class Register extends StatelessWidget {
 // password textfield
   TextFormField passwordFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'please enter password';
-        }
-        // if (!GetUtils.isEmail(val)) {
-        //   return 'Email address ';
-        // }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: passwordController,

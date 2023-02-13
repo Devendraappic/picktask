@@ -24,7 +24,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         centerTitle: true,
         title: Text(
           "Refer & Earn",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

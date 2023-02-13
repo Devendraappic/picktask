@@ -31,7 +31,7 @@ class _CreateLeadState extends State<CreateLead> {
         centerTitle: true,
         title: Text(
           "Create Lead",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

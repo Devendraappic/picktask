@@ -186,7 +186,7 @@ class _HomeState extends State<Home> {
                   height: h * 0.02,
                 ),
                 SizedBox(
-                  height: h * 0.20,
+                  height: h * 0.19,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(

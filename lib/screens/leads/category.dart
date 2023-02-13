@@ -23,7 +23,7 @@ class _CategoryState extends State<Category> {
         centerTitle: true,
         title: Text(
           "Select Category",
-          style: GoogleFonts.cabin(
+          style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),

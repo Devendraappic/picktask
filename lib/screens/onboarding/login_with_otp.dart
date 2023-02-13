@@ -13,6 +13,7 @@ import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/onboarding/otp.dart';
 import 'package:picktask/screens/onboarding/register.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/images.dart';
 
@@ -84,8 +85,9 @@ class LoginWithOtp extends StatelessWidget {
                                   .otpApi(mobileController.text.trim())
                                   .then((value) => false);
                             } else {
-                              Get.snackbar("Please enter 10 digit number", "",
-                                  colorText: kWhiteColor);
+                              showToastMsg("Please enter 10 digit number");
+                              // Get.snackbar("Please enter 10 digit number", "",
+                              //     colorText: kWhiteColor);
                             }
                           }),
                   space(h * 0.02),
@@ -175,15 +177,6 @@ class LoginWithOtp extends StatelessWidget {
 
   TextFormField mobileFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Phone number is required';
-        }
-        if (val.length != 10) {
-          return 'Please enter valid phone number';
-        }
-        return null;
-      },
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: mobileController,

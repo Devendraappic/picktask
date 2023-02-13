@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/screens/account/bank_detail.dart';
 import 'package:picktask/screens/onboarding/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -24,6 +25,8 @@ class _KycState extends State<Kyc> {
   DateTime? _selectedDay;
 
   RxString dateNow = "Date of Birth".obs;
+  TextEditingController nameController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +52,9 @@ class _KycState extends State<Kyc> {
               Center(
                 child: Text(
                   "Please complete kyc to withdraw your payout",
-                  style: GoogleFonts.cabin(
-                      foreground: Paint()..shader = linearGradient,
+                  style: GoogleFonts.poppins(
+                    color:Colors.yellow,
+                      // foreground: Paint()..shader = linearGradient,
                       fontSize: w * 0.04,
                       fontWeight: FontWeight.w600),
                 ),
@@ -113,7 +117,7 @@ class _KycState extends State<Kyc> {
                   text: "Submit",
                   radius: 15,
                   press: () {
-                    Get.to(() => Kyc());
+                    Get.to(() => BankDetails(), transition: Transition.rightToLeft);
                   }),
             ],
           ),
@@ -124,6 +128,92 @@ class _KycState extends State<Kyc> {
 
   calendarModelBottomSheet() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // await Get.defaultDialog(
+      //   radius: 12,
+      //   content:StatefulBuilder(builder: (context, setState) {
+      //     return Container(
+      //       decoration: BoxDecoration(
+      //           color: Colors.transparent,
+      //           borderRadius: BorderRadius.only(
+      //               topLeft: const Radius.circular(10.0),
+      //               topRight: const Radius.circular(10.0))),
+      //       //could change this to Color(0xFF737373),
+      //       //so you don't have to change MaterialApp canvasColor
+      //       child: Card(
+      //         child: TableCalendar(
+      //           daysOfWeekHeight: 40,
+      //
+      //           // startingDayOfWeek: StartingDayOfWeek.monday,
+      //           daysOfWeekStyle: DaysOfWeekStyle(
+      //             dowTextFormatter: (date, locale) {
+      //               return DateFormat.E().format(date).substring(0, 1);
+      //             },
+      //             weekdayStyle: const TextStyle(color: kPrimaryColor),
+      //             weekendStyle: const TextStyle(color: kPrimaryColor),
+      //             decoration: BoxDecoration(
+      //               color: const Color(0xffF4F6F8),
+      //               borderRadius: BorderRadius.circular(5),
+      //             ),
+      //           ),
+      //           calendarStyle: CalendarStyle(
+      //               todayDecoration: BoxDecoration(
+      //                   shape: BoxShape.circle,
+      //                   color: kPrimaryColor.withOpacity(0.5)),
+      //               selectedDecoration: const BoxDecoration(
+      //                 shape: BoxShape.circle,
+      //                 color: kPrimaryColor,
+      //               )),
+      //           firstDay: DateTime(2015),
+      //           headerStyle: const HeaderStyle(
+      //               headerPadding: EdgeInsets.zero,
+      //               titleCentered: true,
+      //               headerMargin: EdgeInsets.only(left: 0, bottom: 0),
+      //               titleTextStyle: TextStyle(
+      //                 fontSize: 18,
+      //                 color: Color(0xff333333),
+      //               ),
+      //               formatButtonVisible: false,
+      //               rightChevronIcon: Padding(
+      //                 padding: EdgeInsets.all(5.0),
+      //                 child: Icon(
+      //                   Icons.arrow_right,
+      //                   size: 30,
+      //                   color: kPrimaryColor,
+      //                 ),
+      //               ),
+      //               leftChevronIcon: Padding(
+      //                 padding: EdgeInsets.all(5.0),
+      //                 child: Icon(
+      //                   Icons.arrow_left,
+      //                   size: 30,
+      //                   color: kPrimaryColor,
+      //                 ),
+      //               )),
+      //           lastDay: DateTime(2030),
+      //           focusedDay: _focusedDay,
+      //           calendarFormat: _calendarFormat,
+      //           selectedDayPredicate: (day) {
+      //             return isSameDay(_selectedDay, day);
+      //           },
+      //           onDaySelected: (selectedDay, focusedDay) {
+      //             if (!isSameDay(_selectedDay, selectedDay)) {
+      //               setState(() {
+      //                 _selectedDay = selectedDay;
+      //                 _focusedDay = focusedDay;
+      //               });
+      //             }
+      //
+      //             Get.back();
+      //           },
+      //           onPageChanged: (focusedDay) {
+      //             _focusedDay = focusedDay;
+      //             setState(() {});
+      //           },
+      //         ),
+      //       ),
+      //     );
+      //   }),
+      // );
       await showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,

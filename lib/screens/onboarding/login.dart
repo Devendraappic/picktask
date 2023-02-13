@@ -13,6 +13,7 @@ import 'package:picktask/screens/onboarding/login_with_otp.dart';
 import 'package:picktask/screens/onboarding/register.dart';
 import 'package:picktask/testing/color_change.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class Login extends StatefulWidget {
@@ -119,16 +120,26 @@ class _LoginState extends State<Login> {
                           text: "Login",
                           radius: 15,
                           press: () {
-                            // Get.to(() => MyApp());
-                            if (formKey.currentState!.validate()) {
-                              Get.offAll(HomeNav(index: 0.obs));
-
-                              onboardingController
-                                  .loginApi(
-                                      emailController.text.toString().trim(),
-                                      passwordController.text.toString().trim())
-                                  .then((value) => false);
+                            if (emailController.text == null || emailController.text.isEmpty) {
+                              showToastMsg("Email address or UniqueId is required");
+                              return ;
+                              // return
                             }
+                            if (!GetUtils.isEmail(emailController.text)) {
+                              showToastMsg('Please enter vaild email address ');
+                              return;
+                            }
+                            if (passwordController.text == null || passwordController.text.isEmpty) {
+                              showToastMsg('Please enter password');
+                              return ;
+                            }
+                            Get.offAll(HomeNav(index: 0.obs));
+
+                            onboardingController
+                                .loginApi(
+                                emailController.text.toString().trim(),
+                                passwordController.text.toString().trim())
+                                .then((value) => false);
                           }),
                   space(h * 0.02),
                   Row(
@@ -170,6 +181,7 @@ class _LoginState extends State<Login> {
                           side: BorderSide(width: 0.7, color: kWhiteColor),
                         ),
                         onPressed: () {
+
                           Get.to(LoginWithOtp());
                         },
                         child: Text(
@@ -219,17 +231,8 @@ class _LoginState extends State<Login> {
   TextFormField emailFormField() {
     return TextFormField(
       controller: emailController,
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Email address or UniqueId is required';
-        }
-        if (!GetUtils.isEmail(val)) {
-          return 'Please enter vaild email address ';
-        }
-        return null;
-      },
       // autovalidateMode:
-      //     AutovalidateMode.onUserInteraction,
+      // AutovalidateMode.onUserInteraction,
       // controller: emailController,
       style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -284,13 +287,7 @@ class _LoginState extends State<Login> {
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Please enter password';
-        }
 
-        return null;
-      },
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: obsecure.value

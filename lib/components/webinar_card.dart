@@ -13,10 +13,11 @@ class WebinarCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       width: w * 0.3,
-      height: h * 0.18,
+      height: h * 0.19,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: kWhiteColor),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
