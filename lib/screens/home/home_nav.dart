@@ -85,7 +85,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
             icon: Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
               child: SvgPicture.asset(
-                earning_icon, // explore icon
+                home_icon, // explore icon
                 width: 18,
                 color: profileController._selectedIndex == 0.obs
                     ? kWhiteColor
@@ -100,7 +100,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
                 child: SvgPicture.asset(
-                  earning_icon, // groups icon
+                  leads_icon, // groups icon
                   width: 18,
                   color: profileController._selectedIndex == 1.obs
                       ? kWhiteColor
@@ -114,7 +114,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
                 child: SvgPicture.asset(
-                  earning_icon, //categories icon
+                  task_icon, //categories icon
                   width: 18,
                   color: profileController._selectedIndex == 2.obs
                       ? kWhiteColor

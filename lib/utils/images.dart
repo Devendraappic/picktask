@@ -16,8 +16,8 @@ const mobile_icon = "assets/icons/mobile.svg"; // mobile icon
 
 // home navigation icon
 
-const home_icon = "assets/icons/mobile.svg";
-const task_icon = "assets/icons/mobile.svg";
-const leads_icon = "assets/icons/mobile.svg";
+const home_icon = "assets/icons/ic_home.svg";
+const task_icon = "assets/icons/tasks.svg";
+const leads_icon = "assets/icons/my_leads.svg";
 const earning_icon = "assets/icons/earnings.svg";
 const account_icon = "assets/icons/name-icon.svg";

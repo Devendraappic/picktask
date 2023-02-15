@@ -32,7 +32,7 @@ class _WalletState extends State<Wallet> {
                 child: Center(
                   child: Text(
                     "Hello TUSHAR",
-                    style: GoogleFonts.cabin(
+                    style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.065,
                         fontWeight: FontWeight.w700),

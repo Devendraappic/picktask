@@ -91,8 +91,7 @@ class _LeadsState extends State<Leads> {
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 14),
-                  // padding: EdgeInsets.only(bottom: 14, left: w * 0.05, right: w * 0.05),
+                  padding: EdgeInsets.only(bottom: 14, left: w * 0.05, right: w * 0.05),
                   child: LeadsCard(),
                 );
               },

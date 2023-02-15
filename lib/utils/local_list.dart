@@ -1,15 +1,16 @@
 // category list
+//
 
 List categoryList = [
-  {
-    "image": "assets/images/savings.png",
-    "title": "Savings Account",
-    "subtitle": "Earn up to ₹400 per account"
-  },
   {
     "image": "assets/images/credit_card.png",
     "title": "Credit Card",
     "subtitle": "Earn up to ₹3000 per card dispach"
+  },
+  {
+    "image": "assets/images/savings.png",
+    "title": "Savings Account",
+    "subtitle": "Earn up to ₹400 per account"
   },
   {
     "image": "assets/images/cash.png",
@@ -18,7 +19,22 @@ List categoryList = [
   },
   {
     "image": "assets/images/loan.png",
-    "title": "Loans",
+    "title": "Loans/Credit",
+    "subtitle": "Earn up to ₹2500 per loan disbursal"
+  },
+  {
+    "image": "assets/images/insurance.png",
+    "title": "Insurance",
+    "subtitle": "Earn up to ₹2500 per loan disbursal"
+  },
+  {
+    "image": "assets/images/install_earn.png",
+    "title": "Install & Earn",
+    "subtitle": "Earn up to ₹2500 per loan disbursal"
+  },
+  {
+    "image": "assets/images/shop_earn.png",
+    "title": "Shop & Earn",
     "subtitle": "Earn up to ₹2500 per loan disbursal"
   },
   {

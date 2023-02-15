@@ -11,9 +11,9 @@ class WebinarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
       width: w * 0.3,
-      height: h * 0.19,
+      height: h * 0.18,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: kWhiteColor),
       child: Column(
