@@ -12,6 +12,7 @@ class AppStrings {
   static const String txtEnterIfscCode = "Enter IFSC Code";
   static const String txtEnterBankName = "Enter Bank Name";
   static const String txtVerify = "Verify";
+  static const String txtSubmit = "Submit";
 
 
 

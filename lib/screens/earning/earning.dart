@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/dot_seperator.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 List a = [1, 2, 4, 7, 9, 10, 12, 34, 65, 21, 78, 56];
@@ -142,6 +143,14 @@ class _EarningState extends State<Earning> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (amountController.text.isEmpty) {
+                      showToastMsg('Enter withdrawal amount');
+                      return ;
+                    }
+                    if (double.parse(amountController.text) < 100) {
+                      showToastMsg('Min withdrawal amount is ₹100');
+                      return ;
+                    }
                     print("length: ${a.length}");
                     int remain = int.parse(amountController.text);
                     int cd = remain;

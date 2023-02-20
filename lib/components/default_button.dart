@@ -50,3 +50,61 @@ class DefaultButton extends StatelessWidget {
     );
   }
 }
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+     this.width,
+     this.height,
+    Key? key,
+    required this.text,
+    required this.press,
+    required this.radius,
+    this.leadingIcon
+  }) : super(key: key);
+  final String text;
+  final Function() press;
+  final double? width;
+  final double? height;
+  final double radius;
+  final Widget? leadingIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color(0xFF4530CB),
+            Color(0xFF4530CB),
+            Color(0xFF6A55F7),
+            Color(0xFF4530CB),
+            Color(0xFF4530CB),
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          borderRadius: BorderRadius.circular(radius)),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        onPressed: press,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if(leadingIcon!=null)
+            leadingIcon!,
+            SizedBox(width: 5,),
+            Text(
+              text,
+              style: GoogleFonts.poppins(
+                  letterSpacing: 1,
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

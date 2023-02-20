@@ -24,6 +24,7 @@ class IdCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
           Container(
+            padding: const EdgeInsets.all(12.0),
             width: double.infinity,
             height: h * 0.3,
             decoration: BoxDecoration(

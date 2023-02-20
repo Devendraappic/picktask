@@ -43,6 +43,21 @@ class _TaskDescriptionState extends State<TaskDescription> {
                   SizedBox(
                     height: 30,
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5.0),
+                      child: Image.asset(
+                        "assets/images/banner_offer.jpeg",
+                        height: 180.0,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     children: [
                       SizedBox(width: 10,),
@@ -123,7 +138,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
                   ),
 
                   Card(
-                    color: Colors.grey,
+                    color: Colors.black54,
                     shape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.black54, width: 1),
                       borderRadius: BorderRadius.circular(10),
@@ -161,17 +176,20 @@ class _TaskDescriptionState extends State<TaskDescription> {
             ),
           ),
           Obx(() {
-              return DefaultButton(
-                  width: double.infinity,
-                  height: h * 0.08,
-                  text: taskController.actionButtonText.value,
-                  radius: 0,
-                  press: () {
-                    if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
-                      taskController.actionButtonText(AppStrings.txtPending);
-                    }
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: DefaultButton(
+                    width: double.infinity,
+                    height: h * 0.08,
+                    text: taskController.actionButtonText.value,
+                    radius: 15,
+                    press: () {
+                      if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
+                        taskController.actionButtonText(AppStrings.txtPending);
+                      }
 
-                  });
+                    }),
+              );
             }
           )
         ],

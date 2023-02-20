@@ -9,6 +9,8 @@ import 'package:picktask/screens/leads/controller/create_lead_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
+import '../../utils/dialog_helper.dart';
+
 class CreateLead extends StatefulWidget {
   const CreateLead({Key? key}) : super(key: key);
 
@@ -37,10 +39,10 @@ class _CreateLeadState extends State<CreateLead> {
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Obx((() => Form(
-          key: formKey,
-          child: Column(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: SingleChildScrollView(
+          child: Obx((() => Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -164,14 +166,32 @@ class _CreateLeadState extends State<CreateLead> {
                   text: "Submit",
                   radius: 15,
                   press: () {
-                   if (formKey.currentState!.validate()) {
-                     showLeadSubmitDialog();
-                   }
+                    if (nameController.text == null || nameController.text.isEmpty) {
+                      showToastMsg('Customer name is required');
+                      return;
+                    }
+                    if (mobileController.text == null || mobileController.text.isEmpty) {
+                      showToastMsg('Mobile number is required');
+                      return;
+                    }
+                    if (mobileController.text.length != 10) {
+                      showToastMsg('Please enter valid phone number');
+                      return ;
+                    }
+                    if (pinCodeController.text == null || pinCodeController.text.isEmpty) {
+                      showToastMsg('Pin code is required');
+                      return;
+                    }
+                    if (pinCodeController.text.length != 6) {
+                      showToastMsg('Please enter valid pin Code');
+                      return ;
+                    }
+                    showLeadSubmitDialog();
                   }),
               space(h * 0.1),
             ],
-          ),
-        ))),
+          ))),
+        ),
       ),
     );
   }
@@ -228,13 +248,6 @@ class _CreateLeadState extends State<CreateLead> {
 
   TextFormField nameFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Customer name is required';
-        }
-
-        return null;
-      },
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
       controller: nameController,
@@ -285,15 +298,7 @@ class _CreateLeadState extends State<CreateLead> {
 
   TextFormField mobileFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Phone number is required';
-        }
-        if (val.length != 10) {
-          return 'Please enter valid phone number';
-        }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
 
@@ -347,15 +352,7 @@ class _CreateLeadState extends State<CreateLead> {
 
   TextFormField pinCodeField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Pin code is required';
-        }
-        if (val.length != 6) {
-          return 'Please enter valid pin Code';
-        }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
 

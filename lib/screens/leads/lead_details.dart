@@ -91,7 +91,7 @@ class LeadDetails extends StatelessWidget {
             child: Column(
               children: [
 
-                Text("Credit on : 02 feb 2023",style: GoogleFonts.cabin(
+                Text("Credited on : 02 feb 2023",style: GoogleFonts.cabin(
                     color: kBalckColor,
                     fontSize: w * 0.045,
                     fontWeight: FontWeight.w400)),

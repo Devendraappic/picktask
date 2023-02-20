@@ -41,8 +41,9 @@ class Register extends StatelessWidget {
                 Text(
                   "We can't wait for you to join us!",
                   style: GoogleFonts.poppins(
-                      foreground: Paint()
-                        ..shader = linearGradient,
+                    color: Colors.yellow,
+                      // foreground: Paint()
+                      //   ..shader = linearGradient,
                       fontSize: 18,
                       fontWeight: FontWeight.w600),
                 ),

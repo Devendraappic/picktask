@@ -148,11 +148,11 @@ class _BankDetailsState extends State<BankDetails> {
                   return DefaultButton(
                       width: double.infinity,
                       height: h * 0.08,
-                      text: accountsController.actionButtonText.value,
+                      text: accountsController.actionButtonTextBankDetail.value,
                       radius: 15,
                       press: () {
-                        if( accountsController.actionButtonText.value==AppStrings.txtVerify){
-                          accountsController.actionButtonText(AppStrings.txtPending);
+                        if( accountsController.actionButtonTextBankDetail.value==AppStrings.txtSubmit){
+                          accountsController.actionButtonTextBankDetail(AppStrings.txtPending);
                         }
                         // if (nameController.text == null || nameController.text.isEmpty) {
                         //   showToastMsg(AppStrings.txtEnterFullName);
