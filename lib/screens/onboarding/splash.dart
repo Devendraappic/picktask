@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/screens/home/home_nav.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/screens/onboarding/welcome_tabs/welcome_screen.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';

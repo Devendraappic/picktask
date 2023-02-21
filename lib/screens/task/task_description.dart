@@ -7,6 +7,7 @@ import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/controller/taskController/task_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/hex_color.dart';
 
 class TaskDescription extends StatefulWidget {
   const TaskDescription({Key? key}) : super(key: key);
@@ -50,7 +51,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
                       borderRadius: BorderRadius.circular(5.0),
                       child: Image.asset(
                         "assets/images/banner_offer.jpeg",
-                        height: 180.0,
+                        height: 110.0,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -138,9 +139,9 @@ class _TaskDescriptionState extends State<TaskDescription> {
                   ),
 
                   Card(
-                    color: Colors.black54,
+                    color: getColorFromHex("#2e2624"),
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black54, width: 1),
+                      side: BorderSide(color: getColorFromHex("#2e2624"), width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(

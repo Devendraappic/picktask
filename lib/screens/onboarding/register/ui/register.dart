@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/home/home_nav.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
+import 'package:picktask/screens/onboarding/register/controller/register_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -24,8 +26,7 @@ class Register extends StatelessWidget {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  OnboardingController onboardingController =
-  Get.put(OnboardingController(), permanent: false);
+  var registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,7 @@ class Register extends StatelessWidget {
                     child: refferalFormField()),
                 space(h * 0.02),
                 Obx((() =>
-                onboardingController.isLoading.value == true
+                registerController.isLoading.value == true
                     ? loader
                     : DefaultButton(
                     width: double.infinity,
@@ -182,14 +183,19 @@ class Register extends StatelessWidget {
                         return;
                       }
 
-                      onboardingController.signupApi(
+                      registerController.registerUser(
+                        context,
                           nameController.text.trim(),
                           mobileController.text.trim(),
                           emailController.text.trim(),
                           passwordController.text.trim(),
                           refferalController.text.trim() == ''
                               ? ""
-                              : refferalController.text.trim());
+                              : refferalController.text.trim()).then((value) {
+                        if (value.success == true) {
+                          Get.offAll(HomeNav(index: 0.obs));
+                        }
+                      });
                     }))),
                 space(h * 0.01),
                 Row(

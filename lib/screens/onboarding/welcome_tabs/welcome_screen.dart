@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/components/indicator.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/onboarding/login.dart';
-import 'package:picktask/screens/onboarding/register.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
+import 'package:picktask/screens/onboarding/register/ui/register.dart';
 
 import '../../../utils/extra_widget.dart';
 import 'welcome_page.dart';

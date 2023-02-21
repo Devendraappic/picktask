@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:picktask/components/categoryCard.dart';
+import 'package:picktask/components/category_card.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/local_list.dart';

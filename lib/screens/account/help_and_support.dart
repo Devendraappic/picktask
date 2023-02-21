@@ -58,7 +58,6 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                 });
                               },
                               child: Container(
-                                height: 30,
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                     gradient: const LinearGradient(
@@ -80,7 +79,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                       child: Text(
                                         accountsController.faqList[index].title!,
                                         textAlign: TextAlign.start,
-                                        style: GoogleFonts.openSans(
+                                        style: GoogleFonts.poppins(
                                             color: kWhiteColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600),
@@ -108,12 +107,15 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                   ? false
                                   : true,
                               child: Container(
-                                color: Colors.white,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                ),
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   accountsController.faqList[index].description!,
                                   textAlign: TextAlign.start,
-                                  style: GoogleFonts.openSans(
+                                  style: GoogleFonts.poppins(
                                       color: Colors.black,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600),

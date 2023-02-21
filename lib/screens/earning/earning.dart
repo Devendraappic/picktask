@@ -151,6 +151,7 @@ class _EarningState extends State<Earning> {
                       showToastMsg('Min withdrawal amount is ₹100');
                       return ;
                     }
+                    showWithdrawalSuccessDialog(context);
                     print("length: ${a.length}");
                     int remain = int.parse(amountController.text);
                     int cd = remain;

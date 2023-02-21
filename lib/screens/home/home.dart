@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
                                   fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              "0",
+                              "₹0",
                               style: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: w * 0.045,

@@ -7,15 +7,17 @@ import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/home/home.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/login/model/login_response.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
-import 'register.dart';
+import 'register/ui/register.dart';
 
 class Otp extends StatefulWidget {
   String number;
-  Otp({required this.number});
+  LoginResponse? response;
+  Otp({required this.number,this.response});
 
   @override
   State<Otp> createState() => _OtpState();
@@ -101,11 +103,11 @@ class _OtpState extends State<Otp> {
               Padding(
                 padding: EdgeInsets.only(left: w * 0.04),
                 child: Text(
-                  "We have sent an OTP on your phone\n"
-                  "number ${widget.number}",
+                  "Enter OTP to verify your mobile number +91-${widget.number}",
                   style: GoogleFonts.poppins(
                       height: 1.5,
-                      foreground: Paint()..shader = linearGradient,
+                      color: Colors.yellow,
+                      // foreground: Paint()..shader = linearGradient,
                       fontSize: w * 0.05,
                       fontWeight: FontWeight.w600),
                 ),

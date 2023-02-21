@@ -13,6 +13,7 @@ class AppStrings {
   static const String txtEnterBankName = "Enter Bank Name";
   static const String txtVerify = "Verify";
   static const String txtSubmit = "Submit";
+  static const String txtNoIntentAccess = "No Internet access!";
 
 
 

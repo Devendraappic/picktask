@@ -8,7 +8,7 @@ import 'package:picktask/components/default_button.dart';
 import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/controller/accountsController/accounts_controller.dart';
 import 'package:picktask/screens/account/kyc.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';

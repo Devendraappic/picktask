@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class WebinarCard extends StatelessWidget {
@@ -10,51 +11,56 @@ class WebinarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
-      width: w * 0.3,
-      height: h * 0.18,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: kWhiteColor),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            "assets/images/sbi_logo.png",
-            width: 50,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "SBI - Credit Card",
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: w * 0.035,
-                fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "21 Nov 3:00 PM",
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: w * 0.033,
-                fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "Intrested?",
-            style: GoogleFonts.poppins(
-                color: Colors.red,
-                fontSize: w * 0.035,
-                fontWeight: FontWeight.w600),
-          ),
-        ],
+    return InkWell(
+      onTap: (){
+        showWebinarDialog(context);
+      },
+      child: Container(
+        padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
+        width: w * 0.3,
+        height: h * 0.18,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), color: kWhiteColor),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              "assets/images/sbi_logo.png",
+              width: 50,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "SBI - Credit Card",
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: w * 0.035,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "21 Nov 3:00 PM",
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: w * 0.033,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "Intrested?",
+              style: GoogleFonts.poppins(
+                  color: Colors.red,
+                  fontSize: w * 0.035,
+                  fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
       ),
     );
   }

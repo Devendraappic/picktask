@@ -7,7 +7,7 @@ import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/accountsController/accounts_controller.dart';
 import 'package:picktask/screens/account/bank_detail.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:table_calendar/table_calendar.dart';

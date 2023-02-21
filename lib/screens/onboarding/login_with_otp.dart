@@ -11,7 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/onboarding/otp.dart';
-import 'package:picktask/screens/onboarding/register.dart';
+import 'package:picktask/screens/onboarding/register/ui/register.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -235,8 +235,3 @@ class LoginWithOtp extends StatelessWidget {
   }
 }
 
-// TextEditingController myController, TextInputType keyboardType, String hint, Icon newIcon
-
-final Shader linearGradient = LinearGradient(
-  colors: <Color>[Colors.yellow, Color(0xffB3713C)],
-).createShader(Rect.fromLTRB(0, 20, 200, 200));

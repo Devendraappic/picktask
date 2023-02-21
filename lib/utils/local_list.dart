@@ -5,47 +5,47 @@ List categoryList = [
   {
     "image": "assets/images/credit_card.png",
     "title": "Credit Card",
-    "subtitle": "Earn up to ₹3000 per card dispach"
+    "subtitle": "Earn up to ₹3000 on per card dispatch"
   },
   {
     "image": "assets/images/savings.png",
     "title": "Savings Account",
-    "subtitle": "Earn up to ₹400 per account"
+    "subtitle": "Earn up to ₹700 on each sale"
   },
   {
     "image": "assets/images/cash.png",
     "title": "Demat Account",
-    "subtitle": "Earn up to ₹600 per account"
+    "subtitle": "Earn up to ₹600 on each sale"
   },
   {
     "image": "assets/images/loan.png",
     "title": "Loans/Credit",
-    "subtitle": "Earn up to ₹2500 per loan disbursal"
+    "subtitle": "Earn up to ₹1200 on successful disbursement"
   },
   {
     "image": "assets/images/insurance.png",
     "title": "Insurance",
-    "subtitle": "Earn up to ₹2500 per loan disbursal"
+    "subtitle": "Earn up to 30% commissions on each sale"
   },
   {
     "image": "assets/images/install_earn.png",
     "title": "Install & Earn",
-    "subtitle": "Earn up to ₹2500 per loan disbursal"
+    "subtitle": "Install or refer apps and earn"
   },
   {
     "image": "assets/images/shop_earn.png",
     "title": "Shop & Earn",
-    "subtitle": "Earn up to ₹2500 per loan disbursal"
+    "subtitle": "Get rewards for every shop"
   },
   {
     "image": "assets/images/merchant_onboarding.png",
     "title": "Merchant Onboarding",
-    "subtitle": "Earn up to ₹1000 per day"
+    "subtitle": "Earn upto Rs. 1500 per day"
   },
   {
     "image": "assets/images/salary.png",
     "title": "Other Tasks",
-    "subtitle": "Explore other tasks"
+    "subtitle": "Explore your other favourite tasks and earn"
   },
 ];
 

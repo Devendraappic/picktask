@@ -9,8 +9,9 @@ import 'package:lottie/lottie.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/home/home_nav.dart';
+import 'package:picktask/screens/onboarding/login/controller/login_controller.dart';
 import 'package:picktask/screens/onboarding/login_with_otp.dart';
-import 'package:picktask/screens/onboarding/register.dart';
+import 'package:picktask/screens/onboarding/register/ui/register.dart';
 import 'package:picktask/testing/color_change.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
@@ -30,16 +31,15 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  OnboardingController onboardingController =
-      Get.put(OnboardingController(), permanent: false);
+  var loginController = Get.put(LoginController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    emailController.text = "bhim.appic@gmail.com";
-    passwordController.text = "111111";
+    emailController.text = "gk@gmail.com";
+    passwordController.text = "123456789";
   }
 
   @override
@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                       ),
                       child: passwordFormField()),
                   space(h * 0.02),
-                  onboardingController.isLoading.value
+                  loginController.isLoading.value
                       ? loader
                       : DefaultButton(
                           width: double.infinity,
@@ -120,26 +120,33 @@ class _LoginState extends State<Login> {
                           text: "Login",
                           radius: 15,
                           press: () {
-                            if (emailController.text == null || emailController.text.isEmpty) {
-                              showToastMsg("Email address or UniqueId is required");
-                              return ;
+                            if (emailController.text == null ||
+                                emailController.text.isEmpty) {
+                              showToastMsg(
+                                  "Email address or UniqueId is required");
+                              return;
                               // return
                             }
                             if (!GetUtils.isEmail(emailController.text)) {
                               showToastMsg('Please enter vaild email address ');
                               return;
                             }
-                            if (passwordController.text == null || passwordController.text.isEmpty) {
+                            if (passwordController.text == null ||
+                                passwordController.text.isEmpty) {
                               showToastMsg('Please enter password');
-                              return ;
+                              return;
                             }
-                            Get.offAll(HomeNav(index: 0.obs));
 
-                            onboardingController
-                                .loginApi(
-                                emailController.text.toString().trim(),
-                                passwordController.text.toString().trim())
-                                .then((value) => false);
+                            loginController
+                                .loginUser(
+                                    context,
+                                    emailController.text.toString().trim(),
+                                    passwordController.text.toString().trim())
+                                .then((value) {
+                              if (value.success == true) {
+                                Get.offAll(HomeNav(index: 0.obs));
+                              }
+                            });
                           }),
                   space(h * 0.02),
                   Row(
@@ -181,7 +188,6 @@ class _LoginState extends State<Login> {
                           side: BorderSide(width: 0.7, color: kWhiteColor),
                         ),
                         onPressed: () {
-
                           Get.to(LoginWithOtp());
                         },
                         child: Text(
@@ -287,7 +293,6 @@ class _LoginState extends State<Login> {
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
       cursorColor: kWhiteColor,
-
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: obsecure.value
@@ -346,9 +351,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-// TextEditingController myController, TextInputType keyboardType, String hint, Icon newIcon
-
-final Shader linearGradient = LinearGradient(
-  colors: <Color>[Colors.yellow, Color(0xffB3713C)],
-).createShader(Rect.fromLTRB(0, 20, 200, 200));

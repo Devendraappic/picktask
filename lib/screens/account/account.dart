@@ -12,9 +12,10 @@ import 'package:picktask/screens/account/help_and_support.dart';
 import 'package:picktask/screens/account/id_card.dart';
 import 'package:picktask/screens/account/kyc.dart';
 import 'package:picktask/screens/account/refer_and_earn.dart';
-import 'package:picktask/screens/onboarding/login.dart';
+import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/local_list.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../utils/extra_widget.dart';
@@ -45,7 +46,7 @@ class Account extends StatelessWidget {
             ),
             space(h * 0.02),
             Text(
-              "TUSHAR AGARWAL",
+              name??"",
               style: GoogleFonts.poppins(
                   color: kWhiteColor,
                   fontSize: w * 0.06,

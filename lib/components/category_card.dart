@@ -62,20 +62,21 @@ class CategoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  // "SBI Savings Account",
                   title,
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.045,
                       fontWeight: FontWeight.w500),
                 ),
-                Text(
-                  // "Earn ₹400 on account openings",
-                  subtitile,
-                  style: GoogleFonts.poppins(
-                      color: kWhiteColor,
-                      fontSize: w * 0.035,
-                      fontWeight: FontWeight.w400),
+                SizedBox(
+                  width: w * 0.6,
+                  child: Text(
+                    subtitile,
+                    style: GoogleFonts.poppins(
+                        color: kWhiteColor,
+                        fontSize: w * 0.035,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
               ],
             )
