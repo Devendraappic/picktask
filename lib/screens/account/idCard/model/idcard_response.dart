@@ -1,47 +1,27 @@
+
 import 'package:json_annotation/json_annotation.dart';
 
-part 'login_response.g.dart';
+part 'idcard_response.g.dart';
 
 @JsonSerializable()
-class LoginResponse {
-  @JsonKey(name: "success")
-  bool? success;
-  @JsonKey(name: "status")
+class IdCardResponse {
   bool? status;
-  @JsonKey(name: "data")
-  LoginData? data;
-  @JsonKey(name: "userData")
-  LoginData? userData;
-  @JsonKey(name: "message")
-  String? message;
-  @JsonKey(name: "msg")
   String? msg;
+  Data? data;
 
-  LoginResponse({this.success, this.data, this.message});
+  IdCardResponse({this.status, this.msg, this.data});
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
+  factory IdCardResponse.fromJson(Map<String, dynamic> json) => _$IdCardResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$IdCardResponseToJson(this);
 }
 @JsonSerializable()
-class LoginData {
-  @JsonKey(name: "Data")
-  UserData? data;
-  String? token;
-  int? kycStatus;
-
-  LoginData({this.data, this.token, this.kycStatus});
-
-  factory LoginData.fromJson(Map<String, dynamic> json) => _$LoginDataFromJson(json);
-  Map<String, dynamic> toJson() => _$LoginDataToJson(this);
-}
-@JsonSerializable()
-class UserData {
+class Data {
   int? id;
   String? role;
   @JsonKey(name: "refer_by")
-  dynamic referBy;
+  String? referBy;
   @JsonKey(name: "ref_code")
-  dynamic refCode;
+  String? refCode;
   String? name;
   @JsonKey(name: "first_name")
   String? firstName;
@@ -51,8 +31,8 @@ class UserData {
   String? mobile;
   @JsonKey(name: "profile_pic")
   String? profilePic;
-  dynamic ranking;
-  int? earning;
+  String? ranking;
+  dynamic earning;
   @JsonKey(name: "credit_score")
   dynamic creditScore;
   @JsonKey(name: "email_verified_at")
@@ -77,9 +57,13 @@ class UserData {
   dynamic trackingtime;
   @JsonKey(name: "earning_amount")
   dynamic earningAmount;
+  @JsonKey(name: "password")
+  String? password;
+  @JsonKey(name: "remember_token")
+  dynamic rememberToken;
   dynamic otp;
 
-  UserData(
+  Data(
       {this.id,
         this.role,
         this.referBy,
@@ -94,6 +78,8 @@ class UserData {
         this.earning,
         this.creditScore,
         this.emailVerifiedAt,
+        this.password,
+        this.rememberToken,
         this.createdAt,
         this.updatedAt,
         this.totalWalletAmount,
@@ -106,7 +92,10 @@ class UserData {
         this.trackingtime,
         this.earningAmount,
         this.otp});
-  factory UserData.fromJson(Map<String, dynamic> json) => _$UserDataFromJson(json);
-  Map<String, dynamic> toJson() => _$UserDataToJson(this);
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  Map<String, dynamic> toJson() => _$DataToJson(this);
+
+
+
 
 }

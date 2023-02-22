@@ -3,15 +3,25 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:picktask/constants/app_constants.dart';
+import 'package:picktask/screens/account/idCard/model/idcard_response.dart';
+import 'package:picktask/screens/account/referAndEarn/model/refer_and_earn_response.dart';
+import 'package:picktask/screens/home/model/home_response.dart';
+import 'package:picktask/screens/notifications/model/notification_list_response.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/network/retrofit/apis.dart';
+import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
+import 'package:picktask/screens/onboarding/register/model/register_response.dart';
+import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:retrofit/http.dart';
+
 part 'api_client.g.dart';
 
-@RestApi(baseUrl: AppConstants.baseUrl+AppConstants.apiPath+AppConstants.apiVersion)
+@RestApi(
+    baseUrl:
+        AppConstants.baseUrl + AppConstants.apiPath + AppConstants.apiVersion)
 abstract class ApiClient {
   factory ApiClient({String? baseUrl}) {
-    var dio= Dio();
+    var dio = Dio();
     Map<String, String> headers = <String, String>{
       //'Authorization':'Bearer ' +AppConstants.TOKEN,
       //'Authorization':'Basic '+base64Encode(utf8.encode('${AppConstants.API_USER_NAME}:${AppConstants.API_PASSWORD}')),
@@ -26,40 +36,59 @@ abstract class ApiClient {
           log(obj.toString());
         }));
     dio.options.headers = headers;
-    return _ApiClient(dio, baseUrl: baseUrl);}
+    return _ApiClient(dio, baseUrl: baseUrl);
+  }
 
   @POST(Apis.login)
   Future<LoginResponse> userLogin(
-    @Field('email') String email,
-    @Field('password') String password
-  );
+      @Field('email') String email, @Field('password') String password);
 
   @POST(Apis.signup)
-  Future<LoginResponse> registerUser(
-      @Field('full_name') String fullName,
-      @Field('mobile') String mobile,
-      @Field('email') String email,
-      @Field('password') String password,
-      @Field('referal_code') String referalCode,
+  Future<RegisterResponse> registerUser(
+    @Field('full_name') String fullName,
+    @Field('mobile') String mobile,
+    @Field('email') String email,
+    @Field('password') String password,
+    @Field('referal_code') String referalCode,
+  );
+
+
+  @POST(Apis.sendOtp)
+  Future<OTPResponse> sendOtp(@Field('mob_no') String mobile);
+
+  @POST(Apis.otpVerify)
+  Future<VerifyOTPResponse> verifyOtp(
+      @Field('otp') String otp, @Field('mob_no') String mobile);
+
+
+  @POST(Apis.identityCard)
+  Future<IdCardResponse> getIdCardDetails(
+      @Field('userid') int userId);
+
+  @POST(Apis.myReferals)
+  Future<MyReferalResponse> getMyReferals(
+      @Field('userid') int userId);
+
+
+  @POST(Apis.changePassword)
+  Future<OTPResponse> changePassword(
+      @Field('userid') int userId,
+      @Field('oldpassword') String oldPassword,
+      @Field('newpassword') String newPassword,
       );
 
-//login api..................
-//   @GET(Apis.LoginAPI + "?")
-//   Future<LoginModel> loginRequest(
-//     @Query("user_login") String user_login,
-//     @Query("password") String password,
-//   );
-//
-// //customer api..................
-//   @GET(Apis.ALLCUSTOMERS + "?")
-//   Future<CustomerModel> getAllCustomers(
-//     @Query("scope") String scope,
-//     @Query("items_per_page") String items_per_page,
-//     @Query("page") String page,
-//     @Query("user_id") String user_id,
-//     @Query("lang_code") String lang_code,
-//     @Query("currency_code") String currency_code,
-//   );
+  @POST(Apis.homePageApi)
+  Future<HomePageResponse> getHomePageData(
+      @Field('user_id') int userId);
+
+  @POST(Apis.notificationList)
+  Future<NotificationListResponse> getNotificationLIst(
+      @Field('user_id') int userId);
+
+  @POST(Apis.tasklist)
+  Future<TaskListResponse> getTasks(
+      @Field('category') String category);
+
 
 //   // place order api..................
 //   @POST(Apis.CHECKOUT)

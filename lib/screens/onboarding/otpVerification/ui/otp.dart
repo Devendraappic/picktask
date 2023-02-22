@@ -6,26 +6,26 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/home/home.dart';
+import 'package:picktask/screens/home/ui/home.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
+import 'package:picktask/screens/onboarding/otpVerification/controller/otp_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
-import 'register/ui/register.dart';
+import '../../register/ui/register.dart';
 
 class Otp extends StatefulWidget {
   String number;
-  LoginResponse? response;
-  Otp({required this.number,this.response});
+
+  Otp({required this.number});
 
   @override
   State<Otp> createState() => _OtpState();
 }
 
 class _OtpState extends State<Otp> {
-  OnboardingController onboardingController =
-      Get.put(OnboardingController(), permanent: false);
+  var oTpVerificationController = Get.put(OTPVerificationController());
 
   String? otp;
 
@@ -47,6 +47,7 @@ class _OtpState extends State<Otp> {
   @override
   void initState() {
     super.initState();
+    oTpVerificationController.sendOTP(context, widget.number);
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
     pin3FocusNode = FocusNode();
@@ -281,8 +282,7 @@ class _OtpState extends State<Otp> {
                                 FocusScope.of(context)
                                     .requestFocus(pin1FocusNode);
                               }
-                            }
-                            ),
+                            }),
                       ),
                       Container(
                         width: 60,
@@ -450,21 +450,21 @@ class _OtpState extends State<Otp> {
 
               space(h * 0.03),
 
-              Obx(() => onboardingController.isVerifyLoading.value
+              Obx(() => oTpVerificationController.isLoading.value
                   ? loader
                   : DefaultButton(
                       width: double.infinity,
                       height: h * 0.08,
                       text: "Submit",
-                  radius: 15,
+                      radius: 15,
                       press: () {
                         String sub =
                             "${first.text}${second.text}${third.text}${fourth.text}";
                         print("sub $sub");
 
                         if (sub.length == 4) {
-                          onboardingController.verifyOtpApi(
-                              widget.number.toString(), sub.toString());
+                          oTpVerificationController.verifyOTP(context,
+                               sub.toString(),widget.number.toString());
                         } else {
                           Get.snackbar("Please enter 4 digit OTP", "",
                               colorText: kWhiteColor);
@@ -476,7 +476,7 @@ class _OtpState extends State<Otp> {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    onboardingController.otpApi(widget.number);
+                    oTpVerificationController.sendOTP(context, widget.number);
                     first.clear();
                     second.clear();
                     third.clear();

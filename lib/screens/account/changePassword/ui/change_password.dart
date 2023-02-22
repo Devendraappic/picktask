@@ -4,18 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/screens/account/changePassword/controller/change_password_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/local_storage.dart';
 
-class ChangePassword extends StatelessWidget {
+class ChangePassword extends StatefulWidget {
+  @override
+  State<ChangePassword> createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
   RxBool oldobsecure = false.obs;
+
   RxBool newobsecure = false.obs;
+
   RxBool confirmobsecure = false.obs;
 
   TextEditingController oldPasswordController = TextEditingController();
+
   TextEditingController newPasswordController = TextEditingController();
+
   TextEditingController confirmPasswordController = TextEditingController();
+  var changePasswordController = Get.put(ChangePasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +52,7 @@ class ChangePassword extends StatelessWidget {
           space(h * 0.02),
           confirmpasswordFormField(),
           space(h * 0.03),
-          DefaultButton(
+          Obx(() => changePasswordController.isLoading.value?loader:DefaultButton(
               width: double.infinity,
               height: h * 0.07,
               text: "Update Password",
@@ -51,14 +63,16 @@ class ChangePassword extends StatelessWidget {
                   return ;
                 }
                 if (newPasswordController.text == null || newPasswordController.text.isEmpty) {
-                 showToastMsg('Please enter new password');
+                  showToastMsg('Please enter new password');
                   return ;
                 }
                 if (confirmPasswordController.text == null || confirmPasswordController.text.isEmpty) {
-                 showToastMsg('Please enter confirm password');
+                  showToastMsg('Please enter confirm password');
                   return;
                 }
-              })
+                changePasswordController.changePassword(context, userId??0, oldPasswordController.text.trim(), newPasswordController.text.trim());
+              }))
+
         ]),
       ),
     );

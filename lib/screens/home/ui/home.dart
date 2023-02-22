@@ -7,13 +7,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/slider.dart';
 import 'package:picktask/components/webinar_card.dart';
+import 'package:picktask/screens/home/controller/home_controller.dart';
 
-import 'package:picktask/controller/home/home_controller.dart';
 import 'package:picktask/testing/map_testing.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/local_storage.dart';
 
-import '../notifications/notification_list.dart';
+import '../../notifications/ui/notification_list.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,9 +27,9 @@ class _HomeState extends State<Home> {
   HomeController homeController = Get.put(HomeController(), permanent: false);
   @override
   void initState() {
-    // TODO: implement initState
+    homeController.getHomePageData(userId??0);
     super.initState();
-    homeController.homeApi();
+
   }
 
   @override
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(top: h * 0.06),
                 child: Center(
                   child: Text(
-                    "Hello TUSHAR",
+                    "Hello $firstName",
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.065,
@@ -60,19 +61,16 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: (){
-                  Get.to(()=>NotificationList());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.notifications,
-                      size: w * 0.1,
-                      color: kWhiteColor,
-                    ),
+              Positioned(
+                top: 30, right: 8,
+                child: InkWell(
+                  onTap: (){
+                    Get.to(()=>NotificationList());
+                  },
+                  child:  Icon(
+                    Icons.notifications,
+                    size: w * 0.1,
+                    color: kWhiteColor,
                   ),
                 ),
               )
@@ -83,7 +81,10 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.symmetric(horizontal: w * 0.05),
             child: Column(
               children: [
-                CustomSliderWidget(items: homeController.bannerList),
+                Obx(() {
+                    return homeController.response.value.data?.topbaner?.isNotEmpty==true?CustomSliderWidget(items: homeController.response.value.data?.topbaner??[]):SizedBox();
+                  }
+                ),
                 space(h * 0.02),
                 InkWell(
                   onTap: () {
@@ -139,7 +140,7 @@ class _HomeState extends State<Home> {
                                   fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              "₹0",
+                              "₹${earning}",
                               style: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: w * 0.045,
@@ -185,23 +186,29 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: h * 0.02,
                 ),
-                SizedBox(
-                  height: h * 0.17,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    itemCount: 6,
-                    shrinkWrap: true,
-                    controller: scrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: w * 0.02),
-                        child: WebinarCard(),
-                      );
-                    },
-                  ),
+                Obx(() {
+                    return homeController.response.value.data?.webinar?.isNotEmpty==true?LimitedBox(
+                      maxHeight: h * 0.17,
+                      child: Flexible(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          itemCount: homeController.response.value.data?.webinar?.length,
+                          shrinkWrap: true,
+                          controller: scrollController,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.only(right: w * 0.02),
+                              child: WebinarCard(webinar:homeController.response.value.data?.webinar?[index] ,),
+                            );
+                          },
+                        ),
+                      ),
+                    ):SizedBox();
+                  }
                 ),
+
                 SizedBox(
                   height: h * 0.02,
                 ),

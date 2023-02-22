@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/main.dart';
+import 'package:picktask/screens/account/idCard/controller/id_card_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/local_storage.dart';
@@ -9,9 +11,21 @@ import 'dart:math' as math;
 
 import 'package:share_plus/share_plus.dart';
 
-class IdCard extends StatelessWidget {
+class IdCard extends StatefulWidget {
   const IdCard({super.key});
 
+  @override
+  State<IdCard> createState() => _IdCardState();
+}
+
+class _IdCardState extends State<IdCard> {
+  var idCardController = Get.put(IdCardController());
+
+  @override
+  void initState() {
+    idCardController.getIdCardDetail(context, userId??0);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +138,7 @@ class IdCard extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                       ),
                     ],)
-                    
+
                   ],
                 ),
 

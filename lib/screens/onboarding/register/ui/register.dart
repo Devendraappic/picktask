@@ -8,8 +8,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/home/home_nav.dart';
+import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
+import 'package:picktask/screens/onboarding/otpVerification/ui/otp.dart';
 import 'package:picktask/screens/onboarding/register/controller/register_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
@@ -193,7 +194,7 @@ class Register extends StatelessWidget {
                               ? ""
                               : refferalController.text.trim()).then((value) {
                         if (value.success == true) {
-                          Get.offAll(HomeNav(index: 0.obs));
+                          Get.to(() => Otp(number: mobileController.text.trim()));
                         }
                       });
                     }))),

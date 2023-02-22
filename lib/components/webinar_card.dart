@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:intl/intl.dart';
 
 class WebinarCard extends StatelessWidget {
-  const WebinarCard({
+  Webinar? webinar;
+
+   WebinarCard({
     Key? key,
+     this.webinar
   }) : super(key: key);
 
   @override
@@ -18,37 +23,41 @@ class WebinarCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
         width: w * 0.3,
-        height: h * 0.18,
+        //height: h * 0.18,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8), color: kWhiteColor),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              "assets/images/sbi_logo.png",
-              width: 50,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.network(
+                webinar?.image??"",
+                //width: 50,
+                height: 40,
+              ),
             ),
             SizedBox(
               height: 5,
             ),
             Text(
-              "SBI - Credit Card",
+              webinar?.content??"",
+              maxLines: 2,
               style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: w * 0.035,
                   fontWeight: FontWeight.w600),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "21 Nov 3:00 PM",
-              style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontSize: w * 0.033,
-                  fontWeight: FontWeight.w600),
-            ),
+            if(webinar?.createdAt?.isNotEmpty==true)
+              Text(
+                "${DateFormat("dd MMM hh:mm a").format(DateTime.parse(webinar?.createdAt??""))}",
+                maxLines: 1,
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontSize: w * 0.028,
+                    fontWeight: FontWeight.w600),
+              ),
             SizedBox(
               height: 5,
             ),

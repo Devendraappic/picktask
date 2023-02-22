@@ -21,6 +21,7 @@ showToastMsg(String message){
 }
 
 //ProgressDialog
+/*
 showProgressDialog(BuildContext context) {
   Widget _drawerWidget = Container(
     child: SafeArea(
@@ -42,6 +43,7 @@ showProgressDialog(BuildContext context) {
     },
   );
 }
+*/
 
 showWebinarDialog(BuildContext context) {
   showDialog(
@@ -175,7 +177,7 @@ showWithdrawalSuccessDialog(BuildContext context){
   );
 }
 
- closeDialog() {
-  Get.back();
-}
+//  closeDialog() {
+//   Get.back();
+// }
 

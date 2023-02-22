@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/main.dart';
-import 'package:picktask/screens/home/home_nav.dart';
+import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/screens/onboarding/welcome_tabs/welcome_screen.dart';
 import 'package:picktask/utils/color.dart';
@@ -38,27 +38,32 @@ class _SpalshState extends State<Spalsh> {
   }
 
   getLoginStatus() async {
-    var firstTime = true;
-
-    firstTime = storage.read("isFirstTimeLaunch") ?? true;
-    var myToken = storage.read('token');
-    print("my....token :$myToken^");
+    // var firstTime = true;
+    //
+    // firstTime = storage.read("isFirstTimeLaunch") ?? true;
+    // var myToken = storage.read('token');
+    print("isLogin::$isLogin \nmy....token :$token");
 
     Future.delayed(Duration(seconds: 3), () {
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => IntdroductionScreen()));
 
-      myToken.toString() == "" || myToken.toString() == "null" || myToken == ''
-          ? firstTime != null
-              ? firstTime
-                  ? Get.offAll(() => WelcomeScreen())
-                  : Get.offAll(() => WelcomeScreen())
-              : Get.offAll(() => WelcomeScreen())
-          : myToken.toString() == '72'
-              ? Get.offAll(() => WelcomeScreen())
-              : Get.offAll(() => HomeNav(
-                    index: 0.obs,
-                  ));
+      if(isLogin==true &&token?.isNotEmpty==true ){
+        Get.offAll(() => HomeNav(
+          index: 0.obs,
+        ));
+      }else{
+        Get.offAll(() => WelcomeScreen());
+      }
+      // myToken.toString() == "" || myToken.toString() == "null" || myToken == ''
+      //     ? firstTime != null
+      //         ? firstTime
+      //             ? Get.offAll(() => WelcomeScreen())
+      //             : Get.offAll(() => WelcomeScreen())
+      //         : Get.offAll(() => WelcomeScreen())
+      //     : myToken.toString() == '72'
+      //         ? Get.offAll(() => WelcomeScreen())
+      //         : Get.offAll(() => HomeNav(
+      //               index: 0.obs,
+      //             ));
     });
   }
 }

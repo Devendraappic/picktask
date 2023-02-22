@@ -50,7 +50,7 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<LoginResponse> registerUser(
+  Future<RegisterResponse> registerUser(
     fullName,
     mobile,
     email,
@@ -68,7 +68,7 @@ class _ApiClient implements ApiClient {
       'referal_code': referalCode,
     };
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -80,7 +80,205 @@ class _ApiClient implements ApiClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = LoginResponse.fromJson(_result.data!);
+    final value = RegisterResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<OTPResponse> sendOtp(mobile) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'mob_no': mobile};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<OTPResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'sendotp',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OTPResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VerifyOTPResponse> verifyOtp(
+    otp,
+    mobile,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'otp': otp,
+      'mob_no': mobile,
+    };
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<VerifyOTPResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'matchotp',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VerifyOTPResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<IdCardResponse> getIdCardDetails(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'userid': userId};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<IdCardResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'identitycard',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = IdCardResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<MyReferalResponse> getMyReferals(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'userid': userId};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MyReferalResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'myreferals',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = MyReferalResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<OTPResponse> changePassword(
+    userId,
+    oldPassword,
+    newPassword,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'userid': userId,
+      'oldpassword': oldPassword,
+      'newpassword': newPassword,
+    };
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<OTPResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'changepassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = OTPResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<HomePageResponse> getHomePageData(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'user_id': userId};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<HomePageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'dashbord',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = HomePageResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<NotificationListResponse> getNotificationLIst(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'user_id': userId};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<NotificationListResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'notification',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = NotificationListResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TaskListResponse> getTasks(category) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'category': category};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TaskListResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'tasklist',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TaskListResponse.fromJson(_result.data!);
     return value;
   }
 

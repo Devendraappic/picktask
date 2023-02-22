@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/black_box.dart';
 import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/components/savings_card.dart';
+import 'package:picktask/screens/account/referAndEarn/controller/refer_and_earn_controller.dart';
+import 'package:picktask/screens/account/referAndEarn/ui/reffered_user_card.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/local_storage.dart';
 
 class ReferAndEarn extends StatefulWidget {
   const ReferAndEarn({super.key});
@@ -16,6 +20,13 @@ class ReferAndEarn extends StatefulWidget {
 }
 
 class _ReferAndEarnState extends State<ReferAndEarn> {
+  var referAndEarnController = Get.put(ReferAndEarnController());
+
+  @override
+  void initState() {
+    referAndEarnController.getMyReferals(context, userId??0);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +41,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Obx(()=>referAndEarnController.isLoading.value?loader:SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Text(
             "Refer your friends & earn unlimited",
@@ -91,18 +102,18 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                             fontSize: w * 0.03,
                             fontWeight: FontWeight.w500),
                       ),
-                      Text(
-                        "GS245",
+                      Obx(() => Text(
+                        referAndEarnController.myRefrerId.value,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: kWhiteColor,
                             fontSize: w * 0.04,
                             fontWeight: FontWeight.w500),
-                      ),
+                      ),)
                     ],
                   ),
                   GradientButton(
-                      height: h * 0.03, width: w * 0.2, text: "Share",
+                    height: h * 0.03, width: w * 0.2, text: "Share",
                     firstColor: Colors.yellow,
                     secondColor: Colors.orange,)
                 ]),
@@ -171,53 +182,23 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                         borderRadius: BorderRadius.circular(w * 0.08)),
                   ),
                   space(h * 0.02),
-                  BlackBox(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              maxRadius: w * 0.07,
-                              backgroundImage: NetworkImage(
-                                  "https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="),
-                            ),
-                            SizedBox(
-                              width: w * 0.02,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Sahil Kumar",
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.poppins(
-                                      color: kWhiteColor,
-                                      fontSize: w * 0.045,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  "+9163+++++928",
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.poppins(
-                                      color: kWhiteColor,
-                                      fontSize: w * 0.045,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      decorationWidth: w * 0.1,
-                      width: double.infinity,
-                      margin: w * 0.00)
+                  Obx(() {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: referAndEarnController.referralList.map((element) {
+                        return ReferedUser(referUserData: element,);
+                      }).toList(),
+                    );
+                  }
+                  )
                 ],
               ),
             ),
           ),
           space(h * 0.07),
         ]),
-      ),
+      )),
     );
   }
 }

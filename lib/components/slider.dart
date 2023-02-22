@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomSliderWidget extends StatefulWidget {
-  // final List<String> items;
-  final List items;
+  final List<Topbaner> items;
 
   CustomSliderWidget({required this.items});
 
@@ -33,63 +33,63 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
   @override
   Widget build(BuildContext context) {
     print("list: ${widget.items}");
-    return Obx((() => Column(
-          children: [
-            const SizedBox(
-              height: 10,
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: CarouselSlider(
+            options: CarouselOptions(
+              aspectRatio: 2.9,
+              autoPlay: true,
+              onPageChanged: (index, reason) {
+                setActiveDot(index);
+              },
+              enableInfiniteScroll: false,
+              autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+              autoPlayAnimationDuration: const Duration(seconds: 2),
+              // autoPlay: true,
+              viewportFraction: 1,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 2.9,
-                  autoPlay: true,
-                  onPageChanged: (index, reason) {
-                    setActiveDot(index);
-                  },
-                  enableInfiniteScroll: false,
-                  autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                  autoPlayAnimationDuration: const Duration(seconds: 2),
-                  // autoPlay: true,
-                  viewportFraction: 1,
-                ),
-                items: widget.items.map((item) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return InkWell(
-                        onTap: () {
-                          launchYoutube(item.link.toString());
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          height: 180,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: NetworkImage(item.banner_pic),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          // child: Image.asset(),
-                        ),
-                      );
+            items: widget.items.map((item) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return InkWell(
+                    onTap: () {
+                      //launchYoutube(item.link);
                     },
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      height: 180,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(item.bannerPic??''),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // child: Image.asset(),
+                    ),
                   );
-                }).toList(),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(widget.items.length, (idx) {
-                  return activeIndex == idx ? ActiveDot() : InactiveDot();
-                })),
-          ],
-        )));
+                },
+              );
+            }).toList(),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(widget.items.length, (idx) {
+              return activeIndex == idx ? ActiveDot() : InactiveDot();
+            })),
+      ],
+    );
   }
 }
 

@@ -10,22 +10,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/onboarding/otp.dart';
+import 'package:picktask/screens/onboarding/otpVerification/controller/otp_controller.dart';
+import 'package:picktask/screens/onboarding/otpVerification/ui/otp.dart';
 import 'package:picktask/screens/onboarding/register/ui/register.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/images.dart';
 
-class LoginWithOtp extends StatelessWidget {
+class LoginWithOtp extends StatefulWidget {
+  @override
+  State<LoginWithOtp> createState() => _LoginWithOtpState();
+}
+
+class _LoginWithOtpState extends State<LoginWithOtp> {
   RxBool obsecure = false.obs;
 
   TextEditingController mobileController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  OnboardingController onboardingController =
-      Get.put(OnboardingController(), permanent: false);
+  var oTpVerificationController =Get.put(OTPVerificationController());
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,7 @@ class LoginWithOtp extends StatelessWidget {
                       ),
                       child: mobileFormField()),
                   space(h * 0.02),
-                  onboardingController.isLoading.value
+                  oTpVerificationController.isLoading.value
                       ? loader
                       : DefaultButton(
                           width: double.infinity,
@@ -80,14 +85,9 @@ class LoginWithOtp extends StatelessWidget {
                             if (mobileController.text.isNotEmpty &&
                                 mobileController.text.length == 10) {
                               Get.to(Otp(number: mobileController.text.trim()));
-
-                              onboardingController
-                                  .otpApi(mobileController.text.trim())
-                                  .then((value) => false);
+                              // oTpVerificationController.sendOTP(context, mobileController.text.trim());
                             } else {
                               showToastMsg("Please enter 10 digit number");
-                              // Get.snackbar("Please enter 10 digit number", "",
-                              //     colorText: kWhiteColor);
                             }
                           }),
                   space(h * 0.02),

@@ -23,7 +23,7 @@ class LoginController extends GetxController {
   Future<LoginResponse> loginUser(
       BuildContext context, String username, String password) async {
     LoginResponse response = LoginResponse();
-    showProgressDialog(context);
+    // showProgressDialog(context);
     isLoading(true);
     try {
       response = await client.userLogin(username, password);
@@ -33,7 +33,6 @@ class LoginController extends GetxController {
     Get.back();
     debugPrint("apiResponse------->" + response.message!);
     if (response.success == true) {
-      isLoading(true);
       await storage.write('is_login', true);
       await storage.write('token', response.data?.token??"");
       await storage.write('id', response.data?.data?.id??0);
@@ -73,7 +72,7 @@ class LoginController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      closeDialog();
+      //closeDialog();
       Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
     }
     return response;

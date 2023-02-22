@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/home/home_nav.dart';
+import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/controller/login_controller.dart';
 import 'package:picktask/screens/onboarding/login_with_otp.dart';
 import 'package:picktask/screens/onboarding/register/ui/register.dart';
@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
     super.initState();
 
     emailController.text = "gk@gmail.com";
-    passwordController.text = "123456789";
+    passwordController.text = "12345678";
   }
 
   @override

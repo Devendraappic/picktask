@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/webView.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/screens/account/bank_detail.dart';
-import 'package:picktask/screens/account/change_password.dart';
+import 'package:picktask/screens/account/changePassword/ui/change_password.dart';
 import 'package:picktask/screens/account/help_and_support.dart';
-import 'package:picktask/screens/account/id_card.dart';
+import 'package:picktask/screens/account/idCard/ui/id_card.dart';
 import 'package:picktask/screens/account/kyc.dart';
-import 'package:picktask/screens/account/refer_and_earn.dart';
+import 'package:picktask/screens/account/referAndEarn/ui/refer_and_earn.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/local_list.dart';
@@ -117,7 +117,7 @@ class Account extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "Pending",
+                          kycStatus==0?"Pending":"Complete",
                           style: GoogleFonts.poppins(
                               color: kWhiteColor,
                               fontSize: w * 0.04,

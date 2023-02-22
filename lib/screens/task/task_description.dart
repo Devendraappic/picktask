@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/constants/app_strings.dart';
-import 'package:picktask/controller/taskController/task_controller.dart';
+import 'package:picktask/screens/task/controller/task_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/hex_color.dart';
