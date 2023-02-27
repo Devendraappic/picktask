@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:picktask/constants/app_constants.dart';
 import 'package:picktask/screens/leads/lead_details.dart';
+import 'package:picktask/screens/leads/model/leads_list_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 class LeadsCard extends StatelessWidget {
-  const LeadsCard({
+  LeadData leadData;
+   LeadsCard({
     Key? key,
+     required this.leadData
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var status="";
+    if(leadData.status==1){
+      status="Pending";
+    }if(leadData.status==2){
+      status="Approved";
+    }if(leadData.status==3){
+      status="Rejected";
+    }if(leadData.status==4){
+      status="In-Progress";
+    }
     return Container(
       padding: EdgeInsets.symmetric(horizontal: w * 0.03),
       height: h * 0.10,
@@ -40,8 +54,11 @@ class LeadsCard extends StatelessWidget {
             decoration:
                 BoxDecoration(shape: BoxShape.circle, color: kWhiteColor),
             child: Center(
-                child: Image.asset(
-              "assets/images/sbi_logo.png",
+                child: leadData.image?.isNotEmpty==true?Image.network(
+                  ("${AppConstants.baseUrl}${leadData.image}").replaceAll("//", "/"),
+              width: 40,
+            ):Image.asset(
+              "assets/images/logo1.jpg",
               width: 40,
             )
             ),
@@ -54,14 +71,14 @@ class LeadsCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "SBI Credit Card",
+                leadData.name??"",
                 style: GoogleFonts.poppins(
                     color: kWhiteColor,
                     fontSize: w * 0.045,
                     fontWeight: FontWeight.w500),
               ),
               Text(
-                "Pending",
+                status,
                 style: GoogleFonts.poppins(
                     color: kWhiteColor,
                     fontSize: w * 0.035,
@@ -70,9 +87,10 @@ class LeadsCard extends StatelessWidget {
 
             ],
           ),
+          Spacer(),
           GestureDetector(
             onTap: (){
-              Get.to(()=>LeadDetails());
+              Get.to(()=>LeadDetails(leadId: leadData.id??0, leadTitle: leadData.name??"",leadImage: leadData.image??"",));
             },
             child: Container(
               height: h * 0.03,

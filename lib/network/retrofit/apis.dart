@@ -11,5 +11,9 @@ class Apis {
   static const String homePageApi = 'dashbord';
   static const String notificationList = 'notification';
   static const String tasklist = 'tasklist';
+  static const String myLeadList = 'myleadlist';
+  static const String leadView = 'leadview';
+  static const String createLeadForm = 'create_leadform';
+  static const String withdrawalList = 'WithdrawalList';
   // static const String NOIMAGEURL = AppConstants.baseUrl+ 'images/wk_pos/no-image.png';
 }

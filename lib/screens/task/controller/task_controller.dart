@@ -1,18 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/constants/app_strings.dart';
-import 'package:picktask/main.dart';
 import 'package:picktask/network/retrofit/api_client.dart';
-import 'package:picktask/screens/home/model/home_response.dart';
-import 'package:picktask/screens/notifications/model/notification_list_response.dart';
-import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:picktask/utils/color.dart';
-import 'package:picktask/utils/dialog_helper.dart';
-import 'package:picktask/utils/local_storage.dart';
-import 'package:picktask/utils/utils.dart';
 
 class TaskController extends GetxController {
   var isLoading = false.obs;
@@ -24,13 +15,15 @@ class TaskController extends GetxController {
   @override
   void onInit() {
     actionButtonText.value= AppStrings.txtStartEarning;
+    //getTaskList("Loan/credit");
     super.onInit();
   }
 
   Future<TaskListResponse> getTaskList(String category) async {
-    isLoading(true);
+
     var response=TaskListResponse();
     try {
+      isLoading(true);
       response = await client.getTasks(category);
     } catch (e, s) {
       print(s);

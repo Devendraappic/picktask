@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/components/progress_widget.dart';
+import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:intl/intl.dart';
 
 showToastMsg(String message){
   Fluttertoast.showToast(
@@ -45,7 +48,8 @@ showProgressDialog(BuildContext context) {
 }
 */
 
-showWebinarDialog(BuildContext context) {
+showWebinarDialog(BuildContext context, Webinar? webinar) {
+
   showDialog(
     useSafeArea: false,
     context: context,
@@ -73,7 +77,7 @@ showWebinarDialog(BuildContext context) {
                         SizedBox(
                           width: w/2,
                           child: Text(
-                            "Live Webinar \n How to sell CITI Bank credit cards",
+                            "Live Webinar \n${webinar?.content}",
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
@@ -88,10 +92,11 @@ showWebinarDialog(BuildContext context) {
 
                     Row(
                       children: [
-                        Icon(Icons.stream_sharp, size: 40,),
+                        Icon(Icons.timer_sharp, size: 40,),
                         SizedBox(width: 10,),
                         Text(
-                          "Webinar Time \n 22-12-2022, 4:00 Am",
+                          "Webinar Time\n${DateFormat("dd-MMM-yyyy hh:mm a").format(DateTime.parse("${webinar?.date} ${webinar?.time}"))} ",
+                          maxLines: 2,
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
@@ -108,6 +113,8 @@ showWebinarDialog(BuildContext context) {
                         text: "Join Now",
                         radius: 15,
                         press: () {
+
+                          Utils.launchURL(webinar?.url??"");
 
                         })
                   ],

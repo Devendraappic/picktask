@@ -282,6 +282,106 @@ class _ApiClient implements ApiClient {
     return value;
   }
 
+  @override
+  Future<LeadsResponse> getLeads(
+    userId,
+    status,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'user_id': userId,
+      'status': status,
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LeadsResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'myleadlist',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LeadsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<LeadDetailResponse> getLeadDetail(leadd) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'leadid': leadd};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LeadDetailResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'leadview',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LeadDetailResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CreateLeadFormResponse> createLeadForm(taskId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'jobid': taskId};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CreateLeadFormResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'create_leadform',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CreateLeadFormResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<WithdrawalListResponse> withdrawalList(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'userId': userId};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<WithdrawalListResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'WithdrawalList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = WithdrawalListResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

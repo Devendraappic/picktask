@@ -5,23 +5,25 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/category_card.dart';
 import 'package:picktask/screens/task/controller/task_controller.dart';
+import 'package:picktask/screens/task/ui/task_card.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/local_list.dart';
 
-class Category extends StatefulWidget {
-  const Category({super.key});
+class MyTasks extends StatefulWidget {
+  String taskTitle;
+   MyTasks({super.key, required this.taskTitle});
 
   @override
-  State<Category> createState() => _CategoryState();
+  State<MyTasks> createState() => _MyTasksState();
 }
 
-class _CategoryState extends State<Category> {
+class _MyTasksState extends State<MyTasks> {
   var taskController = Get.put(TaskController());
   
   @override
   void initState() {
-    // taskController.onInit();
+    taskController.getTaskList(widget.taskTitle);
     super.initState();
   }
 
@@ -32,27 +34,29 @@ class _CategoryState extends State<Category> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          "Select Category",
+          "My Tasks",
           style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: ListView.builder(
-        itemCount: categoryList.length,
-        shrinkWrap: true,
-        controller: scrollController,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
-            child: CategoryCard(
-              title: categoryList[index]["title"],
-              image: categoryList[index]["image"],
-              subtitile: categoryList[index]["subtitle"],
-            ),
+      body: Obx( () {
+          return taskController.isLoading.value==true?loader:ListView.builder(
+            itemCount: taskController.taskList.length,
+            shrinkWrap: true,
+            controller: scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+                child: TaskCard(
+                  taskData:taskController.taskList[index]
+                ),
+              );
+            },
           );
-        },
-      ));
+        }
+      ),
+    );
   }
 }

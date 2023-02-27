@@ -5,7 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:picktask/constants/app_constants.dart';
 import 'package:picktask/screens/account/idCard/model/idcard_response.dart';
 import 'package:picktask/screens/account/referAndEarn/model/refer_and_earn_response.dart';
+import 'package:picktask/screens/createLead/model/create_lead_form_model.dart';
+import 'package:picktask/screens/earning/model/withdrawal_list_response.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
+import 'package:picktask/screens/leads/model/lead_detail_response.dart';
+import 'package:picktask/screens/leads/model/leads_list_response.dart';
 import 'package:picktask/screens/notifications/model/notification_list_response.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/network/retrofit/apis.dart';
@@ -88,6 +92,30 @@ abstract class ApiClient {
   @POST(Apis.tasklist)
   Future<TaskListResponse> getTasks(
       @Field('category') String category);
+
+
+  @POST(Apis.myLeadList)
+  Future<LeadsResponse> getLeads(
+      @Field('user_id') int userId,
+      @Field('status') int? status,
+      );
+
+
+  @POST(Apis.leadView)
+  Future<LeadDetailResponse> getLeadDetail(
+      @Field('leadid') int leadd
+      );
+
+
+
+  @POST(Apis.createLeadForm)
+  Future<CreateLeadFormResponse> createLeadForm(
+      @Field('jobid') int taskId);
+
+
+  @POST(Apis.withdrawalList)
+  Future<WithdrawalListResponse> withdrawalList(
+      @Field('userId') int userId);
 
 
 //   // place order api..................

@@ -18,7 +18,7 @@ class WebinarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        showWebinarDialog(context);
+        showWebinarDialog(context, webinar);
       },
       child: Container(
         padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
@@ -51,7 +51,7 @@ class WebinarCard extends StatelessWidget {
             ),
             if(webinar?.createdAt?.isNotEmpty==true)
               Text(
-                "${DateFormat("dd MMM hh:mm a").format(DateTime.parse(webinar?.createdAt??""))}",
+                "${DateFormat("dd MMM hh:mm a").format(DateTime.parse(webinar?.date??""))}",
                 maxLines: 1,
                 style: GoogleFonts.poppins(
                     color: Colors.black,

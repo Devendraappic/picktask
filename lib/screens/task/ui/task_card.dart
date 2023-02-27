@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/screens/leads/category.dart';
+import 'package:picktask/screens/createLead/ui/create_lead.dart';
 import 'package:picktask/screens/leads/savings.dart';
-import 'package:picktask/screens/task/ui/my_tasks.dart';
+import 'package:picktask/screens/task/model/task_list_response.dart';
 
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
-class CategoryCard extends StatelessWidget {
-  String title, image, subtitile;
-
-  CategoryCard(
-      {required this.title, required this.image, required this.subtitile});
+class TaskCard extends StatelessWidget {
+  TaskData taskData;
+  TaskCard(
+      {super.key, required this.taskData});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>MyTasks(taskTitle: title,));
+       ///todo
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: w * 0.03),
@@ -52,8 +52,7 @@ class CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                //child: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Piggy_Bank_or_Savings_Flat_Icon_Vector.svg/2048px-Piggy_Bank_or_Savings_Flat_Icon_Vector.svg.png")),
-                  child: Image.asset(image)),
+                  child: taskData.photo?.isNotEmpty==true?Image.network(taskData.photo??""):Image.asset("assets/images/logo1.jpg")),
             ),
             SizedBox(
               width: 10,
@@ -63,7 +62,7 @@ class CategoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  taskData.jobType??"",
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.045,
@@ -72,13 +71,47 @@ class CategoryCard extends StatelessWidget {
                 SizedBox(
                   width: w * 0.6,
                   child: Text(
-                    subtitile,
+                    taskData.description??"",
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.035,
                         fontWeight: FontWeight.w400),
                   ),
                 ),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>CreateLead(taskId: taskData.id??0,title:taskData.jobType??"",image: taskData.photo??"",));
+                  },
+                  child: Container(
+                    // height: h * 0.02,
+                    // width: w * 0.15,
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        // stops: [0.1, 0.4, 0.7, 0.9],
+                        colors: const [
+                          // Colors are easy thanks to Flutter's Colors class.
+                          Colors.yellow,
+                          Colors.orange,
+                        ],
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Add Task",
+                        style: GoogleFonts.poppins(
+                            color: kWhiteColor,
+                            fontSize: w * 0.03,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                )
               ],
             )
           ],
