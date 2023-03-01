@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -60,19 +61,15 @@ class _CustomSliderWidgetState extends State<CustomSliderWidget> {
                     onTap: () {
                       //launchYoutube(item.link);
                     },
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 180,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: NetworkImage(item.bannerPic??''),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      // child: Image.asset(),
-                    ),
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 10),
+                       child: ImageView(
+                           imageUrl: item.bannerPic??'',
+                           isCircular: false,
+                           height: 180,
+                           width: double.infinity,
+                           borderRadius:10),
+                     )
                   );
                 },
               );

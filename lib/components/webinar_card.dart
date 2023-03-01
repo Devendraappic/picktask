@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
@@ -32,11 +33,7 @@ class WebinarCard extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Image.network(
-                webinar?.image??"",
-                //width: 50,
-                height: 40,
-              ),
+              child: ImageView(imageUrl: webinar?.image??"",isCircular: false, width: 40, height: 40,radius: 0,)
             ),
             SizedBox(
               height: 5,

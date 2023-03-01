@@ -25,23 +25,27 @@ class LeadDetailResponse {
   }
 }
 
-class LeadDetail{
+
+class LeadDetail {
   int? id;
   dynamic partnerId;
   int? userId;
   int? jobId;
   String? name;
   String? mobile;
-  dynamic reason;
+  String? reason;
   dynamic points;
   String? paymentId;
   String? leadsData;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String? createdAt;
+  String? updatedAt;
   int? status;
   String? image;
-  dynamic imageStatus;
+  String? imageStatus;
   int? deleteStatus;
+  dynamic remarks;
+  dynamic city;
+  dynamic email;
 
   LeadDetail(
       {this.id,
@@ -59,7 +63,10 @@ class LeadDetail{
         this.status,
         this.image,
         this.imageStatus,
-        this.deleteStatus});
+        this.deleteStatus,
+        this.remarks,
+        this.city,
+        this.email});
 
   LeadDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,6 +85,9 @@ class LeadDetail{
     image = json['image'];
     imageStatus = json['image_status'];
     deleteStatus = json['delete_status'];
+    remarks = json['remarks'];
+    city = json['city'];
+    email = json['email'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +108,10 @@ class LeadDetail{
     data['image'] = this.image;
     data['image_status'] = this.imageStatus;
     data['delete_status'] = this.deleteStatus;
+    data['remarks'] = this.remarks;
+    data['city'] = this.city;
+    data['email'] = this.email;
     return data;
   }
 }
+

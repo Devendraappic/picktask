@@ -4,17 +4,17 @@
 List categoryList = [
   {
     "image": "assets/images/credit_card.png",
-    "title": "Credit Card",
+    "title": "Credit Cards",
     "subtitle": "Earn up to ₹3000 on per card dispatch"
   },
   {
     "image": "assets/images/savings.png",
-    "title": "Savings Account",
+    "title": "Savings Accounts",
     "subtitle": "Earn up to ₹700 on each sale"
   },
   {
     "image": "assets/images/cash.png",
-    "title": "Demat Account",
+    "title": "Demat Accounts",
     "subtitle": "Earn up to ₹600 on each sale"
   },
   {

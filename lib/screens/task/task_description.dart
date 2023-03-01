@@ -10,7 +10,8 @@ import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/hex_color.dart';
 
 class TaskDescription extends StatefulWidget {
-  const TaskDescription({Key? key}) : super(key: key);
+  int taskId;
+   TaskDescription({Key? key, required this.taskId}) : super(key: key);
 
   @override
   State<TaskDescription> createState() => _TaskDescriptionState();
@@ -18,17 +19,19 @@ class TaskDescription extends StatefulWidget {
 
 class _TaskDescriptionState extends State<TaskDescription> {
 
-  var taskController= Get.put(TaskController());
+  // var taskController= Get.put(TaskController());
+  var taskController= Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
+    taskController.getTaskDetail(widget.taskId);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          "RBL Bank Saving Account",
+          taskController.taskDetailResponse.value.data?.jobType??"",
           style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
@@ -149,7 +152,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
                       child: Column(
                         children: [
                           Text(
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: w * 0.035,
@@ -177,21 +180,21 @@ class _TaskDescriptionState extends State<TaskDescription> {
             ),
           ),
           Obx(() {
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: DefaultButton(
-                    width: double.infinity,
-                    height: h * 0.08,
-                    text: taskController.actionButtonText.value,
-                    radius: 15,
-                    press: () {
-                      if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
-                        taskController.actionButtonText(AppStrings.txtPending);
-                      }
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DefaultButton(
+                  width: double.infinity,
+                  height: h * 0.08,
+                  text: taskController.actionButtonText.value,
+                  radius: 15,
+                  press: () {
+                    if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
+                      taskController.actionButtonText(AppStrings.txtPending);
+                    }
 
-                    }),
-              );
-            }
+                  }),
+            );
+          }
           )
         ],
       ),

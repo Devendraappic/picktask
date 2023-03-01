@@ -1,8 +1,8 @@
 
 class FilterModel {
-  int id = 0;
+  String status = "";
   var name = "";
   bool isSelected = false;
 
-  FilterModel(this.id,  this.name,  this.isSelected);
+  FilterModel(this.status,  this.name,  this.isSelected);
 }

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/black_box.dart';
 import 'package:picktask/components/gradient_button.dart';
-import 'package:picktask/components/savings_card.dart';
 import 'package:picktask/screens/account/referAndEarn/controller/refer_and_earn_controller.dart';
 import 'package:picktask/screens/account/referAndEarn/ui/reffered_user_card.dart';
 import 'package:picktask/utils/color.dart';

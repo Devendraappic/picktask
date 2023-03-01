@@ -4,8 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:picktask/screens/leads/category.dart';
-import 'package:picktask/screens/leads/savings.dart';
 import 'package:picktask/screens/task/ui/my_tasks.dart';
 
 import 'package:picktask/utils/color.dart';
@@ -21,6 +19,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
+
         Get.to(()=>MyTasks(taskTitle: title,));
       },
       child: Container(

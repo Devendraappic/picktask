@@ -289,13 +289,11 @@ class _ApiClient implements ApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = {
       'user_id': userId,
-      'status': status,
+      'type': status,
     };
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<LeadsResponse>(Options(
       method: 'POST',
@@ -379,6 +377,52 @@ class _ApiClient implements ApiClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = WithdrawalListResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApprovedTasksResponse> getApprovedTaskList(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'user_id': userId};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApprovedTasksResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'approved_tasklist',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApprovedTasksResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TaskDetailResponse> getTaskDetails(taskId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TaskDetailResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'viewtask/${taskId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TaskDetailResponse.fromJson(_result.data!);
     return value;
   }
 

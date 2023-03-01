@@ -14,7 +14,7 @@ class LeadsController extends GetxController {
   var filterList = <FilterModel>[].obs;
   var leadsList = <LeadData>[].obs;
 
-  var selectedStatus = 0.obs;
+  var selectedStatus = "any".obs;
   final client = ApiClient();
 
   var leadDetailResponse = LeadDetailResponse().obs;
@@ -26,20 +26,20 @@ class LeadsController extends GetxController {
   }
 
   getLeadCategories() {
-    filterList.add(FilterModel(0, "All", true));
-    filterList.add(FilterModel(1, "Pending", false));
-    filterList.add(FilterModel(4, "In-Process", false));
-    filterList.add(FilterModel(2, "Approved", false));
-    filterList.add(FilterModel(3, "Rejected", false));
+    filterList.add(FilterModel("any", "All", true));
+    filterList.add(FilterModel("pending", "Pending", false));
+    filterList.add(FilterModel("inprogress", "In-Process", false));
+    filterList.add(FilterModel("approved", "Approved", false));
+    filterList.add(FilterModel("reject", "Rejected", false));
   }
 
-  Future<LeadsResponse> getLeadsList(int status) async {
+  Future<LeadsResponse> getLeadsList(String status) async {
     print("apiCall");
     var response = LeadsResponse();
     try {
       isLoading(true);
       response =
-          await client.getLeads(/*userId??0*/ 183, status == 0 ? null : status);
+          await client.getLeads(/*userId??0*/ 183, status);
     } catch (e, s) {
       print(s);
     }

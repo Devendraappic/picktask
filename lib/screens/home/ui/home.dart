@@ -189,12 +189,13 @@ class _HomeState extends State<Home> {
                 Obx(() {
                     return homeController.response.value.data?.webinar?.isNotEmpty==true?LimitedBox(
                       maxHeight: h * 0.17,
-                      child: Flexible(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
-                          itemCount: homeController.response.value.data?.webinar?.length,
+                          itemCount:homeController.response.value.data?.webinar?.length,
                           shrinkWrap: true,
                           controller: scrollController,
                           itemBuilder: (BuildContext context, int index) {

@@ -5,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/leads_card.dart';
-import 'package:picktask/screens/leads/category.dart';
+import 'package:picktask/screens/approvedTasks/ui/approved_tasks.dart';
+import 'package:picktask/screens/category/ui/category.dart';
 import 'package:picktask/screens/leads/controller/leads_controller.dart';
 import 'package:picktask/screens/createLead/ui/create_lead.dart';
 import 'package:picktask/screens/task/ui/my_tasks.dart';
@@ -66,7 +67,7 @@ class _LeadsState extends State<Leads> {
                               leadsController.filterList[position].isSelected =
                                   true;
                               leadsController.selectedStatus.value =
-                                  leadsController.filterList[position].id;
+                                  leadsController.filterList[position].status;
                               leadsController.leadsList.clear();
                               leadsController.getLeadsList(leadsController.selectedStatus.value);
                               setState(() {});
@@ -116,8 +117,7 @@ class _LeadsState extends State<Leads> {
                   // ),
                   GestureDetector(
                     onTap: () {
-                      //Get.to(()=>Category());
-                      Get.to(()=>CreateLead(taskId: 89,title:"",image: "",));
+                      Get.to(()=>ApprovedTasks());
 
                     },
                     child: Container(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/network/retrofit/api_client.dart';
+import 'package:picktask/screens/task/model/task_detail_response.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:picktask/utils/color.dart';
 
@@ -11,6 +12,7 @@ class TaskController extends GetxController {
   final client = ApiClient();
 
   var actionButtonText= "".obs;
+  var taskDetailResponse= TaskDetailResponse().obs;
 
   @override
   void onInit() {
@@ -41,4 +43,29 @@ class TaskController extends GetxController {
     }
     return response;
   }
+
+  Future<TaskDetailResponse> getTaskDetail(int taskId) async {
+    try {
+      isLoading(true);
+      // WidgetsBinding.instance.addPostFrameCallback((_)async {
+      //
+      // });
+      taskDetailResponse.value = await client.getTaskDetails(79);
+
+    } catch (e, s) {
+      print(s);
+    }
+    print("apiResponse------->" + taskDetailResponse.value.msg.toString());
+    if (taskDetailResponse.value.status == true) {
+      isLoading(false);
+
+      return taskDetailResponse.value;
+    } else {
+      isLoading(false);
+      Get.snackbar(taskDetailResponse.value.msg ?? "", "",
+          colorText: kWhiteColor);
+    }
+    return taskDetailResponse.value;
+  }
+
 }

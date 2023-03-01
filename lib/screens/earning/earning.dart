@@ -405,7 +405,7 @@ class EarningCard extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "TXN01",
+                  "TXN${withdrawalItemData.id}",
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.035,

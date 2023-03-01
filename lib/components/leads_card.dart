@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/constants/app_constants.dart';
 import 'package:picktask/screens/leads/lead_details.dart';
 import 'package:picktask/screens/leads/model/leads_list_response.dart';
@@ -48,19 +49,14 @@ class LeadsCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            height: w * 0.13,
-            width: w * 0.13,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: kWhiteColor),
-            child: Center(
-                child: leadData.image?.isNotEmpty==true?Image.network(
-                  ("${AppConstants.baseUrl}${leadData.image}").replaceAll("//", "/"),
-              width: 40,
-            ):Image.asset(
-              "assets/images/logo1.jpg",
-              width: 40,
-            )
+          ClipOval(
+            child: SizedBox.fromSize(
+              size: const Size.fromRadius(25), // Image radius
+              child: ImageView(
+                imageUrl: ("${AppConstants.baseUrl}${leadData.image}").replaceAll("//", "/"),
+                  isCircular: true
+
+              ),
             ),
           ),
           SizedBox(

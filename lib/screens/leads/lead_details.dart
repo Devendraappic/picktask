@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/gradient_button.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/constants/app_constants.dart';
 import 'package:picktask/screens/leads/controller/leads_controller.dart';
 import 'package:picktask/screens/task/task_description.dart';
 
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:intl/intl.dart';
 
 class LeadDetails extends StatefulWidget {
   int leadId;
@@ -38,13 +40,15 @@ class _LeadDetailsState extends State<LeadDetails> {
   Widget build(BuildContext context) {
     leadsController.getLeadDetail(widget.leadId);
     var status="";
-    if(leadsController.leadDetailResponse.value.data?.status==1){
+    if(leadsController.leadDetailResponse.value.data?.status==0){
       status="Pending";
-    }if(leadsController.leadDetailResponse.value.data?.status==2){
+    }else if(leadsController.leadDetailResponse.value.data?.status==1){
+      status="Pending";
+    }else if(leadsController.leadDetailResponse.value.data?.status==2){
       status="Approved";
-    }if(leadsController.leadDetailResponse.value.data?.status==3){
+    }else if(leadsController.leadDetailResponse.value.data?.status==3){
       status="Rejected";
-    }if(leadsController.leadDetailResponse.value.data?.status==4){
+    }else if(leadsController.leadDetailResponse.value.data?.status==4){
       status="In-Progress";
     }
     return Scaffold(
@@ -62,6 +66,7 @@ class _LeadDetailsState extends State<LeadDetails> {
       ),
       body: Column(children: [
         Container(
+          margin: EdgeInsets.symmetric(horizontal: w * 0.03),
           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
           height: h * 0.12,
           width: double.infinity,
@@ -83,21 +88,11 @@ class _LeadDetailsState extends State<LeadDetails> {
           ),
           child: Row(
             children: [
-            Container(
-            height: w * 0.19,
-            width: w * 0.19,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: kWhiteColor),
-            child: Center(
-              child: widget.leadImage.isNotEmpty == true ? Image.network(
-                ("${AppConstants.baseUrl}${widget.leadImage}").replaceAll(
-                    "//", "/"),
-                width: 50,
-              ) : Image.asset(
-                "assets/images/logo1.jpg",
-                width: 50,
-              ),
-            ),),
+            ImageView(
+              imageUrl: widget.leadImage,
+            height: 60,
+            width: 60,
+            isCircular: false,radius: 10,),
             const SizedBox(
               width: 10,
             ),
@@ -126,18 +121,20 @@ class _LeadDetailsState extends State<LeadDetails> {
                 child: Column(
                   children: [
 
-                    Text("Credited on : ${leadsController.leadDetailResponse.value.data?.createdAt}", style: GoogleFonts.cabin(
+                    Text(
+                        "Credited on : ${DateFormat("ddMMM hh:mm a").format(DateTime.parse(leadsController.leadDetailResponse.value.data?.createdAt??""))}",
+                        style: GoogleFonts.poppins(
                         color: kBalckColor,
-                        fontSize: w * 0.045,
-                        fontWeight: FontWeight.w400)),
+                        fontSize: w * 0.040,
+                        fontWeight: FontWeight.w500)),
                     SizedBox(height: 20,),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text("Name : ${leadsController.leadDetailResponse.value.data?.name} "
-                          "\n Mobile Number : ${leadsController.leadDetailResponse.value.data?.mobile} \n Email : support@appicsoftwares.com \n City: Jaipur",
-                          style: GoogleFonts.cabin(
+                          "\n Mobile Number : ${leadsController.leadDetailResponse.value.data?.mobile} \n Email : ${leadsController.leadDetailResponse.value.data?.email} \n City: ${leadsController.leadDetailResponse.value.data?.city}",
+                          style: GoogleFonts.poppins(
                               color: kBalckColor,
-                              fontSize: w * 0.045,
+                              fontSize: w * 0.040,
                               fontWeight: FontWeight.w500)),
                     ),
 
@@ -154,10 +151,10 @@ class _LeadDetailsState extends State<LeadDetails> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(15.0),
                             child: Text(
-                                "Remark : We can edit the remark while approving any lead.",
+                                "Remark : ${leadsController.leadDetailResponse.value.data?.remarks}",
                                 style: GoogleFonts.averageSans(
                                     color: kBalckColor,
-                                    fontSize: w * 0.045,
+                                    fontSize: w * 0.040,
                                     fontWeight: FontWeight.w400)),
                           ),
                           margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -172,9 +169,9 @@ class _LeadDetailsState extends State<LeadDetails> {
                                   color: Colors.yellow
                               ),
                               child: Text(
-                                "Status : Pending", style: GoogleFonts.poppins(
+                                "Status : $status", style: GoogleFonts.poppins(
                                   color: kBalckColor,
-                                  fontSize: w * 0.045,
+                                  fontSize: w * 0.040,
                                   fontWeight: FontWeight.w500),))),
                         ),
                       ],
@@ -183,7 +180,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                   ],
                 ),
               ),
-              margin: EdgeInsets.symmetric(vertical: 20.0),
+              margin: EdgeInsets.symmetric(vertical: 20.0,horizontal: w * 0.03),
             );
           }
         ),
