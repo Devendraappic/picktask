@@ -16,6 +16,7 @@ import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/network/retrofit/apis.dart';
 import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
 import 'package:picktask/screens/onboarding/register/model/register_response.dart';
+import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/screens/task/model/task_detail_response.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:retrofit/http.dart';
@@ -108,6 +109,12 @@ abstract class ApiClient {
   @POST(Apis.approvedTaskList)
   Future<ApprovedTasksResponse> getApprovedTaskList(
       @Field('user_id') int userId);
+
+  @POST(Apis.applyForJob)
+  Future<ApplyJobResponse> applyForJob(
+      @Field('jobId') int jobId,
+      @Field('userId') int userId
+      );
 
   @GET(Apis.viewtask + "/{taskId}")
   Future<TaskDetailResponse> getTaskDetails(@Path() int taskId);

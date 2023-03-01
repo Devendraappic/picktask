@@ -16,6 +16,7 @@ class Apis {
   static const String createLeadForm = 'create_leadform';
   static const String withdrawalList = 'WithdrawalList';
   static const String approvedTaskList = 'approved_tasklist';
+  static const String applyForJob = 'applyForJob';
   static const String viewtask = 'viewtask';
   // static const String NOIMAGEURL = AppConstants.baseUrl+ 'images/wk_pos/no-image.png';
 }

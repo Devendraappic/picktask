@@ -188,10 +188,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
                   text: taskController.actionButtonText.value,
                   radius: 15,
                   press: () {
-                    if( taskController.actionButtonText.value==AppStrings.txtStartEarning){
-                      taskController.actionButtonText(AppStrings.txtPending);
-                    }
-
+                    taskController.applyForJob(widget.taskId);
                   }),
             );
           }
