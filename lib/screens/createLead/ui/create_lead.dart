@@ -1,13 +1,19 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/screens/createLead/controller/create_lead_controller.dart';
 import 'package:picktask/screens/createLead/ui/form_field_item.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/utils.dart';
 
 class CreateLead extends StatefulWidget {
   int taskId;
@@ -74,17 +80,13 @@ class _CreateLeadState extends State<CreateLead> {
                         ),
                         child: Row(
                           children: [
-                            Container(
-                              height: w * 0.14,
-                              width: w * 0.14,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle, color: kWhiteColor),
-                              child: Center(
-                                  child: Image.network(
-                                    widget.image,
-                                width: 50,
-                              )),
+                            ImageView(imageUrl: widget.image,
+                              isCircular: false,
+                              height: 60,
+                              width: 60,
+                              radius: 8,
                             ),
+
                             SizedBox(
                               width: 10,
                             ),
@@ -129,21 +131,34 @@ class _CreateLeadState extends State<CreateLead> {
                               radius: 15,
                               press: () {
                                 int count=0;
-                                createLeadsController.formItems.forEach((element) {
+                                var myMap = <String, String>{};
+                                for (var element in createLeadsController.formItems) {
+                                  if(element.value=="text"){
+                                    myMap[element.field??""]=( element.fieldTextController as TextEditingController).text;
+                                  }else if(element.value=="file"){
+                                    myMap[element.field??""]=Utils.convertIntoBase64(File(element.fieldValue));
+                                  }
                                   print(element.fieldTextController.text);
                                   if (element.fieldTextController.text == null ||
                                       element.fieldTextController.text.isEmpty) {
                                     count+=count;
                                     showToastMsg('${element.field} is required');
-                                    return;
+                                    continue;
                                   }
-                                });
-                                if(count==0){
-                                  showLeadSubmitDialog();
                                 }
-
-
-
+                                log("sending form data:::> ${myMap.toString()}");
+                                if(count==0){
+                                  createLeadsController.submitLead(myMap).then((value){
+                                    if(value.status==true){
+                                      showLeadSubmitDialog();
+                                    }
+                                    myMap.clear();
+                                    for (var element in createLeadsController.formItems) {
+                                      element.fieldValue="";
+                                      element.fieldTextController=TextEditingController();
+                                    }
+                                  });
+                                }
                               }),
                       space(h * 0.1),
                     ],

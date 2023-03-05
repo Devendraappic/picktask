@@ -21,7 +21,7 @@ class ApprovedTaskCard extends StatelessWidget {
       onTap: (){
         },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+        padding: EdgeInsets.symmetric(vertical: 3),
         height: h * 0.10,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -59,6 +59,7 @@ class ApprovedTaskCard extends StatelessWidget {
               children: [
                 Text(
                   approvedTaskData.jobType??"",
+                  maxLines: 1,
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.045,
@@ -68,6 +69,7 @@ class ApprovedTaskCard extends StatelessWidget {
                   width: w * 0.6,
                   child: Text(
                     approvedTaskData.jobname??"",
+                    maxLines: 1,
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.035,

@@ -13,10 +13,6 @@ import 'package:picktask/utils/extra_widget.dart';
 import 'controller/earnings_controller.dart';
 import 'package:intl/intl.dart';
 
-List a = [1, 2, 4, 7, 9, 10, 12, 34, 65, 21, 78, 56];
-List b = [];
-List c = [];
-
 class Earning extends StatefulWidget {
   const Earning({super.key});
 
@@ -28,33 +24,74 @@ class _EarningState extends State<Earning> {
   var amountController = TextEditingController();
   var earningsController = Get.put(EarningsController());
 
-  @override
-  void initState() {
-    earningsController.getWithdrawalList();
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      earningsController.getWithdrawalList();
+    });
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Obx( () {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: w * 0.05),
-                height: h * 0.15,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: kBlueColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(w * 0.11),
-                    bottomRight: Radius.circular(w * 0.11),
+        body: Obx( () {
+          return earningsController.isLoading.value==true?loader:SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.05),
+                  height: h * 0.15,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: kBlueColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(w * 0.11),
+                      bottomRight: Radius.circular(w * 0.11),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: h * 0.01),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Lifetime Earning",
+                                style: GoogleFonts.poppins(
+                                    color: kWhiteColor,
+                                    fontSize: w * 0.055,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              space(h * 0.0),
+                              Text(
+                                "₹${earningsController.withdrawalListResponse.value.data?.totalamount}",
+                                style: GoogleFonts.poppins(
+                                    color: kWhiteColor,
+                                    fontSize: w * 0.05,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Icon(
+                                Icons.account_balance_wallet_sharp,
+                                size: w * 0.1,
+                                color: kWhiteColor,
+                              ),
+                            ),
+                          )
+                        ]),
                   ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.only(top: h * 0.01),
+                space(h * 0.01),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 5),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,15 +101,15 @@ class _EarningState extends State<Earning> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Lifetime Earning",
+                              "Current Balance",
                               style: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: w * 0.055,
                                   fontWeight: FontWeight.w600),
                             ),
-                            space(h * 0.0),
+                            space(h * 0.005),
                             Text(
-                              "₹100",
+                              "₹${earningsController.withdrawalListResponse.value.data?.currentbalance}",
                               style: GoogleFonts.poppins(
                                   color: kWhiteColor,
                                   fontSize: w * 0.05,
@@ -85,7 +122,7 @@ class _EarningState extends State<Earning> {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Icon(
-                              Icons.wallet,
+                              Icons.account_balance_wallet_sharp,
                               size: w * 0.1,
                               color: kWhiteColor,
                             ),
@@ -93,156 +130,91 @@ class _EarningState extends State<Earning> {
                         )
                       ]),
                 ),
-              ),
-              space(h * 0.01),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 5),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                space(h * 0.02),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 5),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Current Balance",
-                            style: GoogleFonts.poppins(
-                                color: kWhiteColor,
-                                fontSize: w * 0.055,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          space(h * 0.005),
-                          Text(
-                            "₹100",
-                            style: GoogleFonts.poppins(
-                                color: kWhiteColor,
-                                fontSize: w * 0.05,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.wallet,
-                            size: w * 0.1,
-                            color: kWhiteColor,
-                          ),
-                        ),
-                      )
-                    ]),
-              ),
-              space(h * 0.02),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 5),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: h * 0.06,
-                      width: w * 0.45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: kWhiteColor),
-                      child: Center(child: mobileFormField()),
-                    ),
-
-                    // mobileFormField(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (amountController.text.isEmpty) {
-                          showToastMsg('Enter withdrawal amount');
-                          return ;
-                        }
-                        if (double.parse(amountController.text) < 100) {
-                          showToastMsg('Min withdrawal amount is ₹100');
-                          return ;
-                        }
-                        showWithdrawalSuccessDialog(context);
-                        print("length: ${a.length}");
-                        int remain = int.parse(amountController.text);
-                        int cd = remain;
-                        b.add(remain);
-                        var cs = b.reversed;
-
-                        print("ammount: ${amountController.text}");
-
-                        a.remove(remain);
-                        a.sort((a, b) => a - b);
-
-                        print(a);
-                        // b.add(remain);
-                        a.insertAll(0, cs);
-
-                        print(a);
-
-                        print(a.length);
-
-                        for (var i = 0; i < a.length; i += 3) {
-                          c.add([a[i], a[i + 2]]);
-                        }
-                        print(c);
-                      },
-                      child: Container(
+                      Container(
                         height: h * 0.06,
-                        width: w * 0.4,
+                        width: w * 0.45,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: kBlueColor),
-                        child: Center(
-                          child: Text(
-                            "Withdraw",
-                            style: GoogleFonts.poppins(
-                                color: kWhiteColor,
-                                fontSize: w * 0.045,
-                                fontWeight: FontWeight.w500),
+                            color: kWhiteColor),
+                        child: Center(child: mobileFormField()),
+                      ),
+
+                      // mobileFormField(),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (amountController.text.isEmpty) {
+                            showToastMsg('Enter withdrawal amount');
+                            return ;
+                          }
+                          if (double.parse(amountController.text) < 100) {
+                            showToastMsg('Min withdrawal amount is ₹100');
+                            return ;
+                          }
+                          earningsController.applyWithdrawal(double.parse(amountController.text.trim())).then((value){
+                            if(value.success==true){
+                              amountController.text="";
+                              showWithdrawalSuccessDialog(context);
+                            }
+                          });
+
+
+
+                        },
+                        child: Container(
+                          height: h * 0.06,
+                          width: w * 0.4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: kBlueColor),
+                          child: Center(
+                            child: Text(
+                              "Withdraw",
+                              style: GoogleFonts.poppins(
+                                  color: kWhiteColor,
+                                  fontSize: w * 0.045,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              space(h * 0.02),
-              MySeparator(
-                color: Colors.white,
-              ),
-              ListView.builder(
-                itemCount: earningsController.withdrawalList.length,
-                shrinkWrap: true,
-                controller: scrollController,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: h * 0.02),
-                    child: EarningCard(withdrawalItemData: earningsController.withdrawalList[index],),
-                  );
-                },
-              ),
-              //EarningCard()
-            ],
+                space(h * 0.02),
+                MySeparator(
+                  color: Colors.white,
+                ),
+                ListView.builder(
+                  itemCount: earningsController.withdrawalList.length,
+                  shrinkWrap: true,
+                  controller: scrollController,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: h * 0.02),
+                      child: EarningCard(withdrawalItemData: earningsController.withdrawalList[index],),
+                    );
+                  },
+                ),
+                //EarningCard()
+              ],
+            ),
           );
         }
-      ),
-    ));
+        ));
   }
 
   TextFormField mobileFormField() {
     return TextFormField(
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Phone number is required';
-        }
-        if (val.length != 10) {
-          return 'Please enter valid phone number';
-        }
-        return null;
-      },
+
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
 
@@ -345,7 +317,7 @@ class EarningCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "SBI Credit Card 2 Lead",
+                withdrawalItemData.title??"",
                 style: GoogleFonts.poppins(
                     color: kWhiteColor,
                     fontSize: w * 0.035,
@@ -417,12 +389,5 @@ class EarningCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  abc() {
-    for (var i = 0; i < a.length; i += 2) {
-      c.add([a[i], a[i + 1]]);
-    }
-    print(c);
   }
 }

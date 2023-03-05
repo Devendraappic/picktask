@@ -7,6 +7,7 @@ import 'package:picktask/screens/account/idCard/model/idcard_response.dart';
 import 'package:picktask/screens/account/referAndEarn/model/refer_and_earn_response.dart';
 import 'package:picktask/screens/approvedTasks/model/approved_task_response.dart';
 import 'package:picktask/screens/createLead/model/create_lead_form_model.dart';
+import 'package:picktask/screens/createLead/model/lead_submit_response.dart';
 import 'package:picktask/screens/earning/model/withdrawal_list_response.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/screens/leads/model/lead_detail_response.dart';
@@ -115,6 +116,14 @@ abstract class ApiClient {
       @Field('jobId') int jobId,
       @Field('userId') int userId
       );
+  @POST(Apis.withdrawalRequest)
+  Future<ApplyJobResponse> withdrawalRequest(
+      @Field('userId') int userId,
+      @Field('amount') double amount
+      );
+
+  @POST(Apis.leadSubmit)
+  Future<LeadSubmitResponse> submitLeadRequest(@Body() Map<String, dynamic> map);
 
   @GET(Apis.viewtask + "/{taskId}")
   Future<TaskDetailResponse> getTaskDetails(@Path() int taskId);

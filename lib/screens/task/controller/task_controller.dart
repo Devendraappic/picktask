@@ -6,18 +6,17 @@ import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/screens/task/model/task_detail_response.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/local_storage.dart';
 
 class TaskController extends GetxController {
   var isLoading = false.obs;
   var taskList = <TaskData>[].obs;
   final client = ApiClient();
 
-  var actionButtonText = "".obs;
   var taskDetailResponse = TaskDetailResponse().obs;
 
   @override
   void onInit() {
-    actionButtonText.value = AppStrings.txtStartEarning;
     //getTaskList("Loan/credit");
     super.onInit();
   }
@@ -44,19 +43,16 @@ class TaskController extends GetxController {
   }
 
   Future<TaskDetailResponse> getTaskDetail(int taskId) async {
+    isLoading(true);
     try {
-      isLoading(true);
-      // WidgetsBinding.instance.addPostFrameCallback((_)async {
-      //
-      // });
-      taskDetailResponse.value = await client.getTaskDetails(79);
+      taskDetailResponse.value = await client.getTaskDetails(taskId);
     } catch (e, s) {
+      isLoading(false);
       print(s);
     }
     print("apiResponse------->" + taskDetailResponse.value.msg.toString());
     if (taskDetailResponse.value.status == true) {
       isLoading(false);
-
       return taskDetailResponse.value;
     } else {
       isLoading(false);
@@ -68,19 +64,18 @@ class TaskController extends GetxController {
 
   Future<ApplyJobResponse> applyForJob(int jobId) async {
     isLoading(true);
-    var response = await client.applyForJob(82, 198);
+    var response = await client.applyForJob(jobId, userId??0);
 
     print("apiResponse------->" + taskDetailResponse.value.msg.toString());
     if (response.data?.status == true) {
       isLoading(false);
-      if( actionButtonText.value==AppStrings.txtStartEarning){
-       actionButtonText(AppStrings.txtPending);
-      }
+      // if (actionButtonText.value == AppStrings.txtStartEarning) {
+      //   actionButtonText(AppStrings.txtPending);
+      // }
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.message ?? "", "",
-          colorText: kWhiteColor);
+      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
     }
     return response;
   }

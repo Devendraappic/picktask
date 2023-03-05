@@ -6,6 +6,7 @@ import 'package:picktask/screens/earning/model/withdrawal_list_response.dart';
 import 'package:picktask/screens/leads/model/filter_model.dart';
 import 'package:picktask/screens/leads/model/lead_detail_response.dart';
 import 'package:picktask/screens/leads/model/leads_list_response.dart';
+import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/utils/color.dart';
 
 import '../../../utils/local_storage.dart';
@@ -13,36 +14,47 @@ import '../../../utils/local_storage.dart';
 class EarningsController extends GetxController {
   var isLoading = false.obs;
   var withdrawalList= <WithdrawalItemData>[].obs;
-
+  var withdrawalListResponse = WithdrawalListResponse().obs;
   final client = ApiClient();
-
-
-  @override
-  void onInit() {
-    //getLeadCategories();
-    super.onInit();
-  }
 
 
   Future<WithdrawalListResponse> getWithdrawalList() async {
     print("apiCall");
-    var response = WithdrawalListResponse();
+    isLoading(true);
+    var response;
     try {
-      isLoading(true);
+
       response =
-          await client.withdrawalList(/*userId??0*/ 198);
+          await client.withdrawalList(userId??0);
     } catch (e, s) {
       print(s);
+      isLoading(false);
     }
 
     if (response.success == true) {
       isLoading(false);
+      withdrawalListResponse.value=response;
       withdrawalList.value = response.data?.data ?? [];
 
       return response;
     } else {
       isLoading(false);
-     // Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+    }
+    return response;
+  }
+
+
+  Future<ApplyJobResponse> applyWithdrawal(double amount) async {
+    isLoading(true);
+    var response = await client.withdrawalRequest(userId??0, amount);
+
+    if (response.data?.status == true) {
+      isLoading(false);
+      getWithdrawalList();
+      return response;
+    } else {
+      isLoading(false);
+      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
     }
     return response;
   }

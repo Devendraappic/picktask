@@ -1,15 +1,11 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/screens/createLead/controller/create_lead_controller.dart';
 import 'package:picktask/screens/createLead/model/create_lead_form_model.dart';
-import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/color.dart';
-import 'package:picktask/utils/local_storage.dart';
-import 'package:picktask/utils/utils.dart';
+import 'package:picktask/utils/extensions.dart';
 
 class CustomFormField extends StatelessWidget {
   LeadFormData fieldData;
@@ -20,7 +16,6 @@ class CustomFormField extends StatelessWidget {
     required this.fieldData,
     required this.createLeadController,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -118,13 +113,24 @@ class CustomFormField extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: IconButton(
                   onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(allowCompression:true,allowedExtensions: ['pdf', 'doc', 'png', 'jpeg', 'jpg',],type: FileType.custom);
+                    FilePickerResult? result =
+                        await FilePicker.platform.pickFiles(
+                            allowCompression: true,
+                            allowedExtensions: [
+                              // 'pdf',
+                              // 'doc',
+                              'png',
+                              'jpeg',
+                              'jpg',
+                            ],
+                            type: FileType.custom);
 
                     if (result != null) {
-                      var _path=result.files.single.path;
-                      File file = File(result.files.single.path??"");
-                      fieldData.fieldValue = file.name;
-                      (fieldData.fieldTextController as TextEditingController).text=file.name;
+                      var _path = result.files.single.path;
+                      File file = File(_path ?? "");
+                      fieldData.fieldValue = _path ?? "";
+                      (fieldData.fieldTextController as TextEditingController)
+                          .text = file.name;
                     } else {
                       // User canceled the picker
                     }

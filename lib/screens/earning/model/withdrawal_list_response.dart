@@ -76,6 +76,7 @@ class WithdrawalItemData {
   String? amount;
   int? status;
   String? transactionId;
+  String? title;
   String? createdAt;
   String? updatedAt;
   int? type;
@@ -86,6 +87,7 @@ class WithdrawalItemData {
         this.amount,
         this.status,
         this.transactionId,
+        this.title,
         this.createdAt,
         this.updatedAt,
         this.type});
@@ -96,6 +98,7 @@ class WithdrawalItemData {
     amount = json['amount'];
     status = json['status'];
     transactionId = json['transaction_id'];
+    title = json['title'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     type = json['type'];
@@ -108,6 +111,7 @@ class WithdrawalItemData {
     data['amount'] = this.amount;
     data['status'] = this.status;
     data['transaction_id'] = this.transactionId;
+    data['title'] = this.title;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['type'] = this.type;

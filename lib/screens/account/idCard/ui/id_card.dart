@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/screens/account/idCard/controller/id_card_controller.dart';
 import 'package:picktask/utils/color.dart';
@@ -41,7 +42,7 @@ class _IdCardState extends State<IdCard> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(children: [
           Container(
             padding: const EdgeInsets.all(12.0),
@@ -62,33 +63,27 @@ class _IdCardState extends State<IdCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    profilePic!=""?Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff7c94b6),
-                        image: DecorationImage(
-                          image: NetworkImage(profilePic??""),
-                          fit: BoxFit.cover,
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: ImageView(imageUrl: profilePic??"",
+                      isCircular: true,
+                        radius: 35,
+                        width: 80.0,
+                        height: 80.0,
+                      errorWidget: const CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: CircleAvatar(
+                            child: Icon(Icons.person, size: 40,),
+                            radius: 40,
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
-                        borderRadius: BorderRadius.all( Radius.circular(50.0)),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 5.0,
-                        ),
-                      ),
-                    ):const CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                          child: Icon(Icons.person, size: 40,),
-                          radius: 40,
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
+                      ),),
                     ),
+
                     SizedBox(height: 10,),
                     Text(
                       name??"",

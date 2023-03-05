@@ -9,7 +9,9 @@ class ImageView extends StatelessWidget {
   bool isCircular;
   double? radius;
   double? borderRadius;
-  ImageView({Key? key, required this.imageUrl, this.height, this.width,required this.isCircular, this.radius,this.borderRadius}) : super(key: key);
+  BoxFit? boxFit;
+  Widget? errorWidget;
+  ImageView({Key? key, required this.imageUrl, this.height, this.width,required this.isCircular, this.radius,this.borderRadius, this.boxFit, this.errorWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +29,21 @@ class ImageView extends StatelessWidget {
   Widget imageWidget(){
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      placeholder: (context, url) => Image.asset(
+      placeholder: (context, url) => errorWidget??Image.asset(
         "assets/images/logo1.jpg",
         width: width,
         height: height,
-        fit: BoxFit.fill,
+        fit: boxFit??BoxFit.fill,
       ),
-      errorWidget: (context, url, error) => Image.asset(
+      errorWidget: (context, url, error) => errorWidget?? Image.asset(
         "assets/images/logo1.jpg",
         width: width,
         height: height,
-        fit: BoxFit.fill,
+        fit: boxFit??BoxFit.fill,
       ),
       width: width,
       height: height,
-      fit: BoxFit.fill,
+      fit: boxFit??BoxFit.fill,
     );
   }
 }

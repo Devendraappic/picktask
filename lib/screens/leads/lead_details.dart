@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/components/image_view.dart';
@@ -64,9 +65,9 @@ class _LeadDetailsState extends State<LeadDetails> {
               fontWeight: FontWeight.w700),
         ),
       ),
-      body: Column(children: [
+      body:Obx(()=>leadsController.isLoading.value==true?loader: Column(children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: w * 0.03),
+          margin: EdgeInsets.symmetric(horizontal: 15),
           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
           height: h * 0.12,
           width: double.infinity,
@@ -80,7 +81,6 @@ class _LeadDetailsState extends State<LeadDetails> {
               // Add one stop for each color. Stops should increase from 0 to 1
               // stops: [0.1, 0.4, 0.7, 0.9],
               colors: const [
-                // Colors are easy thanks to Flutter's Colors class.
                 Color(0xFF2B252A),
                 Color(0xFF1F2131),
               ],
@@ -88,103 +88,100 @@ class _LeadDetailsState extends State<LeadDetails> {
           ),
           child: Row(
             children: [
-            ImageView(
-              imageUrl: widget.leadImage,
-            height: 60,
-            width: 60,
-            isCircular: false,radius: 10,),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              widget.leadTitle,
-              style: GoogleFonts.poppins(
-                  color: kWhiteColor,
-                  fontSize: w * 0.045,
-                  fontWeight: FontWeight.w500),
-            ),
+              ImageView(
+                imageUrl: widget.leadImage,
+                height: 60,
+                width: 60,
+                isCircular: false,radius: 10,),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                widget.leadTitle,
+                style: GoogleFonts.poppins(
+                    color: kWhiteColor,
+                    fontSize: w * 0.045,
+                    fontWeight: FontWeight.w500),
+              ),
 
 
             ],
           ),
         ),
-        Obx(() {
-            return Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: kBlueColor, width: 2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
+        Card(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: kBlueColor, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
 
-                    Text(
-                        "Credited on : ${DateFormat("ddMMM hh:mm a").format(DateTime.parse(leadsController.leadDetailResponse.value.data?.createdAt??""))}",
-                        style: GoogleFonts.poppins(
+                Text(
+                    "Credited on : ${leadsController.leadDetailResponse.value.data?.createdAt?.isNotEmpty==true?DateFormat("ddMMM yyyy hh:mm a").format(DateTime.parse(leadsController.leadDetailResponse.value.data?.createdAt??"")):""}",
+                    style: GoogleFonts.poppins(
                         color: kBalckColor,
                         fontSize: w * 0.040,
                         fontWeight: FontWeight.w500)),
-                    SizedBox(height: 20,),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Name : ${leadsController.leadDetailResponse.value.data?.name} "
-                          "\n Mobile Number : ${leadsController.leadDetailResponse.value.data?.mobile} \n Email : ${leadsController.leadDetailResponse.value.data?.email} \n City: ${leadsController.leadDetailResponse.value.data?.city}",
-                          style: GoogleFonts.poppins(
+                SizedBox(height: 10,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Name : ${leadsController.leadDetailResponse.value.data?.name} "
+                      "\n Mobile Number : ${leadsController.leadDetailResponse.value.data?.mobile} \n Email : ${leadsController.leadDetailResponse.value.data?.email} \n City: ${leadsController.leadDetailResponse.value.data?.city}",
+                      style: GoogleFonts.poppins(
+                          color: kBalckColor,
+                          fontSize: w * 0.040,
+                          fontWeight: FontWeight.w500)),
+                ),
+
+                Stack(
+                  children: [
+
+                    Card(
+                      color: kBlueColor,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: kBlueColor, width: 2),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                            "Remark : ${leadsController.leadDetailResponse.value.data?.remarks}",
+                            style: GoogleFonts.averageSans(
+                                color: kBalckColor,
+                                fontSize: w * 0.040,
+                                fontWeight: FontWeight.w400)),
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 20.0),
+                    ),
+                    Center(
+                      child: Positioned(child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3, horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              // Box decoration takes a gradient
+                              color: Colors.yellow
+                          ),
+                          child: Text(
+                            "Status : $status", style: GoogleFonts.poppins(
                               color: kBalckColor,
                               fontSize: w * 0.040,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w500),))),
                     ),
-
-                    Stack(
-                      children: [
-
-                        Card(
-                          color: kBlueColor,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: kBlueColor, width: 2),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                                "Remark : ${leadsController.leadDetailResponse.value.data?.remarks}",
-                                style: GoogleFonts.averageSans(
-                                    color: kBalckColor,
-                                    fontSize: w * 0.040,
-                                    fontWeight: FontWeight.w400)),
-                          ),
-                          margin: EdgeInsets.symmetric(vertical: 20.0),
-                        ),
-                        Center(
-                          child: Positioned(child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  // Box decoration takes a gradient
-                                  color: Colors.yellow
-                              ),
-                              child: Text(
-                                "Status : $status", style: GoogleFonts.poppins(
-                                  color: kBalckColor,
-                                  fontSize: w * 0.040,
-                                  fontWeight: FontWeight.w500),))),
-                        ),
-                      ],
-                    )
-
                   ],
-                ),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 20.0,horizontal: w * 0.03),
-            );
-          }
+                )
+
+              ],
+            ),
+          ),
+          margin: EdgeInsets.symmetric(vertical: 20.0,horizontal: 15),
         ),
-      ],),
+      ],)),
     );
   }
 }

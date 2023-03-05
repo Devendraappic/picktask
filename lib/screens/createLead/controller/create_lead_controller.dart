@@ -6,6 +6,7 @@ import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/network/retrofit/api_client.dart';
 import 'package:picktask/screens/createLead/model/create_lead_form_model.dart';
+import 'package:picktask/screens/createLead/model/lead_submit_response.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/screens/notifications/model/notification_list_response.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
@@ -43,6 +44,28 @@ class CreateLeadController extends GetxController {
 
       isLoading(false);
       formItems.value= response.data??[];
+
+      return response;
+    } else {
+      isLoading(false);
+      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+    }
+    return response;
+  }
+
+  Future<LeadSubmitResponse> submitLead(Map<String, dynamic> map) async {
+    var response;
+    try {
+      isLoading(true);
+      response = await client.submitLeadRequest(map);
+    } catch (e, s) {
+      print(s);
+      isLoading(false);
+    }
+
+    if (response.status == true) {
+
+      isLoading(false);
 
       return response;
     } else {

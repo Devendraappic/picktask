@@ -28,7 +28,7 @@ class _ApprovedTasksState extends State<ApprovedTasks> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          "Select Category",
+          "My Tasks",
           style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
