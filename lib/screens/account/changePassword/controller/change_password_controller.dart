@@ -34,12 +34,13 @@ class ChangePasswordController extends GetxController {
     }
     debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
+
       isLoading(false);
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

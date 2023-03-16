@@ -6,6 +6,7 @@ import 'package:picktask/screens/leads/model/filter_model.dart';
 import 'package:picktask/screens/leads/model/lead_detail_response.dart';
 import 'package:picktask/screens/leads/model/leads_list_response.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 
 import '../../../utils/local_storage.dart';
 
@@ -39,11 +40,12 @@ class LeadsController extends GetxController {
     try {
       isLoading(true);
       response =
-          await client.getLeads(/*userId??0*/ 183, status);
+          await client.getLeads(userId??0, status);
     } catch (e, s) {
+      print(e);
       print(s);
     }
-    print("apiResponse------->" + response.msg!);
+    print("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
       isLoading(false);
       leadsList.value = response.data ?? [];
@@ -51,7 +53,7 @@ class LeadsController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }
@@ -63,15 +65,15 @@ class LeadsController extends GetxController {
     } catch (e, s) {
       print(s);
     }
-    print("apiResponse------->" + leadDetailResponse.value.msg!);
+    print("apiResponse------->" + leadDetailResponse.value.msg.toString());
     if (leadDetailResponse.value.status == true) {
       isLoading(false);
 
       return leadDetailResponse.value;
     } else {
       isLoading(false);
-      Get.snackbar(leadDetailResponse.value.msg ?? "", "",
-          colorText: kWhiteColor);
+
+      showToastMsg(leadDetailResponse.value.msg ?? "");
     }
     return leadDetailResponse.value;
   }

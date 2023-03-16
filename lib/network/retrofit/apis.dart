@@ -20,5 +20,9 @@ class Apis {
   static const String withdrawalRequest = 'Withdrawalrequests';
   static const String viewtask = 'viewtask';
   static const String leadSubmit = 'lead_submit';
+  static const String kycUpdate = 'kycUpdate';
+  static const String myAccount = 'myaccount';
+  static const String updateProfile = 'update_profile';
+  static const String userKycData = 'user_kyc_data';
   // static const String NOIMAGEURL = AppConstants.baseUrl+ 'images/wk_pos/no-image.png';
 }

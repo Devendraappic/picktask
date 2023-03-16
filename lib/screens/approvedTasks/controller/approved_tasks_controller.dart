@@ -26,11 +26,10 @@ class ApprovedTasksController extends GetxController {
     try {
       isLoading(true);
       response =
-          await client.getApprovedTaskList(/*userId??0*/ 183);
+          await client.getApprovedTaskList(userId??0 );
     } catch (e, s) {
       print(s);
     }
-   // print("apiResponse------->" + response.msg!);
     if (response.status == true) {
       isLoading(false);
       taskList.value = response.data ?? [];

@@ -7,13 +7,14 @@ import 'package:picktask/screens/account/account.dart';
 import 'package:picktask/screens/earning/earning.dart';
 import 'package:picktask/screens/home/ui/home.dart';
 import 'package:picktask/screens/category/ui/category.dart';
-import 'package:picktask/screens/leads/leads.dart';
+import 'package:picktask/screens/leads/ui/leads.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/images.dart';
 import 'package:picktask/utils/method.dart';
 
 class HomeNav extends StatefulWidget {
   RxInt index;
+
   HomeNav({
     required this.index,
   });
@@ -44,8 +45,8 @@ class _ProfileScreenState extends State<HomeNav> {
               index: s.selectedIndex,
               children: const <Widget>[
                 Home(),
-                Leads(),
                 Category(),
+                Leads(),
                 Earning(),
                 Account()
               ],
@@ -81,8 +82,8 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
-              child: SvgPicture.asset(
-                home_icon, // explore icon
+              child: Image.asset(
+                "assets/icons/ic_home.png", // explore icon
                 width: 18,
                 color: profileController._selectedIndex == 0.obs
                     ? kWhiteColor
@@ -92,33 +93,33 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
             label: "Home",
           ),
 
-          //groups
+          // category
           BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
-                child: SvgPicture.asset(
-                  leads_icon, // groups icon
+                child: Image.asset(
+                  "assets/icons/tasks.png", //categories icon
                   width: 18,
                   color: profileController._selectedIndex == 1.obs
                       ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
-              label: "Leads"),
+              label: "Task"),
 
-          // category
+          //groups
           BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
-                child: SvgPicture.asset(
-                  task_icon, //categories icon
+                child: Image.asset(
+                  "assets/icons/my_leads.png", // groups icon
                   width: 18,
                   color: profileController._selectedIndex == 2.obs
                       ? kWhiteColor
                       : kWhiteColor,
                 ),
               ),
-              label: "Task"),
+              label: "Leads"),
 
           // marketplace
           BottomNavigationBarItem(
@@ -138,8 +139,8 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(bottom: 3.0),
-                child: SvgPicture.asset(
-                  account_icon, // account/me icon
+                child: Image.asset(
+                  "assets/icons/my account.png", // account/me icon
                   width: 20,
                   color: profileController._selectedIndex == 4.obs
                       ? kWhiteColor
@@ -152,7 +153,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
         ],
         currentIndex: s.selectedIndex,
         selectedItemColor: kWhiteColor,
-        unselectedItemColor:kWhiteColor ,
+        unselectedItemColor: kWhiteColor,
         selectedFontSize: 12,
         unselectedFontSize: 12,
         onTap: (index) => s.onItemTapped(index),
@@ -169,7 +170,9 @@ class ProfileController extends GetxController {
 //       Get.put(LearningPathIndex(), permanent: false);
 
   late RxInt _selectedIndex = 0.obs;
+
   set selectedIndex(value) => this._selectedIndex.value = value;
+
   get selectedIndex => this._selectedIndex.value;
 
   onItemTapped(int index) {

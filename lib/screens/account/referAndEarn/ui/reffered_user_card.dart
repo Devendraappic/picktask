@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:picktask/components/image_view.dart';
 import 'package:picktask/screens/account/referAndEarn/model/refer_and_earn_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
@@ -19,10 +20,30 @@ class ReferedUser extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                CircleAvatar(
-                  maxRadius: w * 0.07,
-                  backgroundImage: NetworkImage(
-                      referUserData?.profilePic??"https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.jpg?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="),
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: ImageView(
+                    imageUrl: referUserData?.profilePic??"",
+                    isCircular: true,
+                    radius: 30,
+                    width: 60.0,
+                    height: 60.0,
+                    errorWidget: const CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: CircleAvatar(
+                          child: Icon(
+                            Icons.person,
+                            size: 40,
+                          ),
+                          radius: 40,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   width: w * 0.02,

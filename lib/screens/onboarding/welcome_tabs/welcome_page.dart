@@ -18,12 +18,12 @@ class WelcomeTab extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Image.network(
+            Image.asset(
               image,
               fit: BoxFit.scaleDown,
-              width: 200,
-              height: 200,),
-            SizedBox(height: 60,),
+              height: 300,
+          ),
+            //SizedBox(height: 60,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Text(

@@ -49,8 +49,7 @@ class ReferAndEarnController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      //closeDialog();
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:picktask/components/leads_card.dart';
+import 'package:picktask/screens/leads/ui/leads_card.dart';
 import 'package:picktask/screens/approvedTasks/ui/approved_tasks.dart';
 import 'package:picktask/screens/category/ui/category.dart';
 import 'package:picktask/screens/leads/controller/leads_controller.dart';
@@ -94,7 +94,7 @@ class _LeadsState extends State<Leads> {
                           );
                         }),
                   ),
-                  Expanded(
+                  leadsController.isLoading==true?loader:Expanded(
                     child: ListView.builder(
                       itemCount: leadsController.leadsList.length,
                       shrinkWrap: true,

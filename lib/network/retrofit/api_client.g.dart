@@ -24,6 +24,7 @@ class _ApiClient implements ApiClient {
   Future<LoginResponse> userLogin(
     email,
     password,
+    firebaseToken,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -31,6 +32,7 @@ class _ApiClient implements ApiClient {
     final _data = {
       'email': email,
       'password': password,
+      'token': firebaseToken,
     };
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<LoginResponse>(Options(
@@ -56,6 +58,7 @@ class _ApiClient implements ApiClient {
     email,
     password,
     referalCode,
+    firebaseToken,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -66,6 +69,7 @@ class _ApiClient implements ApiClient {
       'email': email,
       'password': password,
       'referal_code': referalCode,
+      'token': firebaseToken,
     };
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
@@ -111,6 +115,7 @@ class _ApiClient implements ApiClient {
   Future<VerifyOTPResponse> verifyOtp(
     otp,
     mobile,
+    firebaseToken,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -118,6 +123,7 @@ class _ApiClient implements ApiClient {
     final _data = {
       'otp': otp,
       'mob_no': mobile,
+      'token': firebaseToken,
     };
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<VerifyOTPResponse>(Options(
@@ -462,17 +468,210 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<LeadSubmitResponse> submitLeadRequest(map) async {
+  Future<KycUpdateModel> updateKyc(
+    userId,
+    name_onpencard,
+    gender,
+    city,
+    pincode,
+    pan_number,
+    ocupation,
+    annual_income,
+    dob,
+    acc_holder_name,
+    account_num,
+    ifsc_code,
+    bank_name,
+    bank_proof,
+    pencard_img,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'user_id',
+      userId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'name_onpencard',
+      name_onpencard,
+    ));
+    _data.fields.add(MapEntry(
+      'gender',
+      gender,
+    ));
+    _data.fields.add(MapEntry(
+      'city',
+      city,
+    ));
+    _data.fields.add(MapEntry(
+      'pincode',
+      pincode,
+    ));
+    _data.fields.add(MapEntry(
+      'pan_number',
+      pan_number,
+    ));
+    _data.fields.add(MapEntry(
+      'ocupation',
+      ocupation,
+    ));
+    _data.fields.add(MapEntry(
+      'annual_income',
+      annual_income,
+    ));
+    _data.fields.add(MapEntry(
+      'dob',
+      dob,
+    ));
+    _data.fields.add(MapEntry(
+      'acc_holder_name',
+      acc_holder_name,
+    ));
+    _data.fields.add(MapEntry(
+      'account_num',
+      account_num,
+    ));
+    _data.fields.add(MapEntry(
+      'ifsc_code',
+      ifsc_code,
+    ));
+    _data.fields.add(MapEntry(
+      'bank_name',
+      bank_name,
+    ));
+    if(bank_proof?.path.isNotEmpty==true){
+      _data.files.add(MapEntry(
+        'bank_proof',
+        MultipartFile.fromFileSync(
+          bank_proof!.path,
+          filename: bank_proof.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
+    _data.files.add(MapEntry(
+      'pencard_img',
+      MultipartFile.fromFileSync(
+        pencard_img.path,
+        filename: pencard_img.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<KycUpdateModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              'kycUpdate',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = KycUpdateModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UpdateProfilePicResponse> updateProfile(
+    userId,
+    image,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(map);
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'user_id',
+      userId.toString(),
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UpdateProfilePicResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              'update_profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UpdateProfilePicResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<MyAccountResponse> myAccountRequest(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'userid': userId};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MyAccountResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'myaccount',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = MyAccountResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<LeadSubmitResponse> submitLeadRequest(
+    userId,
+    jobId,
+    data,
+    images,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'user_id',
+      userId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'job_id',
+      jobId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'data',
+      jsonEncode(data),
+    ));
+    _data.files.addAll(images.map((i) => MapEntry(
+        'images',
+        MultipartFile.fromFileSync(
+          i.path,
+          filename: i.path.split(Platform.pathSeparator).last,
+        ))));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<LeadSubmitResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
@@ -486,14 +685,17 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<TaskDetailResponse> getTaskDetails(taskId) async {
+  Future<TaskDetailResponse> getTaskDetails(
+    taskId,
+    userId,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = {'user_id': userId};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TaskDetailResponse>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
@@ -505,6 +707,29 @@ class _ApiClient implements ApiClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TaskDetailResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<KycDetailResponse> getKYCDetails(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'user_id': userId};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<KycDetailResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'user_kyc_data',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = KycDetailResponse.fromJson(_result.data!);
     return value;
   }
 

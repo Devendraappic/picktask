@@ -21,8 +21,8 @@ class ApprovedTaskCard extends StatelessWidget {
       onTap: (){
         },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 3),
-        height: h * 0.10,
+        padding: EdgeInsets.all(10),
+        //height: h * 0.10,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -45,8 +45,8 @@ class ApprovedTaskCard extends StatelessWidget {
             Center(
               //child: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Piggy_Bank_or_Savings_Flat_Icon_Vector.svg/2048px-Piggy_Bank_or_Savings_Flat_Icon_Vector.svg.png")),
                 child: ImageView(imageUrl:approvedTaskData.photo??"", isCircular: false,
-                  height: w * 0.19,
-                  width: w * 0.19,
+                  height: w * 0.17,
+                  width: w * 0.17,
                   radius: 10,
 
                 )),
@@ -58,7 +58,7 @@ class ApprovedTaskCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  approvedTaskData.jobType??"",
+                  approvedTaskData.jobname??"",
                   maxLines: 1,
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
@@ -68,7 +68,7 @@ class ApprovedTaskCard extends StatelessWidget {
                 SizedBox(
                   width: w * 0.6,
                   child: Text(
-                    approvedTaskData.jobname??"",
+                    approvedTaskData.jobType??"",
                     maxLines: 1,
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
@@ -78,12 +78,11 @@ class ApprovedTaskCard extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(()=>CreateLead(taskId: approvedTaskData.jobId??0,title:approvedTaskData.jobType??"",image: approvedTaskData.photo??"",));
+                    Get.to(()=>CreateLead(taskId: approvedTaskData.jobId??0,title:approvedTaskData.jobname??"",image: approvedTaskData.photo??"",));
                   },
                   child: Container(
-                    // height: h * 0.02,
-                    // width: w * 0.15,
-                    padding: EdgeInsets.symmetric(horizontal: 7),
+
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(
@@ -104,7 +103,7 @@ class ApprovedTaskCard extends StatelessWidget {
                         "Add Lead",
                         style: GoogleFonts.poppins(
                             color: kWhiteColor,
-                            fontSize: w * 0.03,
+                            fontSize: w * 0.04,
                             fontWeight: FontWeight.w600),
                       ),
                     ),

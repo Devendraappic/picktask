@@ -14,3 +14,4 @@ String? referCode = storage.read("ref_code");
 bool? isLogin = storage.read("is_login");
 String? partnerId = storage.read("partner_id");
 String? profilePic = storage.read("profile_pic");
+String? firebaseToken = storage.read("firebase_token");

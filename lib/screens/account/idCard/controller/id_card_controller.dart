@@ -17,7 +17,7 @@ class IdCardController extends GetxController {
   var isLoading = false.obs;
 
   final client = ApiClient();
-
+ var idCardResponse= IdCardResponse().obs;
   @override
   void onInit() {
     super.onInit();
@@ -35,6 +35,7 @@ class IdCardController extends GetxController {
     }
     debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
+      idCardResponse(response);
       await storage.write('is_login', true);
       await storage.write('id', response.data?.id??0);
       await storage.write('role', response.data?.role??"");
@@ -72,8 +73,7 @@ class IdCardController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      //closeDialog();
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

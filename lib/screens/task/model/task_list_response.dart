@@ -40,8 +40,12 @@ class TaskData {
   int? isImage;
   int? paymentId;
   int? adminStatus;
-  dynamic trackingtime;
+  String? trackingtime;
   String? earning;
+  String? shareUrl;
+  String? shareMessage;
+  String? tagline;
+  String? bannerimg;
 
   TaskData(
       {this.id,
@@ -57,7 +61,11 @@ class TaskData {
         this.paymentId,
         this.adminStatus,
         this.trackingtime,
-        this.earning});
+        this.earning,
+        this.shareUrl,
+        this.shareMessage,
+        this.tagline,
+        this.bannerimg});
 
   TaskData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -74,6 +82,10 @@ class TaskData {
     adminStatus = json['admin_status'];
     trackingtime = json['trackingtime'];
     earning = json['earning'];
+    shareUrl = json['share_url'];
+    shareMessage = json['share_message'];
+    tagline = json['tagline'];
+    bannerimg = json['bannerimg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +104,10 @@ class TaskData {
     data['admin_status'] = this.adminStatus;
     data['trackingtime'] = this.trackingtime;
     data['earning'] = this.earning;
+    data['share_url'] = this.shareUrl;
+    data['share_message'] = this.shareMessage;
+    data['tagline'] = this.tagline;
+    data['bannerimg'] = this.bannerimg;
     return data;
   }
 }

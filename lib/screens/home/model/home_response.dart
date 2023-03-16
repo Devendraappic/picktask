@@ -1,88 +1,43 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'home_response.g.dart';
+
+@JsonSerializable()
 class HomePageResponse {
   bool? status;
   String? msg;
-  Data? data;
+  HomePageData? data;
 
   HomePageResponse({this.status, this.msg, this.data});
 
-  HomePageResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-  }
+  factory HomePageResponse.fromJson(Map<String, dynamic> json) => _$HomePageResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$HomePageResponseToJson(this);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
 }
-
-class Data {
+@JsonSerializable()
+class HomePageData {
   int? earning;
   String? name;
   List<Topbaner>? topbaner;
   List<Webinar>? webinar;
 
-  Data({this.earning, this.name, this.topbaner, this.webinar});
+  HomePageData({this.earning, this.name, this.topbaner, this.webinar});
 
-  Data.fromJson(Map<String, dynamic> json) {
-    earning = json['earning'];
-    name = json['name'];
-    if (json['topbaner'] != null) {
-      topbaner = <Topbaner>[];
-      json['topbaner'].forEach((v) {
-        topbaner!.add(new Topbaner.fromJson(v));
-      });
-    }
-    if (json['webinar'] != null) {
-      webinar = <Webinar>[];
-      json['webinar'].forEach((v) {
-        webinar!.add(new Webinar.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['earning'] = this.earning;
-    data['name'] = this.name;
-    if (this.topbaner != null) {
-      data['topbaner'] = this.topbaner!.map((v) => v.toJson()).toList();
-    }
-    if (this.webinar != null) {
-      data['webinar'] = this.webinar!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  factory HomePageData.fromJson(Map<String, dynamic> json) => _$HomePageDataFromJson(json);
+  Map<String, dynamic> toJson() => _$HomePageDataToJson(this);
 }
-
+@JsonSerializable()
 class Topbaner {
   int? id;
+  @JsonKey(name: "banner_pic")
   String? bannerPic;
   String? link;
 
   Topbaner({this.id, this.bannerPic, this.link});
-
-  Topbaner.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    bannerPic = json['banner_pic'];
-    link = json['link'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['banner_pic'] = this.bannerPic;
-    data['link'] = this.link;
-    return data;
-  }
+  factory Topbaner.fromJson(Map<String, dynamic> json) => _$TopbanerFromJson(json);
+  Map<String, dynamic> toJson() => _$TopbanerToJson(this);
 }
-
+@JsonSerializable()
 class Webinar {
   int? id;
   String? content;
@@ -90,7 +45,9 @@ class Webinar {
   String? image;
   String? date;
   String? time;
+  @JsonKey(name: "created_at")
   String? createdAt;
+  @JsonKey(name: "updated_at")
   String? updatedAt;
 
   Webinar(
@@ -102,28 +59,6 @@ class Webinar {
         this.time,
         this.createdAt,
         this.updatedAt});
-
-  Webinar.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    content = json['content'];
-    url = json['url'];
-    image = json['image'];
-    date = json['date'];
-    time = json['time'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['content'] = this.content;
-    data['url'] = this.url;
-    data['image'] = this.image;
-    data['date'] = this.date;
-    data['time'] = this.time;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  factory Webinar.fromJson(Map<String, dynamic> json) => _$WebinarFromJson(json);
+  Map<String, dynamic> toJson() => _$WebinarToJson(this);
 }

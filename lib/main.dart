@@ -1,12 +1,37 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/onboarding/splash.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+AndroidNotificationChannel? channel;
+
+FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+late FirebaseMessaging messaging;
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  print('notification(${notificationResponse.id}) action tapped: '
+      '${notificationResponse.actionId} with'
+      ' payload: ${notificationResponse.payload}');
+  if (notificationResponse.input?.isNotEmpty ?? false) {
+    print(
+        'notification action tapped with input: ${notificationResponse.input}');
+  }
+}
 void main() async {
   runZonedGuarded(() async {
     //for register services
@@ -17,6 +42,58 @@ void main() async {
       // systemNavigationBarColor: Colors.blue, // navigation bar color
       statusBarColor: Colors.transparent, // status bar color
     ));
+    await Firebase.initializeApp();
+
+    messaging = FirebaseMessaging.instance;
+
+    await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    //If subscribe based sent notification then use this token
+    final fcmToken = await messaging.getToken();
+    print("firebase token::: $fcmToken");
+    await storage.write('firebase_token', fcmToken);
+    //If subscribe based on topic then use this
+   // await messaging.subscribeToTopic('flutter_notification');
+
+    // Set the background messaging handler early on, as a named top-level function
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    if (!kIsWeb) {
+      channel = const AndroidNotificationChannel(
+          'flutter_notification', // id
+          'flutter_notification_title', // title
+          importance: Importance.high,
+          enableLights: true,
+          enableVibration: true,
+          showBadge: true,
+          playSound: true);
+
+      flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+      final android =
+      AndroidInitializationSettings('@drawable/ic_notifications_icon');
+      final iOS = DarwinInitializationSettings();
+      final initSettings = InitializationSettings(android: android, iOS: iOS);
+
+      await flutterLocalNotificationsPlugin!.initialize(initSettings,
+          onDidReceiveNotificationResponse: notificationTapBackground,
+          onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
+
+      await messaging
+          .setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
     runApp(const Picktask());
     OnboardingController();
   }, (error, stack) {
@@ -35,6 +112,75 @@ class Picktask extends StatefulWidget {
 }
 
 class _PicktaskState extends State<Picktask> {
+  @override
+  void initState() {
+    super.initState();
+
+    setupInteractedMessage();
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) async {
+      RemoteNotification? notification = message?.notification!;
+
+      print(notification != null ? notification.title : '');
+    });
+
+    FirebaseMessaging.onMessage.listen((message) async {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null && !kIsWeb) {
+        String action = jsonEncode(message.data);
+
+        flutterLocalNotificationsPlugin!.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel!.id,
+                channel!.name,
+                priority: Priority.high,
+                importance: Importance.max,
+                setAsGroupSummary: true,
+                styleInformation: DefaultStyleInformation(true, true),
+                largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+                channelShowBadge: true,
+                autoCancel: true,
+                icon: '@drawable/ic_notifications_icon',
+              ),
+            ),
+            payload: action);
+      }
+      print('A new event was published!');
+      print('Handling a background message ${message.notification?.body}');
+    });
+
+    FirebaseMessaging.onMessageOpenedApp
+        .listen((message) => _handleMessage(message.data));
+  }
+
+  Future<dynamic> onSelectNotification(payload) async {
+    Map<String, dynamic> action = jsonDecode(payload);
+    _handleMessage(action);
+  }
+
+  Future<void> setupInteractedMessage() async {
+    await FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((value) => _handleMessage(value != null ? value.data : Map()));
+  }
+
+  void _handleMessage(Map<String, dynamic> data) {
+    if (data['redirect'] == "splash") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const Spalsh()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

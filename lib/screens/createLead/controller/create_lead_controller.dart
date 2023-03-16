@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -48,16 +49,17 @@ class CreateLeadController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }
 
-  Future<LeadSubmitResponse> submitLead(Map<String, dynamic> map) async {
+  Future<LeadSubmitResponse> submitLead(int jobId, Map<String, dynamic> map, List<File> images) async {
     var response;
     try {
       isLoading(true);
-      response = await client.submitLeadRequest(map);
+      log("request data::> userId: $userId,jobId: $jobId, map: ${map.toString()}, file size: ${images.length}");
+      response = await client.submitLeadRequest(userId??0, jobId, map, images);
     } catch (e, s) {
       print(s);
       isLoading(false);
@@ -70,7 +72,7 @@ class CreateLeadController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

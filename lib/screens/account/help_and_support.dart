@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
-import 'package:picktask/controller/accountsController/accounts_controller.dart';
+import 'package:picktask/screens/account/accountsController/accounts_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/utils.dart';
 
 class HelpAndSupport extends StatefulWidget {
   const HelpAndSupport({super.key});
@@ -140,7 +141,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                         radius: 15,
                         leadingIcon: Icon(Icons.call, color: Colors.white,),
                         press: () {
-                          accountsController.openDialer("9997854380");
+                          accountsController.openDialer("9610046706");
                         }),
                   ),
                   SizedBox(
@@ -153,8 +154,12 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                         text: "EMAIL US",
                         radius: 15,
                         leadingIcon: Icon(Icons.email, color: Colors.white,),
-                        press: () {
-                         //todo
+                        press: () async{
+                          try {
+                            await Utils.launchURL("mailto:partners@picktask.in",);
+                          } catch (e) {
+                            debugPrint("sendEmail failed ${e}");
+                          }
                         }),
                   ),
                 ],

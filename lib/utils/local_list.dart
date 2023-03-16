@@ -53,35 +53,35 @@ List categoryList = [
 
 List accountMenuList = [
   {
-    "image": "assets/icons/id card.svg",
+    "image": "assets/icons/id_card.png",
     "title": "My ID Card",
   },
   {
-    "image": "assets/icons/video-icon.svg",
+    "image": "assets/icons/video_icon.png",
     "title": "PickTask Introduction",
   },
   {
-    "image": "assets/icons/referral.svg",
+    "image": "assets/icons/referral.png",
     "title": "My Refferals",
   },
   {
-    "image": "assets/icons/help and support.svg",
+    "image": "assets/icons/help_and_support.png",
     "title": "Help  & Support",
   },
   {
-    "image": "assets/icons/change-password-icon.svg",
+    "image": "assets/icons/change_password.png",
     "title": "Change Password",
   },
   {
-    "image": "assets/icons/privacy-policy-icon.svg",
+    "image": "assets/icons/privacy_policy.png",
     "title": "Privcay Policy",
   },
   {
-    "image": "assets/icons/terms-and-conditions-icon.svg",
+    "image": "assets/icons/terms_and_conditions.png",
     "title": "Terms & Conditions",
   },
   {
-    "image": "assets/icons/logout-line-icon.svg",
+    "image": "assets/icons/logout.png",
     "title": "Logout",
   },
 ];
@@ -91,7 +91,7 @@ List socialList = [
   {"image": "assets/icon/instagram.svg", "width": 20.0},
   {"image": "assets/icon/linkedin.svg", "width": 20.0},
   {"image": "assets/icon/facebook.svg", "width": 20.0},
-  {"image": "assets/icon/twitter.svg", "width": 20.0},
+  {"image": "assets/icon/twitter_icon.svg", "width": 20.0},
   {"image": "assets/icon/youtube.svg", "width": 20.0},
   {"image": "assets/icon/telegram.svg", "width": 20.0},
 ];

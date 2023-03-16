@@ -25,16 +25,15 @@ Widget space(double? height, [double? width]) {
     width: width,
   );
 }
+Future<void> launchYoutube(var url) async {
+  Uri fbBundleUri = Uri.parse(url);
+  try {
+    bool launched = await launchUrl(fbBundleUri,  mode: LaunchMode.externalApplication); // Launch the app if installed!
 
-// lauch url
-
-void launchYoutube(var url) async {
-  if (!await launchUrl(Uri.parse(url))) {
-    throw Exception('Could not launch $url');
+    if (!launched) {
+      launchUrl(fbBundleUri); // Launch web view if app is not installed!
+    }
+  } catch (e) {
+    launchUrl(fbBundleUri); // Launch web view if app is not installed!
   }
-  // print("launchingUrl: hgh");
-
-  // if (await canLaunch(url.toString())) {
-  //   await launch(url.toString());
-  // }
 }

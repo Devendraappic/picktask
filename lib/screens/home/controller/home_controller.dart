@@ -17,20 +17,15 @@ class HomeController extends GetxController {
   var response=HomePageResponse().obs;
   final client = ApiClient();
 
-  @override
-  void onInit() {
-    //getHomePageData(userId??0);
-    super.onInit();
-  }
 
-  Future<HomePageResponse> getHomePageData(int userId) async {
+  Future<HomePageResponse> getHomePageData() async {
     isLoading(true);
     try {
-      response.value = await client.getHomePageData(userId);
+      response.value = await client.getHomePageData(userId??0);
     } catch (e, s) {
+      print(e);
       print(s);
     }
-    debugPrint("apiResponse------->" + response.value.msg!);
     if (response.value.status == true) {
 
       isLoading(false);
@@ -38,7 +33,7 @@ class HomeController extends GetxController {
       return response.value;
     } else {
       isLoading(false);
-      Get.snackbar(response.value.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.value.msg ?? "");
     }
     return response.value;
   }

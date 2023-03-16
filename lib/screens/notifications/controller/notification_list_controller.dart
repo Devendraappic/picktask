@@ -35,7 +35,7 @@ class NotificationListController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

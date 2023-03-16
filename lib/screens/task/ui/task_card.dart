@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/components/image_view.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
-import 'package:picktask/screens/task/task_description.dart';
+import 'package:picktask/screens/task/ui/task_description.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
@@ -23,8 +23,7 @@ class TaskCard extends StatelessWidget {
         Get.to(()=>TaskDescription(taskId:taskData.id??0));
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 3),
-        height: h * 0.10,
+        padding: EdgeInsets.all(10),
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -43,19 +42,20 @@ class TaskCard extends StatelessWidget {
           ),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-                child: ImageView(imageUrl: taskData.photo??"",isCircular: false, radius: 10 , height: w * 0.19,
-                  width: w * 0.19,)),
+                child: ImageView(imageUrl: taskData.photo??"",isCircular: false, radius: 10 , height: w * 0.17,
+                  width: w * 0.17,)),
             SizedBox(
               width: 10,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  taskData.jobType ?? "",
+                  taskData.title ?? "",
                   style: GoogleFonts.poppins(
                       color: kWhiteColor,
                       fontSize: w * 0.045,
@@ -64,13 +64,15 @@ class TaskCard extends StatelessWidget {
                 SizedBox(
                   width: w * 0.6,
                   child: Text(
-                    taskData.description ?? "",
+                    taskData.tagline ?? "",
+                    maxLines: 2,
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.035,
                         fontWeight: FontWeight.w400),
                   ),
                 ),
+                SizedBox(height: 3,),
                 GradientButton(
                   height: h * 0.03,
                   width: w * 0.17,

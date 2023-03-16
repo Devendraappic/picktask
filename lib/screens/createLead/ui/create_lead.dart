@@ -13,6 +13,7 @@ import 'package:picktask/screens/createLead/ui/form_field_item.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:picktask/utils/utils.dart';
 
 class CreateLead extends StatefulWidget {
@@ -130,15 +131,20 @@ class _CreateLeadState extends State<CreateLead> {
                               text: "Submit",
                               radius: 15,
                               press: () {
+
                                 int count=0;
                                 var myMap = <String, String>{};
+                                List<File> images=[];
+
+
                                 for (var element in createLeadsController.formItems) {
                                   if(element.value=="text"){
                                     myMap[element.field??""]=( element.fieldTextController as TextEditingController).text;
-                                  }else if(element.value=="file"){
-                                    myMap[element.field??""]=Utils.convertIntoBase64(File(element.fieldValue));
                                   }
-                                  print(element.fieldTextController.text);
+                                  else if(element.value=="file"){
+                                    images.add(File(element.fieldValue));
+                                    //myMap[element.field??""]=Utils.convertIntoBase64(File(element.fieldValue));
+                                  }
                                   if (element.fieldTextController.text == null ||
                                       element.fieldTextController.text.isEmpty) {
                                     count+=count;
@@ -146,11 +152,10 @@ class _CreateLeadState extends State<CreateLead> {
                                     continue;
                                   }
                                 }
-                                log("sending form data:::> ${myMap.toString()}");
                                 if(count==0){
-                                  createLeadsController.submitLead(myMap).then((value){
+                                  createLeadsController.submitLead(widget.taskId,myMap,images).then((value){
                                     if(value.status==true){
-                                      showLeadSubmitDialog();
+                                      showLeadSubmitDialog(context);
                                     }
                                     myMap.clear();
                                     for (var element in createLeadsController.formItems) {
@@ -170,57 +175,7 @@ class _CreateLeadState extends State<CreateLead> {
     );
   }
 
-  showLeadSubmitDialog() {
-    Get.defaultDialog(
-      radius: 12,
-      content: Wrap(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              alignment: Alignment.center,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: kWhiteColor),
-              child: Center(
-                  child: Image.asset(
-                "assets/images/check.png",
-                width: 80,
-              )),
-            ),
-          ),
-          SizedBox(
-            height: h * 0.1,
-          ),
-          Expanded(
-              child: Text(
-            'Success! Your lead was submitted successfully. We will validate your lead. It will take some time.',
-            textAlign: TextAlign.center,
-          )),
-          SizedBox(
-            height: h * 0.1,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {
-                Get.back(closeOverlays: true);
-              },
-              child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-                  decoration: BoxDecoration(
-                      color: kBlueColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Text(
-                    "Okay",
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
 
 }

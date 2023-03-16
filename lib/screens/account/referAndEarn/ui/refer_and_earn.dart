@@ -8,8 +8,11 @@ import 'package:picktask/components/gradient_button.dart';
 import 'package:picktask/screens/account/referAndEarn/controller/refer_and_earn_controller.dart';
 import 'package:picktask/screens/account/referAndEarn/ui/reffered_user_card.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/local_storage.dart';
+import 'package:share_plus/share_plus.dart';
+import'dart:io' show Platform;
 
 class ReferAndEarn extends StatefulWidget {
   const ReferAndEarn({super.key});
@@ -44,7 +47,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Text(
             "Refer your friends & earn unlimited",
-            style: GoogleFonts.cabin(
+            style: GoogleFonts.poppins(
                 color: kWhiteColor,
                 fontSize: w * 0.05,
                 fontWeight: FontWeight.w700),
@@ -53,7 +56,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
           Text(
             "Get a flat ₹20 in your wallet + 10% of your\n friends earning",
             textAlign: TextAlign.center,
-            style: GoogleFonts.cabin(
+            style: GoogleFonts.poppins(
                 height: 1.2,
                 color: kWhiteColor,
                 fontSize: w * 0.038,
@@ -111,10 +114,26 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                       ),)
                     ],
                   ),
-                  GradientButton(
-                    height: h * 0.03, width: w * 0.2, text: "Share",
-                    firstColor: Colors.yellow,
-                    secondColor: Colors.orange,)
+                  InkWell(
+                    onTap: (){
+                      if(Platform.isAndroid){
+                        if(referAndEarnController.myRefrerId.isNotEmpty){
+                          Share.share(
+                              'Hi Dear\nDownload PickTask app and start earning upto Rs. 1 Lakh every month by completing tasks of over 50+ Indian leading brands like SBI Bank, Axis Bank, PayTm Money, Airtel, Flipkart, Sugar, Lenskart & many more.\n\nYou can also earn ₹20 & 10% lifetime earning by referring your friends & family!\n\nDownload PickTask and Be Your Own Boss!\n\n Link: https://play.google.com/store/apps/details?id=com.picktask\n\n '
+                                  'Use my referral code: ${referAndEarnController.myRefrerId}',
+                              subject: 'Referral code');
+                        }else{
+                          showToastMsg("You have no referral code");
+                        }
+                      }
+
+
+                    },
+                    child: GradientButton(
+                      height: h * 0.03, width: w * 0.2, text: "Share",
+                      firstColor: Colors.yellow,
+                      secondColor: Colors.orange,),
+                  )
                 ]),
           ),
           space(h * 0.02),
@@ -145,7 +164,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                   ),
                   space(h * 0.01),
                   Text(
-                    "So I'm so close to having my app ready to upload to the PlayStore, but I can't get KeyStore figured out. I am using flutter, which provides what I need from java in order to run keytool. I get into the right directory, ( I just followed the docs on this process from flutter.dev) C:\Users\Jake Gill\AndroidStudio\jre\bin I've gone through the process a thousand different ways of adding keystore passwords and my name and city and all that just for it to tell me that the path I provided for the key.jks to be added to is an illegal option. I'm using this from flutter.dev:",
+                    "1. Share PickTask download link and your unique refferal code with your friend or teams.\n\n2. Your friend joins PickTask using your refferal code and complete registration.\n\n3 Your friend needs to complete their first task and get approved.\n\n4. Done! You will get ₹20 in your wallet and 10% refferal income if your friend actives on PickTask",
                     textAlign: TextAlign.start,
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,

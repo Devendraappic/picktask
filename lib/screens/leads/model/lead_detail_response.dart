@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'lead_detail_response.g.dart';
+
+@JsonSerializable()
 class LeadDetailResponse {
   bool? status;
   String? msg;
@@ -6,42 +11,36 @@ class LeadDetailResponse {
 
   LeadDetailResponse({this.status, this.msg, this.imagesbaseurl, this.data});
 
-  LeadDetailResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    msg = json['msg'];
-    imagesbaseurl = json['imagesbaseurl'];
-    data = json['data'] != null ? new LeadDetail.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['msg'] = this.msg;
-    data['imagesbaseurl'] = this.imagesbaseurl;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
+  factory LeadDetailResponse.fromJson(Map<String, dynamic> json) => _$LeadDetailResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$LeadDetailResponseToJson(this);
 }
 
-
+@JsonSerializable()
 class LeadDetail {
   int? id;
+  @JsonKey(name: "partner_id")
   dynamic partnerId;
+  @JsonKey(name: "user_id")
   int? userId;
+  @JsonKey(name: "job_id")
   int? jobId;
   String? name;
   String? mobile;
   String? reason;
   dynamic points;
+  @JsonKey(name: "payment_id")
   String? paymentId;
-  String? leadsData;
+  @JsonKey(name: "leads_data")
+  Map<String, dynamic>? leadsData;
+  @JsonKey(name: "created_at")
   String? createdAt;
+  @JsonKey(name: "updated_at")
   String? updatedAt;
   int? status;
   String? image;
+  @JsonKey(name: "image_status")
   String? imageStatus;
+  @JsonKey(name: "delete_status")
   int? deleteStatus;
   dynamic remarks;
   dynamic city;
@@ -68,50 +67,7 @@ class LeadDetail {
         this.city,
         this.email});
 
-  LeadDetail.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    partnerId = json['partner_id'];
-    userId = json['user_id'];
-    jobId = json['job_id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    reason = json['reason'];
-    points = json['points'];
-    paymentId = json['payment_id'];
-    leadsData = json['leads_data'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    status = json['status'];
-    image = json['image'];
-    imageStatus = json['image_status'];
-    deleteStatus = json['delete_status'];
-    remarks = json['remarks'];
-    city = json['city'];
-    email = json['email'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['partner_id'] = this.partnerId;
-    data['user_id'] = this.userId;
-    data['job_id'] = this.jobId;
-    data['name'] = this.name;
-    data['mobile'] = this.mobile;
-    data['reason'] = this.reason;
-    data['points'] = this.points;
-    data['payment_id'] = this.paymentId;
-    data['leads_data'] = this.leadsData;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['status'] = this.status;
-    data['image'] = this.image;
-    data['image_status'] = this.imageStatus;
-    data['delete_status'] = this.deleteStatus;
-    data['remarks'] = this.remarks;
-    data['city'] = this.city;
-    data['email'] = this.email;
-    return data;
-  }
+  factory LeadDetail.fromJson(Map<String, dynamic> json) => _$LeadDetailFromJson(json);
+  Map<String, dynamic> toJson() => _$LeadDetailToJson(this);
 }
 

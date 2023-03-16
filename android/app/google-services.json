@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "195729084478",
+    "project_id": "picktask-6c2e6",
+    "storage_bucket": "picktask-6c2e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195729084478:android:e4fc41d2ee360b0e8dc16f",
+        "android_client_info": {
+          "package_name": "com.picktask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195729084478-otlj1h9n75j892r2a6bcobtcgoa12gdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqZ_B4Y0CP-3vEinxSHF2gqO16jPGLZ4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195729084478-otlj1h9n75j892r2a6bcobtcgoa12gdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

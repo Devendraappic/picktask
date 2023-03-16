@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/webView.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/controller/login_controller.dart';
@@ -31,6 +32,7 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  var onboardingController = Get.put( OnboardingController());
   var loginController = Get.put(LoginController());
 
   @override
@@ -38,8 +40,8 @@ class _LoginState extends State<Login> {
     // TODO: implement initState
     super.initState();
 
-    emailController.text = "gk@gmail.com";
-    passwordController.text = "12345678";
+    emailController.text = "kapil@picktask.com";
+    passwordController.text = "123456";
   }
 
   @override
@@ -227,6 +229,61 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   space(h * 0.1),
+                  Center(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Text(
+                          "By continuing you are agreeing to our ",
+                          style: GoogleFonts.poppins(
+                              color: kWhiteColor,
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.to(() => WebViewQuests(
+                                title: "Terms & Conditions",
+                                url:
+                                "https://www.picktask.in/terms-and-conditions"));
+
+                          },
+                          child: Text(
+                            "Terms of Use",
+                            style: GoogleFonts.poppins(
+                                foreground: Paint()
+                                  ..shader = linearGradient,
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Text(
+                          " and ",
+                          style: GoogleFonts.poppins(
+                              color: kWhiteColor,
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.to(() => WebViewQuests(
+                                title: "Privacy Policy",
+                                url:
+                                "https://www.picktask.in/privacy-policy"));
+
+                          },
+                          child: Text(
+                            "Privacy Policy",
+                            style: GoogleFonts.poppins(
+                                foreground: Paint()
+                                  ..shader = linearGradient,
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ))),

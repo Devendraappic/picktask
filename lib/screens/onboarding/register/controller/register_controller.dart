@@ -10,6 +10,7 @@ import 'package:picktask/screens/onboarding/otpVerification/ui/otp.dart';
 import 'package:picktask/screens/onboarding/register/model/register_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:picktask/utils/utils.dart';
 
 class RegisterController extends GetxController {
@@ -28,7 +29,7 @@ class RegisterController extends GetxController {
     // showProgressDialog(context);
     isLoading(true);
     try {
-      response = await client.registerUser(name, mobile, email, password, referral);
+      response = await client.registerUser(name, mobile, email, password, referral,firebaseToken??"");
     } catch (e, s) {
       print(s);
     }
@@ -42,8 +43,7 @@ class RegisterController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      // closeDialog();
-      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.message ?? "");
     }
     return response;
   }

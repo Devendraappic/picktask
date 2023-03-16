@@ -6,6 +6,7 @@ import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/screens/task/model/task_detail_response.dart';
 import 'package:picktask/screens/task/model/task_list_response.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/local_storage.dart';
 
 class TaskController extends GetxController {
@@ -14,10 +15,9 @@ class TaskController extends GetxController {
   final client = ApiClient();
 
   var taskDetailResponse = TaskDetailResponse().obs;
-
+  var htmlData = "".obs;
   @override
   void onInit() {
-    //getTaskList("Loan/credit");
     super.onInit();
   }
 
@@ -27,9 +27,10 @@ class TaskController extends GetxController {
       isLoading(true);
       response = await client.getTasks(category);
     } catch (e, s) {
+      print(e);
       print(s);
     }
-    debugPrint("apiResponse------->" + response.msg!);
+    debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
       isLoading(false);
       taskList.value = response.data ?? [];
@@ -37,29 +38,33 @@ class TaskController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
+
     }
     return response;
   }
 
   Future<TaskDetailResponse> getTaskDetail(int taskId) async {
     isLoading(true);
+     var response= TaskDetailResponse();
     try {
-      taskDetailResponse.value = await client.getTaskDetails(taskId);
+      response = await client.getTaskDetails(taskId, userId??0);
     } catch (e, s) {
       isLoading(false);
       print(s);
     }
-    print("apiResponse------->" + taskDetailResponse.value.msg.toString());
-    if (taskDetailResponse.value.status == true) {
+    print("apiResponse------->" + response.msg.toString());
+    if (response.status == true) {
       isLoading(false);
-      return taskDetailResponse.value;
+      taskDetailResponse(response);
+      htmlData(taskDetailResponse.value.data?.description??"");
+      return response;
     } else {
       isLoading(false);
-      Get.snackbar(taskDetailResponse.value.msg ?? "", "",
-          colorText: kWhiteColor);
+
+      showToastMsg(response.msg ?? "");
     }
-    return taskDetailResponse.value;
+    return response;
   }
 
   Future<ApplyJobResponse> applyForJob(int jobId) async {
@@ -75,7 +80,7 @@ class TaskController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.message ?? "");
     }
     return response;
   }

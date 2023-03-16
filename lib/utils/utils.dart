@@ -32,6 +32,5 @@ class Utils {
     return base64File;
   }
 
-
 }
 

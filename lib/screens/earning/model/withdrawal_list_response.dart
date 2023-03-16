@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'withdrawal_list_response.g.dart';
+
+@JsonSerializable()
 class WithdrawalListResponse {
   bool? success;
   WithdrawalData? data;
@@ -5,28 +10,15 @@ class WithdrawalListResponse {
 
   WithdrawalListResponse({this.success, this.data, this.message});
 
-  WithdrawalListResponse.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    data = json['data'] != null ? new WithdrawalData.fromJson(json['data']) : null;
-    message = json['message'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['message'] = this.message;
-    return data;
-  }
+  factory WithdrawalListResponse.fromJson(Map<String, dynamic> json) => _$WithdrawalListResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$WithdrawalListResponseToJson(this);
 }
-
+@JsonSerializable()
 class WithdrawalData {
   String? currentbalance;
-  String? totalamount;
-  List<WithdrawalItemData>? data;
-  List<WithdrawalItemData>? creditedrequests;
+  int? totalamount;
+  List<ListData>? data;
+  List<Creditedrequests>? creditedrequests;
   bool? status;
 
   WithdrawalData(
@@ -35,86 +27,72 @@ class WithdrawalData {
         this.data,
         this.creditedrequests,
         this.status});
+  factory WithdrawalData.fromJson(Map<String, dynamic> json) => _$WithdrawalDataFromJson(json);
+  Map<String, dynamic> toJson() => _$WithdrawalDataToJson(this);
 
-  WithdrawalData.fromJson(Map<String, dynamic> json) {
-    currentbalance = json['currentbalance'];
-    totalamount = json['totalamount'];
-    if (json['data'] != null) {
-      data = <WithdrawalItemData>[];
-      json['data'].forEach((v) {
-        data!.add(new WithdrawalItemData.fromJson(v));
-      });
-    }
-    if (json['creditedrequests'] != null) {
-      creditedrequests = <WithdrawalItemData>[];
-      json['creditedrequests'].forEach((v) {
-        creditedrequests!.add(new WithdrawalItemData.fromJson(v));
-      });
-    }
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['currentbalance'] = this.currentbalance;
-    data['totalamount'] = this.totalamount;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.creditedrequests != null) {
-      data['creditedrequests'] =
-          this.creditedrequests!.map((v) => v.toJson()).toList();
-    }
-    data['status'] = this.status;
-    return data;
-  }
 }
-
-class WithdrawalItemData {
+@JsonSerializable()
+class ListData {
   int? id;
+  @JsonKey(name: "user_id")
   int? userId;
   String? amount;
   int? status;
+  @JsonKey(name: "transaction_id")
   String? transactionId;
-  String? title;
+  @JsonKey(name: "created_at")
   String? createdAt;
+  @JsonKey(name: "updated_at")
   String? updatedAt;
   int? type;
+  String? remarks;
+  String? title;
 
-  WithdrawalItemData(
+  ListData(
       {this.id,
         this.userId,
         this.amount,
         this.status,
         this.transactionId,
-        this.title,
         this.createdAt,
         this.updatedAt,
-        this.type});
+        this.type,
+        this.remarks,
+        this.title});
+  factory ListData.fromJson(Map<String, dynamic> json) => _$ListDataFromJson(json);
+  Map<String, dynamic> toJson() => _$ListDataToJson(this);
 
-  WithdrawalItemData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    amount = json['amount'];
-    status = json['status'];
-    transactionId = json['transaction_id'];
-    title = json['title'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    type = json['type'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['amount'] = this.amount;
-    data['status'] = this.status;
-    data['transaction_id'] = this.transactionId;
-    data['title'] = this.title;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['type'] = this.type;
-    return data;
-  }
 }
+@JsonSerializable()
+class Creditedrequests {
+  int? id;
+  @JsonKey(name: "user_id")
+  int? userId;
+  String? amount;
+  int? status;
+  @JsonKey(name: "transaction_id")
+  String? transactionId;
+  @JsonKey(name: "created_at")
+  String? createdAt;
+  @JsonKey(name: "updated_at")
+  String? updatedAt;
+  int? type;
+  String? remarks;
+  String? title;
+
+  Creditedrequests(
+      {this.id,
+        this.userId,
+        this.amount,
+        this.status,
+        this.transactionId,
+        this.createdAt,
+        this.updatedAt,
+        this.type,
+        this.remarks,
+        this.title});
+  factory Creditedrequests.fromJson(Map<String, dynamic> json) => _$CreditedrequestsFromJson(json);
+  Map<String, dynamic> toJson() => _$CreditedrequestsToJson(this);
+
+}
+

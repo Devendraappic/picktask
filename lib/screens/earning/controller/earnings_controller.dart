@@ -8,12 +8,13 @@ import 'package:picktask/screens/leads/model/lead_detail_response.dart';
 import 'package:picktask/screens/leads/model/leads_list_response.dart';
 import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 
 import '../../../utils/local_storage.dart';
 
 class EarningsController extends GetxController {
   var isLoading = false.obs;
-  var withdrawalList= <WithdrawalItemData>[].obs;
+  var withdrawalList= <ListData>[].obs;
   var withdrawalListResponse = WithdrawalListResponse().obs;
   final client = ApiClient();
 
@@ -24,9 +25,9 @@ class EarningsController extends GetxController {
     var response;
     try {
 
-      response =
-          await client.withdrawalList(userId??0);
+      response = await client.withdrawalList(userId??0);
     } catch (e, s) {
+      print(e);
       print(s);
       isLoading(false);
     }
@@ -54,7 +55,7 @@ class EarningsController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.message ?? "");
     }
     return response;
   }

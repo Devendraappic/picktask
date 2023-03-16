@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/webView.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
@@ -228,12 +229,60 @@ class Register extends StatelessWidget {
                   ],
                 ),
                 space(h * 0.1),
-                Text(
-                  "Terms of use & Privacy Policy",
-                  style: GoogleFonts.poppins(
-                      color: kWhiteColor,
-                      fontSize: w * 0.04,
-                      fontWeight: FontWeight.w400),
+                Center(
+                  child: Wrap(
+                   alignment: WrapAlignment.center,
+                    children: [
+                      Text(
+                        "By continuing you are agreeing to our ",
+                        style: GoogleFonts.poppins(
+                            color: kWhiteColor,
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Get.to(() => WebViewQuests(
+                              title: "Terms & Conditions",
+                              url:
+                              "https://www.picktask.in/terms-and-conditions"));
+
+                        },
+                        child: Text(
+                          "Terms of Use",
+                          style: GoogleFonts.poppins(
+                              foreground: Paint()
+                                ..shader = linearGradient,
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Text(
+                        " and ",
+                        style: GoogleFonts.poppins(
+                            color: kWhiteColor,
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Get.to(() => WebViewQuests(
+                              title: "Privacy Policy",
+                              url:
+                              "https://www.picktask.in/privacy-policy"));
+
+                        },
+                        child: Text(
+                          "Privacy Policy",
+                          style: GoogleFonts.poppins(
+                              foreground: Paint()
+                                ..shader = linearGradient,
+                              fontSize: w * 0.04,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -306,8 +355,6 @@ class Register extends StatelessWidget {
   TextFormField mobileFormField() {
     return TextFormField(
 
-      // autovalidateMode:
-      //     AutovalidateMode.onUserInteraction,
 
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
 

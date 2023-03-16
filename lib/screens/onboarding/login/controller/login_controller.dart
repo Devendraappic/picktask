@@ -8,6 +8,7 @@ import 'package:picktask/network/retrofit/api_client.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:picktask/utils/utils.dart';
 
 class LoginController extends GetxController {
@@ -26,7 +27,7 @@ class LoginController extends GetxController {
     // showProgressDialog(context);
     isLoading(true);
     try {
-      response = await client.userLogin(username, password);
+      response = await client.userLogin(username, password, firebaseToken??"");
     } catch (e, s) {
       print(s);
     }
@@ -72,8 +73,7 @@ class LoginController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      //closeDialog();
-      Get.snackbar(response.message ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.message ?? "");
     }
     return response;
   }

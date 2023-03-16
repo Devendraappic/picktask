@@ -10,6 +10,7 @@ import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:picktask/utils/utils.dart';
 
 class OTPVerificationController extends GetxController {
@@ -17,42 +18,36 @@ class OTPVerificationController extends GetxController {
 
   final client = ApiClient();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<OTPResponse> sendOTP(
       BuildContext context,String mobile) async {
     OTPResponse response = OTPResponse();
-    // showProgressDialog(context);
     isLoading(true);
     try {
       response = await client.sendOtp( mobile);
+      isLoading(false);
     } catch (e, s) {
       print(s);
+      isLoading(false);
     }
     debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
-      isLoading(false);
-    // closeDialog();
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
       return response;
     } else {
       isLoading(false);
-      //closeDialog();
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
+    isLoading(false);
     return response;
   }
 
   Future<VerifyOTPResponse> verifyOTP(
       BuildContext context, String otp, String mobile) async {
     VerifyOTPResponse response = VerifyOTPResponse();
-    //showProgressDialog(context);
     isLoading(true);
     try {
-      response = await client.verifyOtp(otp, mobile);
+      response = await client.verifyOtp(otp, mobile, firebaseToken??"");
     } catch (e, s) {
       print(s);
     }
@@ -96,8 +91,7 @@ class OTPVerificationController extends GetxController {
       return response;
     } else {
       isLoading(false);
-      //closeDialog();
-      Get.snackbar(response.msg ?? "", "", colorText: kWhiteColor);
+      showToastMsg(response.msg ?? "");
     }
     return response;
   }

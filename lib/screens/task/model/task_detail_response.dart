@@ -1,14 +1,14 @@
 class TaskDetailResponse {
   bool? status;
   String? msg;
-  TaskDetails? data;
+  TaskDetail? data;
 
   TaskDetailResponse({this.status, this.msg, this.data});
 
   TaskDetailResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? new TaskDetails.fromJson(json['data']) : null;
+    data = json['data'] != null ? new TaskDetail.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,7 +22,7 @@ class TaskDetailResponse {
   }
 }
 
-class TaskDetails {
+class TaskDetail {
   int? id;
   dynamic partnerId;
   String? title;
@@ -35,10 +35,13 @@ class TaskDetails {
   int? isImage;
   int? paymentId;
   int? adminStatus;
-  dynamic trackingtime;
+  String? trackingtime;
   String? earning;
+  String? shareUrl;
+  String? shareMessage;
+  int? newStatus;
 
-  TaskDetails(
+  TaskDetail(
       {this.id,
         this.partnerId,
         this.title,
@@ -52,9 +55,12 @@ class TaskDetails {
         this.paymentId,
         this.adminStatus,
         this.trackingtime,
-        this.earning});
+        this.earning,
+        this.shareUrl,
+        this.shareMessage,
+        this.newStatus});
 
-  TaskDetails.fromJson(Map<String, dynamic> json) {
+  TaskDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     partnerId = json['partner_id'];
     title = json['title'];
@@ -69,6 +75,9 @@ class TaskDetails {
     adminStatus = json['admin_status'];
     trackingtime = json['trackingtime'];
     earning = json['earning'];
+    shareUrl = json['share_url'];
+    shareMessage = json['share_message'];
+    newStatus = json['new_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +96,9 @@ class TaskDetails {
     data['admin_status'] = this.adminStatus;
     data['trackingtime'] = this.trackingtime;
     data['earning'] = this.earning;
+    data['share_url'] = this.shareUrl;
+    data['share_message'] = this.shareMessage;
+    data['new_status'] = this.newStatus;
     return data;
   }
 }

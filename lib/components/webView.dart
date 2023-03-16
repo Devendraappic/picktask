@@ -15,14 +15,33 @@ class WebViewQuests extends StatefulWidget {
 }
 
 class _WebViewQuestsState extends State<WebViewQuests> {
-  late WebViewController _webViewController;
+  late final WebViewController _webViewController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          // Update loading bar.
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {},
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          // if (request.url.startsWith('https://www.youtube.com/')) {
+          //   return NavigationDecision.prevent;
+          // }
+          return NavigationDecision.navigate;
+        },
+      ),
+    )
+    ..loadRequest(Uri.parse(widget.url));
 
   double progress = 0;
   @override
   void initState() {
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
+    // if (Platform.isAndroid) {
+    //   WebView.platform = SurfaceAndroidWebView();
+    // }
     super.initState();
   }
 
@@ -50,8 +69,9 @@ class _WebViewQuestsState extends State<WebViewQuests> {
             color: kPrimaryColor,
           ),
           Expanded(
-              child: WebView(
-            initialUrl: widget.url,
+              child: WebViewWidget(
+                controller: _webViewController,
+
           )),
         ],
       ),

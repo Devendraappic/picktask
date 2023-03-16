@@ -11,6 +11,7 @@ import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/screens/onboarding/otpVerification/controller/otp_controller.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
 
 import '../../register/ui/register.dart';
@@ -47,7 +48,8 @@ class _OtpState extends State<Otp> {
   @override
   void initState() {
     super.initState();
-    oTpVerificationController.sendOTP(context, widget.number);
+    print("init state called...");
+    // oTpVerificationController.sendOTP(context, widget.number);
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
     pin3FocusNode = FocusNode();
@@ -77,6 +79,10 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      oTpVerificationController.sendOTP(context, widget.number);
+    });
     return Scaffold(
       extendBody: true,
       body: Padding(
@@ -450,7 +456,7 @@ class _OtpState extends State<Otp> {
 
               space(h * 0.03),
 
-              Obx(() => oTpVerificationController.isLoading.value
+              Obx(() => oTpVerificationController.isLoading.value==true
                   ? loader
                   : DefaultButton(
                       width: double.infinity,
@@ -466,8 +472,8 @@ class _OtpState extends State<Otp> {
                           oTpVerificationController.verifyOTP(context,
                                sub.toString(),widget.number.toString());
                         } else {
-                          Get.snackbar("Please enter 4 digit OTP", "",
-                              colorText: kWhiteColor);
+
+                          showToastMsg("Please enter 4 digit OTP");
                         }
                       })),
 
