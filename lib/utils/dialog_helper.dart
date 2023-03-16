@@ -447,7 +447,6 @@ logoutDialogue(BuildContext context) {
       return AlertDialog(
           scrollable: true,
           contentPadding: EdgeInsets.zero,
-          // backgroundColor: kWhiteColor,
           titlePadding: EdgeInsets.zero,
           backgroundColor: Colors.amber,
           shape: RoundedRectangleBorder(
@@ -538,27 +537,26 @@ logoutDialogue(BuildContext context) {
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
                             ),
-                            onPressed: () {
-                              storage.erase();
-                              storage.remove('token');
-                              storage.remove('id');
-                              storage.remove('role');
-                              storage.remove('name');
-                              storage.remove('first_name');
-                              storage.remove('reffercode');
-                              storage.remove('email');
-                              storage.remove('last_name');
-                              storage.remove('mobile');
-                              storage.remove('profile_pic');
-                              storage.remove('ranking');
-                              storage.remove('earning');
-                              storage.remove('total_wallet_amount');
-                              storage.remove('current_wallet_amout');
-                              storage.remove('status');
-
-                              storage.remove('approve');
-                              storage.remove('kyc_status');
-                              Get.offAll(Login());
+                            onPressed: () async {
+                             await storage.erase();
+                             await storage.remove('token');
+                             await storage.remove('id');
+                             await storage.remove('role');
+                             await storage.remove('name');
+                             await storage.remove('first_name');
+                             await storage.remove('reffercode');
+                             await storage.remove('email');
+                             await storage.remove('last_name');
+                             await storage.remove('mobile');
+                             await storage.remove('profile_pic');
+                             await storage.remove('ranking');
+                             await storage.remove('earning');
+                             await storage.remove('total_wallet_amount');
+                             await storage.remove('current_wallet_amout');
+                             await storage.remove('status');
+                             await storage.remove('approve');
+                             await storage.remove('kyc_status');
+                             Get.offAll(Login());
                             },
                             child: Text(
                               "Confirm",

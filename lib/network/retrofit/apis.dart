@@ -3,8 +3,8 @@ import 'package:picktask/constants/app_constants.dart';
 class Apis {
   static const String login = 'login';
   static const String signup = 'register';
-  static const String sendOtp = 'sendotp';
-  static const String otpVerify = 'matchotp';
+  static const String sendOtp = 'loginwithotp';
+  static const String otpVerify = 'mobile_otpmatch';
   static const String identityCard = 'identitycard';
   static const String myReferals = 'myreferals';
   static const String changePassword = 'changepassword';

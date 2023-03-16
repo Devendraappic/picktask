@@ -1,55 +1,28 @@
-class RegisterResponse {
-  bool? success;
+class VerifyOTPResponse {
+  bool? status;
+  String? msg;
   Data? data;
-  String? name;
-  String? message;
-  String? token;
 
-  RegisterResponse(
-      {this.success, this.data, this.name, this.message, this.token});
+  VerifyOTPResponse({this.status, this.msg, this.data});
 
-  RegisterResponse.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
+  VerifyOTPResponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    msg = json['msg'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    name = json['name'];
-    message = json['message'];
-    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    data['status'] = this.status;
+    data['msg'] = this.msg;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['name'] = this.name;
-    data['message'] = this.message;
-    data['token'] = this.token;
     return data;
   }
 }
 
 class Data {
-  UserData? userData;
-
-  Data({this.userData});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    userData = json['userData'] != null
-        ? new UserData.fromJson(json['userData'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.userData != null) {
-      data['userData'] = this.userData!.toJson();
-    }
-    return data;
-  }
-}
-
-class UserData {
   int? id;
   String? role;
   dynamic referBy;
@@ -60,7 +33,7 @@ class UserData {
   dynamic lastName;
   String? mobile;
   String? profilePic;
-  dynamic ranking;
+  String? ranking;
   int? earning;
   dynamic creditScore;
   dynamic emailVerifiedAt;
@@ -70,7 +43,7 @@ class UserData {
   String? currentWalletAmout;
   int? status;
   dynamic approve;
-  dynamic deviceId;
+  String? deviceId;
   int? kycStatus;
   dynamic partnerId;
   dynamic trackingtime;
@@ -78,7 +51,7 @@ class UserData {
   dynamic otp;
   String? token;
 
-  UserData(
+  Data(
       {this.id,
         this.role,
         this.referBy,
@@ -107,7 +80,7 @@ class UserData {
         this.otp,
         this.token});
 
-  UserData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     role = json['role'];
     referBy = json['refer_by'];

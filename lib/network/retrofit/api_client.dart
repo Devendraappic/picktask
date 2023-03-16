@@ -20,6 +20,7 @@ import 'package:picktask/screens/notifications/model/notification_list_response.
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/network/retrofit/apis.dart';
 import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
+import 'package:picktask/screens/onboarding/otpVerification/mode/otp_verify_response.dart';
 import 'package:picktask/screens/onboarding/register/model/register_response.dart';
 import 'package:picktask/screens/task/model/apply_job_response.dart';
 import 'package:picktask/screens/task/model/task_detail_response.dart';
@@ -79,13 +80,17 @@ abstract class ApiClient {
     @Field('token') String firebaseToken,
   );
 
+
   @POST(Apis.sendOtp)
-  Future<OTPResponse> sendOtp(@Field('mob_no') String mobile);
+  Future<OTPResponse> sendOtp(
+      @Field('mob_num') String mobile,
+      @Field('token') String firebaseToken,
+      );
 
   @POST(Apis.otpVerify)
   Future<VerifyOTPResponse> verifyOtp(
       @Field('otp') String otp,
-      @Field('mob_no') String mobile,
+      @Field('mob_num') String mobile,
       @Field('token') String firebaseToken,
       );
 

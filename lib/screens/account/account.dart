@@ -22,7 +22,6 @@ import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/hex_color.dart';
 import 'package:picktask/utils/local_list.dart';
 import 'package:picktask/utils/local_storage.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../utils/extra_widget.dart';
 
@@ -170,10 +169,7 @@ class _AccountState extends State<Account> {
                         ),
                         InkWell(
                           onTap: () {
-                            if(kycStatus!=0){
-                              Get.to(() => Kyc());
-                            }
-
+                            Get.to(() => Kyc());
                           },
                           child: Container(
                             height: h * 0.03,
@@ -302,80 +298,6 @@ class _AccountState extends State<Account> {
                                       default:
                                         {
                                           logoutDialogue(context);
-
-                                          // Get.defaultDialog(
-                                          //     contentPadding: EdgeInsets.all(10),
-                                          //     title: "",
-
-                                          //     // titleStyle: TextStyle(color: Colors.black, fontSize: 17),
-
-                                          //     content: Column(
-                                          //       children: [
-                                          //         Text(
-                                          //             "Are you sure you want to "
-                                          //             "\nLogout?",
-                                          //             textAlign: TextAlign.center,
-                                          //             style: GoogleFonts.cabin(
-                                          //                 color: Colors.black,
-                                          //                 fontSize: 18,
-                                          //                 fontWeight:
-                                          //                     FontWeight.w500)),
-                                          //         SizedBox(
-                                          //           height: 20,
-                                          //         ),
-                                          //         SizedBox(
-                                          //           width: 140,
-                                          //           height: 40,
-                                          //           child: TextButton(
-                                          //             style: TextButton.styleFrom(
-                                          //               shape: RoundedRectangleBorder(
-                                          //                   borderRadius:
-                                          //                       BorderRadius.circular(
-                                          //                           10)),
-                                          //               backgroundColor:
-                                          //                   kPrimaryColor,
-                                          //             ),
-                                          //             onPressed: () async {
-                                          //               Get.offAllNamed("/login");
-                                          //             },
-                                          //             child: Text(
-                                          //               "Logout",
-                                          //               style: GoogleFonts.cabin(
-                                          //                   color: Colors.white,
-                                          //                   fontSize: 16,
-                                          //                   fontWeight:
-                                          //                       FontWeight.w600),
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         SizedBox(
-                                          //           height: 5,
-                                          //         ),
-                                          //         SizedBox(
-                                          //           width: 140,
-                                          //           height: 40,
-                                          //           child: TextButton(
-                                          //             style: TextButton.styleFrom(
-                                          //               shape: RoundedRectangleBorder(
-                                          //                   borderRadius:
-                                          //                       BorderRadius.circular(
-                                          //                           20)),
-                                          //             ),
-                                          //             onPressed: () {
-                                          //               Get.back();
-                                          //             },
-                                          //             child: Text(
-                                          //               "Cancel",
-                                          //               style: GoogleFonts.cabin(
-                                          //                   color: Colors.black,
-                                          //                   fontSize: 16,
-                                          //                   fontWeight:
-                                          //                       FontWeight.w600),
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //       ],
-                                          //     ));
 
                                         }
                                     }

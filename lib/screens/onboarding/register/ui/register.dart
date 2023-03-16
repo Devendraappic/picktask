@@ -195,7 +195,7 @@ class Register extends StatelessWidget {
                               ? ""
                               : refferalController.text.trim()).then((value) {
                         if (value.success == true) {
-                          Get.to(() => Otp(number: mobileController.text.trim()));
+                          Get.offAll(HomeNav(index: 0.obs));
                         }
                       });
                     }))),

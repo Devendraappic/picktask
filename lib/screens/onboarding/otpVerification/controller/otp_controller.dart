@@ -8,6 +8,7 @@ import 'package:picktask/network/retrofit/api_client.dart';
 import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
+import 'package:picktask/screens/onboarding/otpVerification/mode/otp_verify_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/local_storage.dart';
@@ -24,7 +25,7 @@ class OTPVerificationController extends GetxController {
     OTPResponse response = OTPResponse();
     isLoading(true);
     try {
-      response = await client.sendOtp( mobile);
+      response = await client.sendOtp( mobile, firebaseToken??"");
       isLoading(false);
     } catch (e, s) {
       print(s);

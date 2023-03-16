@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart'; // for date format
 import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/screens/account/accountsController/accounts_controller.dart';
 import 'package:picktask/utils/color.dart';
@@ -14,6 +14,7 @@ import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extensions.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/local_storage.dart';
+import 'package:get/get.dart';
 
 class BankDetails extends StatefulWidget {
   String? name, gender, city, pincode,panNo, occupation, annualIncome, dob;
@@ -175,7 +176,7 @@ class _BankDetailsState extends State<BankDetails> {
               ],
             ),
             space(h * 0.04),
-            if(kycStatus!=1)
+            if(kycStatus!=1 /*|| kycStatus!=0*/)
               Obx(() {
                 return DefaultButton(
                     width: double.infinity,
@@ -184,7 +185,7 @@ class _BankDetailsState extends State<BankDetails> {
                     accountsController.actionButtonTextBankDetail.value,
                     radius: 15,
                     press: () {
-                      if(kycStatus==0 ||kycStatus==1){
+                      if(kycStatus==1){
                         return;
                       }
                       if (accountsController.nameController.text == null || accountsController.nameController.text.isEmpty) {
@@ -249,11 +250,13 @@ class _BankDetailsState extends State<BankDetails> {
                                 .value ==
                                 AppStrings.txtSubmit)
                               {
-                                accountsController
-                                    .actionButtonTextBankDetail(
-                                    AppStrings.txtPending)
+
+                                accountsController.actionButtonTextBankDetail(AppStrings.txtPending)
+
+
                               }
                           }
+
                       });
                     });
               }),

@@ -20,7 +20,7 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   void initState() {
-    notificationListController.getNotificationList(182);
+    notificationListController.getNotificationList();
     super.initState();
   }
   @override

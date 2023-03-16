@@ -11,6 +11,7 @@ import 'package:picktask/screens/onboarding/login/model/login_response.dart';
 import 'package:picktask/screens/onboarding/otpVerification/mode/otp_response.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
+import 'package:picktask/utils/local_storage.dart';
 import 'package:picktask/utils/utils.dart';
 
 class IdCardController extends GetxController {
@@ -24,12 +25,12 @@ class IdCardController extends GetxController {
   }
 
   Future<IdCardResponse> getIdCardDetail(
-      BuildContext context,int userId) async {
+      BuildContext context) async {
     IdCardResponse response = IdCardResponse();
     //showProgressDialog(context);
     isLoading(true);
     try {
-      response = await client.getIdCardDetails(userId);
+      response = await client.getIdCardDetails(userId??0);
     } catch (e, s) {
       print(s);
     }

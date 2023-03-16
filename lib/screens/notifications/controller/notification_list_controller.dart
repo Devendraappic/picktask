@@ -18,11 +18,11 @@ class NotificationListController extends GetxController {
   var notificationList=<NotificationItemData>[].obs;
   final client = ApiClient();
 
-  Future<NotificationListResponse> getNotificationList(int userId) async {
+  Future<NotificationListResponse> getNotificationList() async {
     isLoading(true);
     var response=NotificationListResponse();
     try {
-      response = await client.getNotificationLIst(userId);
+      response = await client.getNotificationLIst(userId??0);
     } catch (e, s) {
       print(s);
     }

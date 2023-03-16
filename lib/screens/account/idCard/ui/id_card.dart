@@ -33,7 +33,7 @@ class _IdCardState extends State<IdCard> {
 
   @override
   void initState() {
-    idCardController.getIdCardDetail(context, userId ?? 0);
+    idCardController.getIdCardDetail(context);
     super.initState();
   }
 

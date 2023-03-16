@@ -81,11 +81,16 @@ class _LoginWithOtpState extends State<LoginWithOtp> {
                           height: h * 0.08,
                           text: "GET OTP",
                       radius: 15,
-                          press: () {
+                          press: () async{
                             if (mobileController.text.isNotEmpty &&
                                 mobileController.text.length == 10) {
-                              Get.to(()=>Otp(number: mobileController.text.trim()));
-                              // oTpVerificationController.sendOTP(context, mobileController.text.trim());
+                              oTpVerificationController.sendOTP(context, mobileController.text.trim()).then((value) {
+                                if(value.status==true){
+                                  Get.to(()=>Otp(number: mobileController.text.trim() ,));
+                                }
+                              });
+
+
                             } else {
                               showToastMsg("Please enter 10 digit number");
                             }

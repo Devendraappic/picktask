@@ -48,8 +48,7 @@ class _OtpState extends State<Otp> {
   @override
   void initState() {
     super.initState();
-    print("init state called...");
-    // oTpVerificationController.sendOTP(context, widget.number);
+
     pin1FocusNode = FocusNode();
     pin2FocusNode = FocusNode();
     pin3FocusNode = FocusNode();
@@ -80,9 +79,7 @@ class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      oTpVerificationController.sendOTP(context, widget.number);
-    });
+
     return Scaffold(
       extendBody: true,
       body: Padding(
@@ -92,7 +89,6 @@ class _OtpState extends State<Otp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               space(h * 0.09),
-              // BackButton(),
 
               DefaultBackButton(),
               space(h * 0.07),

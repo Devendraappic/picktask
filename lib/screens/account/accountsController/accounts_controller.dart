@@ -285,7 +285,8 @@ class AccountsController extends GetxController {
       isLoading(false);
 
       showToastMsg("Your KYC Details Submitted Successfully.");
-      await storage.write('kyc_status', 0);
+
+      Get.offAll(HomeNav(index: 4.obs));
       return response;
     } else {
       isLoading(false);

@@ -89,11 +89,17 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<OTPResponse> sendOtp(mobile) async {
+  Future<OTPResponse> sendOtp(
+    mobile,
+    firebaseToken,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'mob_no': mobile};
+    final _data = {
+      'mob_num': mobile,
+      'token': firebaseToken,
+    };
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<OTPResponse>(Options(
       method: 'POST',
@@ -102,7 +108,7 @@ class _ApiClient implements ApiClient {
     )
             .compose(
               _dio.options,
-              'sendotp',
+              'loginwithotp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -122,7 +128,7 @@ class _ApiClient implements ApiClient {
     final _headers = <String, dynamic>{};
     final _data = {
       'otp': otp,
-      'mob_no': mobile,
+      'mob_num': mobile,
       'token': firebaseToken,
     };
     final _result = await _dio
@@ -133,7 +139,7 @@ class _ApiClient implements ApiClient {
     )
             .compose(
               _dio.options,
-              'matchotp',
+              'mobile_otpmatch',
               queryParameters: queryParameters,
               data: _data,
             )
