@@ -39,9 +39,9 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    emailController.text = "kapil@picktask.com";
-    passwordController.text = "123456";
+    //
+    // emailController.text = "kapil@picktask.com";
+    // passwordController.text = "123456";
   }
 
   @override
