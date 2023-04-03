@@ -157,21 +157,21 @@ class Register extends StatelessWidget {
                     radius: 15,
                     press: () {
                       if (nameController.text == null ||
-                          nameController.text.isEmpty) {
+                          nameController.text.trim().isEmpty) {
                         showToastMsg('Please enter name');
                         return;
                       }
                       if (mobileController.text == null ||
-                          mobileController.text.isEmpty) {
+                          mobileController.text.trim().isEmpty) {
                         showToastMsg('Phone number is required');
                         return;
                       }
-                      if (mobileController.text.length != 10) {
+                      if (mobileController.text.trim().length != 10) {
                         showToastMsg('Please enter valid phone number');
                         return;
                       }
                       if (emailController.text == null ||
-                          emailController.text.isEmpty) {
+                          emailController.text.trim().isEmpty) {
                         showToastMsg('Email address or UniqueId is required');
                         return;
                       }
@@ -180,7 +180,7 @@ class Register extends StatelessWidget {
                         return;
                       }
                       if (passwordController.text == null ||
-                          passwordController.text.isEmpty) {
+                          passwordController.text.trim().isEmpty) {
                         showToastMsg('please enter password');
                         return;
                       }
@@ -195,7 +195,7 @@ class Register extends StatelessWidget {
                               ? ""
                               : refferalController.text.trim()).then((value) {
                         if (value.success == true) {
-                          Get.offAll(HomeNav(index: 0.obs));
+                          Get.to(()=>Otp(number: mobileController.text.trim() ,));
                         }
                       });
                     }))),
@@ -296,16 +296,10 @@ class Register extends StatelessWidget {
 
   TextFormField nameFormField() {
     return TextFormField(
-      // autovalidateMode:
-      //     AutovalidateMode.onUserInteraction,
       controller: nameController,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]+|\s"))
-      ],
-
       style: GoogleFonts.poppins(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.name,
       cursorColor: kWhiteColor,
       decoration: InputDecoration(
         fillColor: kPrimaryColor,
@@ -342,7 +336,7 @@ class Register extends StatelessWidget {
         prefixIcon: Padding(
           padding: EdgeInsets.all(12),
           child: Icon(
-            Icons.person_rounded,
+            Icons.person,
             color: kWhiteColor,
           ),
         ),

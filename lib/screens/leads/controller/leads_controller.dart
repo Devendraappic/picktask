@@ -16,6 +16,7 @@ class LeadsController extends GetxController {
   var leadsList = <LeadData>[].obs;
 
   var selectedStatus = "any".obs;
+  var status = "".obs;
   final client = ApiClient();
 
   var leadDetailResponse = LeadDetailResponse().obs;
@@ -59,22 +60,22 @@ class LeadsController extends GetxController {
   }
 
   Future<LeadDetailResponse> getLeadDetail(int leadId) async {
+    var res= LeadDetailResponse();
     try {
       isLoading(true);
-      leadDetailResponse.value = await client.getLeadDetail(leadId);
+      res = await client.getLeadDetail(leadId);
     } catch (e, s) {
       print(s);
     }
-    print("apiResponse------->" + leadDetailResponse.value.msg.toString());
-    if (leadDetailResponse.value.status == true) {
+    if (res.status == true) {
       isLoading(false);
-
-      return leadDetailResponse.value;
+      leadDetailResponse(res);
+      return res;
     } else {
       isLoading(false);
 
-      showToastMsg(leadDetailResponse.value.msg ?? "");
+      showToastMsg(res.msg ?? "");
     }
-    return leadDetailResponse.value;
+    return res;
   }
 }

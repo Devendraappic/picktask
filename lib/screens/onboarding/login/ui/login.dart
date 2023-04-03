@@ -123,7 +123,7 @@ class _LoginState extends State<Login> {
                           radius: 15,
                           press: () {
                             if (emailController.text == null ||
-                                emailController.text.isEmpty) {
+                                emailController.text.trim().isEmpty) {
                               showToastMsg(
                                   "Email address or UniqueId is required");
                               return;
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                               return;
                             }
                             if (passwordController.text == null ||
-                                passwordController.text.isEmpty) {
+                                passwordController.text.trim().isEmpty) {
                               showToastMsg('Please enter password');
                               return;
                             }
@@ -142,8 +142,8 @@ class _LoginState extends State<Login> {
                             loginController
                                 .loginUser(
                                     context,
-                                    emailController.text.toString().trim(),
-                                    passwordController.text.toString().trim())
+                                    emailController.text.trim(),
+                                    passwordController.text.trim())
                                 .then((value) {
                               if (value.success == true) {
                                 Get.offAll(HomeNav(index: 0.obs));

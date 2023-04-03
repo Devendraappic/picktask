@@ -1,21 +1,17 @@
-// ignore_for_file: prefer_const_constructors
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/back_button.dart';
 import 'package:picktask/components/default_button.dart';
-import 'package:picktask/controller/onboarding/onboarding_controller.dart';
-import 'package:picktask/screens/home/ui/home.dart';
-import 'package:picktask/screens/onboarding/login/model/login_response.dart';
-import 'package:picktask/screens/onboarding/login/ui/login.dart';
 import 'package:picktask/screens/onboarding/otpVerification/controller/otp_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
-
-import '../../register/ui/register.dart';
-
+import 'package:alt_sms_autofill/alt_sms_autofill.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 class Otp extends StatefulWidget {
   String number;
 
@@ -25,43 +21,62 @@ class Otp extends StatefulWidget {
   State<Otp> createState() => _OtpState();
 }
 
-class _OtpState extends State<Otp> {
+class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   var oTpVerificationController = Get.put(OTPVerificationController());
 
-  String? otp;
+  late Timer timer;
+  late int remainingTime;
+  late int timerTime;
+  late bool connectionState;
+  TextEditingController? textEditingController1;
 
-  TextEditingController first = TextEditingController();
-  TextEditingController second = TextEditingController();
-  TextEditingController third = TextEditingController();
-  TextEditingController fourth = TextEditingController();
-  bool isloading = false;
+  String _comingSms = 'Unknown';
+  String otp="";
 
-  late FocusNode pin1FocusNode;
-  late FocusNode pin2FocusNode;
-  late FocusNode pin3FocusNode;
-  late FocusNode pin4FocusNode;
-  var tap = 0;
-  var tap1 = 0;
-  var tap2 = 0;
-  var tap3 = 0;
+  Future<void> initSmsListener() async {
 
+    String? comingSms;
+    try {
+      comingSms = await AltSmsAutofill().listenForSms;
+    } on PlatformException {
+      comingSms = 'Failed to get Sms.';
+    }
+    if (!mounted) return;
+    setState(() {
+      _comingSms = comingSms??"";
+      print("====>Message: ${_comingSms}");
+      print("${_comingSms[32]}");
+      textEditingController1?.text = _comingSms[16] + _comingSms[17] + _comingSms[18] + _comingSms[19]; //used to set the code in the message to a string and setting it to a textcontroller. message length is 38. so my code is in string index 32-37.
+    });
+  }
   @override
   void initState() {
     super.initState();
 
-    pin1FocusNode = FocusNode();
-    pin2FocusNode = FocusNode();
-    pin3FocusNode = FocusNode();
-    pin4FocusNode = FocusNode();
+    remainingTime = 60;
+    timerTime = 60;
+    connectionState = true;
+    initTimer();
+    textEditingController1 = TextEditingController();
+    initSmsListener();
+  }
+
+  initTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      remainingTime = timerTime - timer.tick;
+      if (remainingTime <= 0) {
+        timer.cancel();
+      }
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    pin1FocusNode.dispose();
-    pin2FocusNode.dispose();
-    pin3FocusNode.dispose();
-    pin4FocusNode.dispose();
+    timer.cancel();
+    textEditingController1?.dispose();
+    AltSmsAutofill().unregisterListener();
   }
 
   void nextField(String value, FocusNode focusNode) {
@@ -78,8 +93,6 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       extendBody: true,
       body: Padding(
@@ -89,7 +102,6 @@ class _OtpState extends State<Otp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               space(h * 0.09),
-
               DefaultBackButton(),
               space(h * 0.07),
               Padding(
@@ -115,344 +127,62 @@ class _OtpState extends State<Otp> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-
               space(h * 0.06),
-
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 00),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // Box decoration takes a gradient
-                          gradient: LinearGradient(
-                            // Where the linear gradient begins and ends
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            // Add one stop for each color. Stops should increase from 0 to 1
-                            // stops: [0.1, 0.4, 0.7, 0.9],
-                            colors: const [
-                              // Colors are easy thanks to Flutter's Colors class.
-                              Color(0xFF2B252A),
-                              Color(0xFF1F2131),
-                            ],
-                          ),
-                        ),
-                        child: TextFormField(
-                          maxLength: 1,
-                          controller: first,
-                          focusNode: pin1FocusNode,
-                          autofocus: true,
-                          obscureText: false,
-                          style: GoogleFonts.poppins(
-                              fontSize: 24, color: kWhiteColor),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            fillColor: kPrimaryColor,
-
-                            // fillColor: Colors.black,
-                            filled: false,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 16),
-                            counterText: '',
-
-                            hintStyle: GoogleFonts.poppins(
-                                color: kWhiteColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kPrimaryColor,
-                                width: 1.0,
-                              ),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 1.0)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kWhiteColor),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kPrimaryColor,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            disabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kWhiteColor, width: 1.0)),
-                            errorBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 1.0)),
-
-                            prefixIconConstraints: BoxConstraints(minWidth: 4),
-                          ),
-                          onChanged: (value) {
-                            nextField(value, pin2FocusNode);
-                            //previousField(value, pin2FocusNode);
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // Box decoration takes a gradient
-                          gradient: LinearGradient(
-                            // Where the linear gradient begins and ends
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            // Add one stop for each color. Stops should increase from 0 to 1
-                            // stops: [0.1, 0.4, 0.7, 0.9],
-                            colors: const [
-                              // Colors are easy thanks to Flutter's Colors class.
-                              Color(0xFF2B252A),
-                              Color(0xFF1F2131),
-                            ],
-                          ),
-                        ),
-                        child: TextFormField(
-                            maxLength: 1,
-                            controller: second,
-                            focusNode: pin2FocusNode,
-                            obscureText: false,
-                            style: GoogleFonts.poppins(
-                                fontSize: 24, color: kWhiteColor),
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              fillColor: kPrimaryColor,
-                              // fillColor: Colors.black,
-                              filled: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 16),
-                              counterText: '',
-
-                              hintStyle: GoogleFonts.poppins(
-                                  color: kWhiteColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kPrimaryColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.red, width: 1.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: kWhiteColor),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: kPrimaryColor,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kWhiteColor, width: 1.0)),
-                              errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.red, width: 1.0)),
-
-                              prefixIconConstraints:
-                                  BoxConstraints(minWidth: 4),
-                            ),
-                            onChanged: (value) {
-                              if (value.toString().length == 0 && tap2 == 0) {
-                                print("Print1");
-
-                                tap2 = 1;
-                              }
-                              if (value.toString().length > 0) {
-                                print("Print2");
-                                FocusScope.of(context)
-                                    .requestFocus(pin3FocusNode);
-                              }
-                              if (value.toString().length == 0 && tap2 == 1) {
-                                print("Print3");
-                                FocusScope.of(context)
-                                    .requestFocus(pin1FocusNode);
-                              }
-                            }),
-                      ),
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // Box decoration takes a gradient
-                          gradient: LinearGradient(
-                            // Where the linear gradient begins and ends
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            // Add one stop for each color. Stops should increase from 0 to 1
-                            // stops: [0.1, 0.4, 0.7, 0.9],
-                            colors: const [
-                              // Colors are easy thanks to Flutter's Colors class.
-                              Color(0xFF2B252A),
-                              Color(0xFF1F2131),
-                            ],
-                          ),
-                        ),
-                        child: TextFormField(
-                            maxLength: 1,
-                            controller: third,
-                            focusNode: pin3FocusNode,
-                            obscureText: false,
-                            style: GoogleFonts.poppins(
-                                fontSize: 24, color: kWhiteColor),
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              fillColor: kPrimaryColor,
-                              // fillColor: Colors.black,
-                              filled: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 16),
-                              counterText: '',
-
-                              hintStyle: GoogleFonts.poppins(
-                                  color: kWhiteColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kPrimaryColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.red, width: 1.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: kWhiteColor),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: kPrimaryColor,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kWhiteColor, width: 1.0)),
-                              errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.red, width: 1.0)),
-
-                              prefixIconConstraints:
-                                  BoxConstraints(minWidth: 4),
-                            ),
-                            onChanged: (value) {
-                              if (value.toString().length == 0 && tap3 == 0) {
-                                tap3 = 1;
-                              }
-                              if (value.toString().length > 0) {
-                                FocusScope.of(context)
-                                    .requestFocus(pin4FocusNode);
-                              }
-                              if (value.toString().length == 0 && tap3 == 1) {
-                                FocusScope.of(context)
-                                    .requestFocus(pin2FocusNode);
-                              }
-                            }),
-                      ),
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // Box decoration takes a gradient
-                          gradient: LinearGradient(
-                            // Where the linear gradient begins and ends
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            // Add one stop for each color. Stops should increase from 0 to 1
-                            // stops: [0.1, 0.4, 0.7, 0.9],
-                            colors: const [
-                              // Colors are easy thanks to Flutter's Colors class.
-                              Color(0xFF2B252A),
-                              Color(0xFF1F2131),
-                            ],
-                          ),
-                        ),
-                        child: TextFormField(
-                          maxLength: 1,
-                          controller: fourth,
-                          focusNode: pin4FocusNode,
-                          obscureText: false,
-                          style: GoogleFonts.poppins(
-                              fontSize: 24, color: kWhiteColor),
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            fillColor: kPrimaryColor,
-                            // fillColor: Colors.black,
-                            filled: true,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 16),
-                            counterText: '',
-
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kPrimaryColor,
-                                width: 1.0,
-                              ),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 1.0)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kWhiteColor),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kPrimaryColor,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            disabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kWhiteColor, width: 1.0)),
-                            errorBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 1.0)),
-
-                            prefixIconConstraints: BoxConstraints(minWidth: 4),
-                          ),
-                          onChanged: (value) {
-                            if (value.toString().length == 0 && tap3 == 0) {
-                              tap3 = 1;
-                            }
-                            if (value.toString().length > 0) {
-                              FocusScope.of(context).unfocus();
-                            }
-                            if (value.toString().length == 0 && tap3 == 1) {
-                              FocusScope.of(context)
-                                  .requestFocus(pin3FocusNode);
-                            }
-                          },
-                        ),
-                      ),
-                    ]),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: PinCodeTextField(
+                  appContext: context,
+                  pastedTextStyle: TextStyle(
+                    color: Colors.green.shade600,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  length: 4,
+                  obscureText: false,
+                  animationType: AnimationType.fade,
+                  pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(10),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      inactiveFillColor: Colors.white,
+                      inactiveColor: Colors.grey,
+                      selectedColor:Colors.grey,
+                      selectedFillColor: Colors.white,
+                      activeFillColor: Colors.white,
+                      activeColor: Colors.grey
+                  ),
+                  cursorColor: Colors.black,
+                  animationDuration: Duration(milliseconds: 300),
+                  enableActiveFill: true,
+                  controller: textEditingController1,
+                  keyboardType: TextInputType.number,
+                  boxShadows: [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      color: Colors.black12,
+                      blurRadius: 10,
+                    )
+                  ],
+                  onCompleted: (v) {
+                    if (v.length == 4) {
+                      oTpVerificationController.verifyOTP(context,
+                          v, widget.number.toString());
+                    } else {
+                      showToastMsg("Please enter 4 digit OTP");
+                    }
+                    //do something or move to next screen when code complete
+                  },
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      print('$value');
+                      otp=value;
+                    });
+                  },
+                ),
               ),
-
               space(h * 0.03),
-
-              Obx(() => oTpVerificationController.isLoading.value==true
+              Obx(() => oTpVerificationController.isLoading.value == true
                   ? loader
                   : DefaultButton(
                       width: double.infinity,
@@ -460,39 +190,60 @@ class _OtpState extends State<Otp> {
                       text: "Submit",
                       radius: 15,
                       press: () {
-                        String sub =
-                            "${first.text}${second.text}${third.text}${fourth.text}";
-                        print("sub $sub");
+                        print("sub $otp");
 
-                        if (sub.length == 4) {
+                        if (otp.length == 4) {
                           oTpVerificationController.verifyOTP(context,
-                               sub.toString(),widget.number.toString());
+                              otp.toString(), widget.number.toString());
                         } else {
-
                           showToastMsg("Please enter 4 digit OTP");
                         }
                       })),
-
               space(h * 0.06),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  remainingTime == 0
+                      ? GestureDetector(
+                    onTap: () {
+                      otp="";
+                      oTpVerificationController
+                          .sendOTP(context, widget.number)
+                          .then((value) {
+                            remainingTime=60;
+                            initTimer();
 
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    oTpVerificationController.sendOTP(context, widget.number);
-                    first.clear();
-                    second.clear();
-                    third.clear();
-                    fourth.clear();
-                  },
-                  child: Text(
-                    "Resend OTP",
-                    style: GoogleFonts.poppins(
-                        color: kWhiteColor,
-                        fontSize: w * 0.04,
-                        fontWeight: FontWeight.w500),
+
+                      });
+                    },
+                    child:  Text(
+                      "Resend OTP",
+                      style: GoogleFonts.poppins(
+                          color: kWhiteColor,
+                          fontSize: w * 0.04,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )
+                      : RichText(
+                    text: TextSpan(
+                        style: GoogleFonts.poppins(
+                            color: kWhiteColor,
+                            fontSize: w * 0.04,
+                            fontWeight: FontWeight.w500),
+                      text: "Resend OTP in ",
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: "${remainingTime}s",
+                            style: GoogleFonts.poppins(
+                                color: kWhiteColor,
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
+                ],
+              ),
             ],
           ),
         ),

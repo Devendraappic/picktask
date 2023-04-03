@@ -38,6 +38,7 @@ class TaskDetail {
   String? trackingtime;
   String? earning;
   String? shareUrl;
+  String? bannerimg;
   String? shareMessage;
   int? newStatus;
 
@@ -57,6 +58,7 @@ class TaskDetail {
         this.trackingtime,
         this.earning,
         this.shareUrl,
+        this.bannerimg,
         this.shareMessage,
         this.newStatus});
 
@@ -76,6 +78,7 @@ class TaskDetail {
     trackingtime = json['trackingtime'];
     earning = json['earning'];
     shareUrl = json['share_url'];
+    bannerimg = json['bannerimg'];
     shareMessage = json['share_message'];
     newStatus = json['new_status'];
   }
@@ -96,6 +99,7 @@ class TaskDetail {
     data['admin_status'] = this.adminStatus;
     data['trackingtime'] = this.trackingtime;
     data['earning'] = this.earning;
+    data['bannerimg'] = this.bannerimg;
     data['share_url'] = this.shareUrl;
     data['share_message'] = this.shareMessage;
     data['new_status'] = this.newStatus;

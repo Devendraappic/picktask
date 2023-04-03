@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
+import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/screens/account/changePassword/controller/change_password_controller.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
@@ -36,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          "My Leads",
+          "Change Password",
           style: GoogleFonts.poppins(
               color: kWhiteColor,
               fontSize: w * 0.05,
@@ -58,19 +59,27 @@ class _ChangePasswordState extends State<ChangePassword> {
               text: "Update Password",
               radius: 15,
               press: () {
-                if (oldPasswordController.text == null || oldPasswordController.text.isEmpty) {
+                if (oldPasswordController.text == null || oldPasswordController.text.trim().isEmpty) {
                   showToastMsg('Please enter old password');
                   return ;
                 }
-                if (newPasswordController.text == null || newPasswordController.text.isEmpty) {
+                if (newPasswordController.text == null || newPasswordController.text.trim().isEmpty) {
                   showToastMsg('Please enter new password');
                   return ;
                 }
-                if (confirmPasswordController.text == null || confirmPasswordController.text.isEmpty) {
+                if (confirmPasswordController.text == null || confirmPasswordController.text.trim().isEmpty) {
                   showToastMsg('Please enter confirm password');
                   return;
                 }
-                changePasswordController.changePassword(context, userId??0, oldPasswordController.text.trim(), newPasswordController.text.trim());
+                if (newPasswordController.text.trim() != confirmPasswordController.text.trim()) {
+                  showToastMsg('New and conform password must be same');
+                  return;
+                }
+                changePasswordController.changePassword(context, userId??0, oldPasswordController.text.trim(), newPasswordController.text.trim()).then((value) {
+                  if(value.status == true){
+                    Get.offAll(HomeNav(index: 4.obs));
+                  }
+                });
               }))
 
         ]),

@@ -38,34 +38,16 @@ class _SpalshState extends State<Spalsh> {
   }
 
   getLoginStatus() async {
-    // var firstTime = true;
-    //
-    // firstTime = storage.read("isFirstTimeLaunch") ?? true;
-    // var myToken = storage.read('token');
-    print("isLogin::$isLogin \nmy....token :$token");
+    print("isLogin::$isLogin \nmy....token :$firebaseToken");
 
     Future.delayed(Duration(seconds: 3), () {
-
-      if(isLogin==true &&token?.isNotEmpty==true ){
+      if (isLogin == true && firebaseToken?.isNotEmpty == true) {
         Get.offAll(() => HomeNav(
-          index: 0.obs,
-        ));
-      }else{
+              index: 0.obs,
+            ));
+      } else {
         Get.offAll(() => WelcomeScreen());
       }
-      // myToken.toString() == "" || myToken.toString() == "null" || myToken == ''
-      //     ? firstTime != null
-      //         ? firstTime
-      //             ? Get.offAll(() => WelcomeScreen())
-      //             : Get.offAll(() => WelcomeScreen())
-      //         : Get.offAll(() => WelcomeScreen())
-      //     : myToken.toString() == '72'
-      //         ? Get.offAll(() => WelcomeScreen())
-      //         : Get.offAll(() => HomeNav(
-      //               index: 0.obs,
-      //             ));
     });
   }
 }
-
-

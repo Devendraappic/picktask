@@ -83,7 +83,7 @@ class _LoginWithOtpState extends State<LoginWithOtp> {
                       radius: 15,
                           press: () async{
                             if (mobileController.text.isNotEmpty &&
-                                mobileController.text.length == 10) {
+                                mobileController.text.trim().length == 10) {
                               oTpVerificationController.sendOTP(context, mobileController.text.trim()).then((value) {
                                 if(value.status==true){
                                   Get.to(()=>Otp(number: mobileController.text.trim() ,));

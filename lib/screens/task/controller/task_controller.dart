@@ -11,11 +11,14 @@ import 'package:picktask/utils/local_storage.dart';
 
 class TaskController extends GetxController {
   var isLoading = false.obs;
+  var btnVisibility = true.obs;
   var taskList = <TaskData>[].obs;
   final client = ApiClient();
 
   var taskDetailResponse = TaskDetailResponse().obs;
   var htmlData = "".obs;
+  var status = "Start Earning".obs;
+
   @override
   void onInit() {
     super.onInit();

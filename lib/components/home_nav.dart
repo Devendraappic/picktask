@@ -156,7 +156,9 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
         unselectedItemColor: kWhiteColor,
         selectedFontSize: 12,
         unselectedFontSize: 12,
-        onTap: (index) => s.onItemTapped(index),
+        onTap: (index) {
+          s.onItemTapped(index);
+        },
         /* currentIndex: Get.find<ProfileController>().selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: Get.find<ProfileController>().onItemTapped, */

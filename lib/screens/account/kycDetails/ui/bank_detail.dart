@@ -42,11 +42,16 @@ class _BankDetailsState extends State<BankDetails> {
   final picker = ImagePicker();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     accountsController.isLoading(false);
-    return accountsController.isLoading.value==true?loader:Scaffold(body: Padding(
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    return Obx(() => Scaffold(body: Padding(
       padding: EdgeInsets.symmetric(horizontal: w * 0.04),
-      child: SingleChildScrollView(
+      child:accountsController.isLoading.value==true?loader: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -54,7 +59,7 @@ class _BankDetailsState extends State<BankDetails> {
 
             DefaultBackButton(),
             space(h * 0.01),
-            if(kycStatus!=1)
+            if(accountsController.kycStatus.value!=1)
               Text(
                 "Submit Your Bank Details!",
                 style: GoogleFonts.cabin(
@@ -66,6 +71,7 @@ class _BankDetailsState extends State<BankDetails> {
             Center(
               child: Text(
                 "You will receive your payout only on this account.",
+                textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                     color: Colors.yellow,
                     //foreground: Paint()..shader = linearGradient,
@@ -108,7 +114,7 @@ class _BankDetailsState extends State<BankDetails> {
                 ),
                 InkWell(
                   onTap: () {
-                    if(kycStatus==1){
+                    if(accountsController.kycStatus.value==1){
                       return;
                     }
                     _showPicker(context, true, false);
@@ -154,7 +160,7 @@ class _BankDetailsState extends State<BankDetails> {
                 ),
                 InkWell(
                   onTap: () {
-                    if(kycStatus==1){
+                    if(accountsController.kycStatus.value==1){
                       return;
                     }
                     _showPicker(context, false, true);
@@ -176,7 +182,7 @@ class _BankDetailsState extends State<BankDetails> {
               ],
             ),
             space(h * 0.04),
-            if(kycStatus!=1 /*|| kycStatus!=0*/)
+            if(accountsController.kycStatus.value!=1 /*|| accountsController.kycStatus.value!=0*/)
               Obx(() {
                 return DefaultButton(
                     width: double.infinity,
@@ -185,22 +191,22 @@ class _BankDetailsState extends State<BankDetails> {
                     accountsController.actionButtonTextBankDetail.value,
                     radius: 15,
                     press: () {
-                      if(kycStatus==1){
+                      if(accountsController.kycStatus.value==1){
                         return;
                       }
-                      if (accountsController.nameController.text == null || accountsController.nameController.text.isEmpty) {
+                      if (accountsController.nameController.text == null || accountsController.nameController.text.trim().isEmpty) {
                         showToastMsg(AppStrings.txtEnterFullName);
                         return ;
                       }
-                      if (accountsController.accountNumberController.text == null ||accountsController.accountNumberController.text.isEmpty) {
+                      if (accountsController.accountNumberController.text == null ||accountsController.accountNumberController.text.trim().isEmpty) {
                         showToastMsg(AppStrings.txtEnterAccountNumber);
                         return ;
                       }
-                      if (accountsController.confirmAccountNumberController.text == null || accountsController.confirmAccountNumberController.text.isEmpty) {
+                      if (accountsController.confirmAccountNumberController.text == null || accountsController.confirmAccountNumberController.text.trim().isEmpty) {
                         showToastMsg(AppStrings.txtEnterConfirmAccountNumber);
                         return ;
                       }
-                      if (accountsController.accountNumberController.text != accountsController.confirmAccountNumberController.text) {
+                      if (accountsController.accountNumberController.text.trim() != accountsController.confirmAccountNumberController.text.trim()) {
                         showToastMsg(AppStrings.txtConfirmAccountNumberDoesNotMatch);
                         return ;
                       }
@@ -208,12 +214,16 @@ class _BankDetailsState extends State<BankDetails> {
                         showToastMsg(AppStrings.txtEnterConfirmAccountNumber);
                         return ;
                       }
-                      if (accountsController.ifscController.text == null || accountsController.ifscController.text.isEmpty) {
+                      if (accountsController.ifscController.text == null || accountsController.ifscController.text.trim().isEmpty) {
                         showToastMsg(AppStrings.txtEnterIfscCode);
                         return ;
                       }
-                      if (accountsController.bankController.text == null || accountsController.bankController.text.isEmpty) {
+                      if (accountsController.bankController.text == null || accountsController.bankController.text.trim().isEmpty) {
                         showToastMsg(AppStrings.txtEnterBankName);
+                        return ;
+                      }
+                      if (accountsController.panCardTxt.value == null || accountsController.panCardTxt.value.isEmpty ||accountsController.panCardTxt.value==AppStrings.uploadPanCardImage ) {
+                        showToastMsg(AppStrings.uploadPanCardImage);
                         return ;
                       }
                       String dobDate= widget.dob??"";
@@ -264,14 +274,14 @@ class _BankDetailsState extends State<BankDetails> {
           ],
         ),
       ),
-    ),);
+    ),));
   }
 
   // full name textfield
 
   TextFormField nameFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
 
       controller: accountsController.nameController,
 
@@ -326,7 +336,7 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField accountNumberFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
 
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
@@ -383,7 +393,7 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField confirmAccountNumberFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
 
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
@@ -440,7 +450,7 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField ifscCodeFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
 
       // autovalidateMode:
       //     AutovalidateMode.onUserInteraction,
@@ -497,7 +507,7 @@ class _BankDetailsState extends State<BankDetails> {
 
   TextFormField bankNameFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
 
       controller: accountsController.bankController,
 
@@ -570,10 +580,15 @@ class _BankDetailsState extends State<BankDetails> {
                       onTap: () async {
                         if (isBankProof) {
                           accountsController.bankProof.value = await _imgFromGallery();
-                          accountsController.bankProofTxt.value= accountsController.bankProof.value.name;
+                          if(accountsController.bankProof.value.name.isNotEmpty){
+                            accountsController.bankProofTxt.value= accountsController.bankProof.value.name;
+                          }
                         } else if (isPan) {
                           accountsController.panCard.value = await _imgFromGallery();
-                          accountsController.panCardTxt.value= accountsController.panCard.value.name;
+                          if(accountsController.panCard.value.name.isNotEmpty){
+                            accountsController.panCardTxt.value= accountsController.panCard.value.name;
+
+                          }
 
                         }
                         Navigator.of(context).pop();
@@ -592,12 +607,17 @@ class _BankDetailsState extends State<BankDetails> {
                       if (isBankProof) {
                         accountsController.bankProof.value =
                             await _imgFromCamera();
-                        accountsController.bankProofTxt.value= accountsController.bankProof.value.name;
 
+                        if(accountsController.bankProof.value.name.isNotEmpty){
+                          accountsController.bankProofTxt.value= accountsController.bankProof.value.name;
+                        }
                       } else if (isPan) {
                         accountsController.panCard.value =
                             await _imgFromCamera();
-                        accountsController.panCardTxt.value= accountsController.panCard.value.name;
+                        if(accountsController.panCard.value.name.isNotEmpty){
+                          accountsController.panCardTxt.value= accountsController.panCard.value.name;
+
+                        }
 
                       }
                       Navigator.of(context).pop();

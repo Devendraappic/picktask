@@ -22,7 +22,7 @@ class WebinarCard extends StatelessWidget {
         showWebinarDialog(context, webinar);
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 10,right: 10, top: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
         width: w * 0.3,
         //height: h * 0.18,
         decoration: BoxDecoration(
@@ -65,6 +65,7 @@ class WebinarCard extends StatelessWidget {
                   fontSize: w * 0.035,
                   fontWeight: FontWeight.w600),
             ),
+
           ],
         ),
       ),

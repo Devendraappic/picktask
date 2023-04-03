@@ -56,7 +56,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             },
           ),
           Positioned(
-            bottom: 100,
+            bottom: 60,
             left: 20,
             right: 20,
             child: Obx(() {

@@ -14,6 +14,7 @@ class AppStrings {
   static const String txtVerify = "Verify";
   static const String txtSubmit = "Submit";
   static const String txtNoIntentAccess = "No Internet access!";
+  static const String txtNoDataFound = "No Data Available!";
   static const String enterCity = "Enter city";
   static const String pinCode = "Enter pin code";
   static const String panNumber = "Enter pan number";
@@ -21,6 +22,7 @@ class AppStrings {
   static const String annualIncome = "Annual Income";
   static const String occupation = "Occupation";
   static const String selectGender = "Select Gender";
+  static const String uploadPanCardImage = "Upload Pan Card Image";
 
 
 

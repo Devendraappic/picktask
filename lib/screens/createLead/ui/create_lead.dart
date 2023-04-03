@@ -141,15 +141,15 @@ class _CreateLeadState extends State<CreateLead> {
                                   if(element.value=="text"){
                                     myMap[element.field??""]=( element.fieldTextController as TextEditingController).text;
                                   }
-                                  else if(element.value=="file"){
+                                  else if(element.value=="file"&& element.fieldTextController.text.trim().isNotEmpty){
                                     images.add(File(element.fieldValue));
                                     //myMap[element.field??""]=Utils.convertIntoBase64(File(element.fieldValue));
                                   }
                                   if (element.fieldTextController.text == null ||
-                                      element.fieldTextController.text.isEmpty) {
+                                      element.fieldTextController.text.trim().isEmpty) {
                                     count+=count;
                                     showToastMsg('${element.field} is required');
-                                    continue;
+                                    return;
                                   }
                                 }
                                 if(count==0){

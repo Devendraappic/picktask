@@ -57,21 +57,19 @@ class LeadsCard extends StatelessWidget {
                 child: SizedBox.fromSize(
                   size: const Size.fromRadius(25), // Image radius
                   child: ImageView(
-                    imageUrl: ("${AppConstants.baseUrl}${leadData.image}").replaceAll("//", "/"),
+                    imageUrl: leadData.image??"",
                       isCircular: true
 
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //mainAxisSize: MainAxisSize.min,
                 children: [
-
                   SizedBox(
                     width: w * 0.6,
                     child: Text(

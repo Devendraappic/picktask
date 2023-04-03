@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/utils/color.dart';
+import 'package:picktask/utils/dialog_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // loading indicator
@@ -34,6 +35,7 @@ Future<void> launchYoutube(var url) async {
       launchUrl(fbBundleUri); // Launch web view if app is not installed!
     }
   } catch (e) {
+    showToastMsg("Oops! Invalid webinar link!");
     launchUrl(fbBundleUri); // Launch web view if app is not installed!
   }
 }

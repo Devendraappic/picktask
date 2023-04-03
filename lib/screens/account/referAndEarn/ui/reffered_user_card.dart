@@ -60,7 +60,7 @@ class ReferedUser extends StatelessWidget {
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      referUserData?.mobile??"",
+                      (referUserData?.mobile??"").replaceRange(2, 7,"*****"),
                       textAlign: TextAlign.start,
                       style: GoogleFonts.poppins(
                           color: kWhiteColor,

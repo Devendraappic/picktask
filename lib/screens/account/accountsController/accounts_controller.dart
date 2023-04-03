@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picktask/constants/app_strings.dart';
+import 'package:picktask/constants/key_constants.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/model/onboarding/welcome_tab.dart';
 import 'package:picktask/network/retrofit/api_client.dart';
@@ -34,8 +35,9 @@ class AccountsController extends GetxController {
   var gender = "Select Gender".obs;
   var bankProofTxt = "Bank Proof(Optional)".obs;
   var panCardTxt = "Upload Pan Card Image".obs;
-
+  var kycStatusTxt="Apply".obs;
   var isLoading = false.obs;
+  var kycStatus = 0.obs;
   final client = ApiClient();
   Rx<File> bankProof = File('').obs;
   Rx<File> panCard = File('').obs;
@@ -207,15 +209,30 @@ class AccountsController extends GetxController {
 
     debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
-      await storage.write('name', response.data?.name ?? "");
-      await storage.write('partner_id', response.data?.partnerId ?? "");
 
-      await storage.write('reffercode', response.data?.refCode ?? "");
+      await storage.write(KeyConstants.nameKey, response.data?.name??"");
+      await storage.write(KeyConstants.partnerIdKey, response.data?.partnerId??"");
 
-      await storage.write('profile_pic', response.profilepic ?? "");
+      await storage.write(
+          KeyConstants.refCodeKey, response.data?.refCode??"");
 
-      await storage.write('kyc_status', response.kycStatus ?? 0);
+      await storage.write(
+          KeyConstants.profilePicKey, response.profilepic??"");
 
+
+      await storage.write(
+          KeyConstants.kycStatusKey, response.kycStatus ?? 0);
+
+      kycStatus(response.kycStatus ?? 0);
+      if( response.kycStatus==3){
+        kycStatusTxt.value= "Rejected";
+      }if( response.kycStatus==2){
+        kycStatusTxt.value = "Pending";
+      }if( response.kycStatus==1){
+        kycStatusTxt.value = "Completed";
+      }if( response.kycStatus==0){
+        kycStatusTxt.value = "Not Completed";
+      }
       isLoading(false);
 
       return response;
@@ -233,6 +250,7 @@ class AccountsController extends GetxController {
     debugPrint("apiResponse------->" + response.msg.toString());
     if (response.status == true) {
       await storage.write('kyc_status', response.data?.kycStatus ?? 0);
+      await storage.write(KeyConstants.kycStatusKey, response.data?.kycStatus ?? 0);
       isLoading(false);
       return response;
     } else {
@@ -280,12 +298,12 @@ class AccountsController extends GetxController {
       print("error==> $s");
       isLoading(false);
     }
-    debugPrint("apiResponse------->" + response.message!);
+    // debugPrint("apiResponse------->" + response.message!);
     if (response.data?.status == true) {
       isLoading(false);
 
       showToastMsg("Your KYC Details Submitted Successfully.");
-
+      await storage.write(KeyConstants.kycStatusKey, 2);
       Get.offAll(HomeNav(index: 4.obs));
       return response;
     } else {

@@ -38,27 +38,31 @@ class _LeadDetailsState extends State<LeadDetails> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      leadsController.getLeadDetail(widget.leadId).then((value) {
+
+        if(value.status==true){
+
+          if (leadsController.leadDetailResponse.value.data?.status == 0) {
+            leadsController.status.value = "Pending";
+          } else if (leadsController.leadDetailResponse.value.data?.status == 1) {
+            leadsController.status.value = "Pending";
+          } else if (leadsController.leadDetailResponse.value.data?.status == 2) {
+            leadsController.status.value = "Approved";
+          } else if (leadsController.leadDetailResponse.value.data?.status == 3) {
+            leadsController.status.value = "Rejected";
+          } else if (leadsController.leadDetailResponse.value.data?.status == 4) {
+            leadsController.status.value = "In-Progress";
+          }
+        }
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      leadsController.getLeadDetail(widget.leadId);
-    });
-    var status = "";
-    if (leadsController.leadDetailResponse.value.data?.status == 0) {
-      status = "Pending";
-    } else if (leadsController.leadDetailResponse.value.data?.status == 1) {
-      status = "Pending";
-    } else if (leadsController.leadDetailResponse.value.data?.status == 2) {
-      status = "Approved";
-    } else if (leadsController.leadDetailResponse.value.data?.status == 3) {
-      status = "Rejected";
-    } else if (leadsController.leadDetailResponse.value.data?.status == 4) {
-      status = "In-Progress";
-    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -124,6 +128,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                     side: BorderSide(color: kBlueColor, width: 2),
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(15.0),
@@ -138,23 +143,30 @@ class _LeadDetailsState extends State<LeadDetails> {
                         SizedBox(
                           height: 10,
                         ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: leadsController.leadDetailResponse.value
-                              .data?.leadsData?.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            String key = (leadsController.leadDetailResponse
-                                    .value.data?.leadsData as Map)
-                                .keys
-                                .elementAt(index);
-                            return Text(
-                                " ${key} :  ${leadsController.leadDetailResponse.value.data?.leadsData?[key]}",
-                                style: GoogleFonts.poppins(
-                                    color: kBalckColor,
-                                    fontSize: w * 0.040,
-                                    fontWeight: FontWeight.w500));
-                          },
-                        ),
+                        leadsController.leadDetailResponse.value.data?.leadsData
+                                    ?.isNotEmpty ==
+                                true
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: leadsController.leadDetailResponse
+                                    .value.data?.leadsData?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  String key = (leadsController
+                                          .leadDetailResponse
+                                          .value
+                                          .data
+                                          ?.leadsData as Map<String, dynamic>)
+                                      .keys
+                                      .elementAt(index);
+                                  return Text(
+                                      " ${key} :  ${leadsController.leadDetailResponse.value.data?.leadsData?[key]}",
+                                      style: GoogleFonts.poppins(
+                                          color: kBalckColor,
+                                          fontSize: w * 0.040,
+                                          fontWeight: FontWeight.w500));
+                                },
+                              )
+                            : SizedBox(),
                         SizedBox(
                           height: 10,
                         ),
@@ -188,7 +200,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                                       // Box decoration takes a gradient
                                       color: Colors.yellow),
                                   child: Text(
-                                    "Status : $status",
+                                    "Status : ${leadsController.status.value}",
                                     style: GoogleFonts.poppins(
                                         color: kBalckColor,
                                         fontSize: w * 0.040,
@@ -200,7 +212,6 @@ class _LeadDetailsState extends State<LeadDetails> {
                       ],
                     ),
                   ),
-                  margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15),
                 ),
               ],
             )),

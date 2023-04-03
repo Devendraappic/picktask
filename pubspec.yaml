@@ -64,6 +64,9 @@ dependencies:
   device_info_plus: ^8.1.0
   flutter_widget_from_html: ^0.10.0
   html_unescape: ^2.0.0
+  pin_code_fields: ^7.4.0
+  alt_sms_autofill: ^1.0.0
+  restart_app: ^1.1.2
 
 
 dev_dependencies:

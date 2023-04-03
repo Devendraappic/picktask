@@ -182,7 +182,7 @@ abstract class ApiClient {
     @Part(name: 'user_id') int userId,
     @Part(name: 'job_id') int jobId,
     @Part(name: 'data') Map<String, dynamic> data,
-    @Part(name: 'images') List<File> images,
+    @Part(name: 'images[]') List<File> images
   );
 
   @POST(Apis.viewtask + "/{taskId}")

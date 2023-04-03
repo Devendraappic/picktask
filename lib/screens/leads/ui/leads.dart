@@ -94,23 +94,7 @@ class _LeadsState extends State<Leads> {
                           );
                         }),
                   ),
-                  leadsController.isLoading==true?loader:Expanded(
-                    child: ListView.builder(
-                      itemCount: leadsController.leadsList.length,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      controller: scrollController,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 14, left: w * 0.05, right: w * 0.05),
-                          child: LeadsCard(
-                              leadData: leadsController.leadsList[index]),
-                        );
-                      },
-                    ),
-                  ),
+                  leadsController.isLoading==true?loader:Expanded(child: buildUI()),
 
                   // SizedBox(
                   //   height: h * 0.1,
@@ -148,6 +132,31 @@ class _LeadsState extends State<Leads> {
                 ],
               );
             }),
+    );
+  }
+  buildUI(){
+   return leadsController.leadsList.isNotEmpty?ListView.builder(
+     itemCount: leadsController.leadsList.length,
+     shrinkWrap: true,
+     physics: const ClampingScrollPhysics(),
+     controller: scrollController,
+     scrollDirection: Axis.vertical,
+     itemBuilder: (BuildContext context, int index) {
+       return Padding(
+         padding: EdgeInsets.only(
+             bottom: 14, left: w * 0.05, right: w * 0.05),
+         child: LeadsCard(
+             leadData: leadsController.leadsList[index]),
+       );
+     },
+   ): Center(
+      child: Text(
+        "No leads found!",
+        style: GoogleFonts.poppins(
+            color: kWhiteColor,
+            fontSize: w * 0.045,
+            fontWeight: FontWeight.w500),
+      ),
     );
   }
 }

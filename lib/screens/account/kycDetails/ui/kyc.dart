@@ -60,7 +60,7 @@ class _KycState extends State<Kyc> {
   }
   @override
   Widget build(BuildContext context) {
-    return Obx(() => accountsController.isLoading.value==true?loader: Scaffold(
+    return Obx(() => /*accountsController.isLoading.value==true?loader: */Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: w * 0.04),
@@ -68,9 +68,9 @@ class _KycState extends State<Kyc> {
             children: [
               space(h * 0.05),
               DefaultBackButton(),
-              if(kycStatus!=1)
+              if(accountsController.kycStatus.value!=1)
               space(h * 0.01),
-              if(kycStatus!=1)
+              if(accountsController.kycStatus.value!=1)
                 Text(
                   "Complete Your KYC!",
                   style: GoogleFonts.cabin(
@@ -81,7 +81,8 @@ class _KycState extends State<Kyc> {
               space(h * 0.015),
               Center(
                 child: Text(
-                  kycStatus==1?"Your KYC is completed":"Please complete kyc to withdraw your payout",
+                  accountsController.kycStatus.value==1?"Your KYC is completed":"Please complete kyc to withdraw your payout",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       color: Colors.yellow,
                       // foreground: Paint()..shader = linearGradient,
@@ -106,7 +107,7 @@ class _KycState extends State<Kyc> {
               space(h * 0.02),
               InkWell(
                 onTap: () {
-                  if(kycStatus==1){
+                  if(accountsController.kycStatus.value==1){
                     return;
                   }
                   accountsController.selectDate(context);
@@ -147,11 +148,11 @@ class _KycState extends State<Kyc> {
               DefaultButton(
                   width: double.infinity,
                   height: h * 0.08,
-                  text: kycStatus==1?"Next":"Verify",
+                  text: accountsController.kycStatus.value==1?"Next":"Verify",
                   radius: 15,
                   press: () {
                     if (accountsController.nameOnPanController.text == null ||
-                        accountsController.nameOnPanController.text.isEmpty) {
+                        accountsController.nameOnPanController.text.trim().isEmpty) {
                       showToastMsg(AppStrings.txtEnterFullName);
                       return;
                     }
@@ -161,17 +162,17 @@ class _KycState extends State<Kyc> {
                       return;
                     }
                     if (accountsController.cityController.text == null ||
-                        accountsController.cityController.text.isEmpty) {
+                        accountsController.cityController.text.trim().isEmpty) {
                       showToastMsg(AppStrings.enterCity);
                       return;
                     }
                     if (accountsController.pinCodeController.text == null ||
-                        accountsController.pinCodeController.text.isEmpty) {
+                        accountsController.pinCodeController.text.trim().isEmpty) {
                       showToastMsg(AppStrings.pinCode);
                       return;
                     }
                     if (accountsController.panNumberController.text == null ||
-                        accountsController.panNumberController.text.isEmpty) {
+                        accountsController.panNumberController.text.trim().isEmpty) {
                       showToastMsg(AppStrings.panNumber);
                       return;
                     }
@@ -213,7 +214,7 @@ class _KycState extends State<Kyc> {
   // full name textfield
   TextFormField nameFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
@@ -263,7 +264,7 @@ class _KycState extends State<Kyc> {
   TextFormField cityFormField() {
 
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       keyboardType: TextInputType.emailAddress,
@@ -318,7 +319,7 @@ class _KycState extends State<Kyc> {
   TextFormField pincodeFormField() {
     return TextFormField(
       controller: accountsController.pinCodeController,
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
       //keyboardType: TextInputType.emailAddress,
@@ -371,7 +372,7 @@ class _KycState extends State<Kyc> {
   // . pan number textfield
   TextFormField panNumbnerFormField() {
     return TextFormField(
-      readOnly: kycStatus==1?true:false,
+      readOnly: accountsController.kycStatus.value==1?true:false,
       controller: accountsController.panNumberController,
       style: TextStyle(
           color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
@@ -453,7 +454,7 @@ class GenderDrop extends StatelessWidget {
             width: w * 0.03,
           ),
           IgnorePointer(
-            ignoring: kycStatus==1?true:false,
+            ignoring: accountsController.kycStatus.value==1?true:false,
             child: Obx(() => DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     dropdownColor: kPrimaryColor,
@@ -533,7 +534,7 @@ class OccupationDrop extends StatelessWidget {
             width: w * 0.03,
           ),
           IgnorePointer(
-            ignoring: kycStatus==1?true:false,
+            ignoring: accountsController.kycStatus.value==1?true:false,
             child: Obx(() => DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     dropdownColor: kPrimaryColor,
@@ -605,7 +606,7 @@ class AnnualIncomeDrop extends StatelessWidget {
             width: w * 0.03,
           ),
           IgnorePointer(
-            ignoring: kycStatus==1?true:false,
+            ignoring: accountsController.kycStatus.value==1?true:false,
 
             child: Obx(() => DropdownButtonHideUnderline(
                   child: DropdownButton<String>(

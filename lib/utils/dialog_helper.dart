@@ -5,12 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/default_button.dart';
 import 'package:picktask/components/home_nav.dart';
 import 'package:picktask/components/progress_widget.dart';
+import 'package:picktask/constants/key_constants.dart';
 import 'package:picktask/main.dart';
 import 'package:picktask/screens/account/kycDetails/ui/kyc.dart';
 import 'package:picktask/screens/home/model/home_response.dart';
 import 'package:picktask/screens/onboarding/login/ui/login.dart';
+import 'package:picktask/screens/onboarding/splash.dart';
 import 'package:picktask/utils/extra_widget.dart';
 import 'package:picktask/utils/utils.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:picktask/utils/color.dart';
 import 'package:intl/intl.dart';
@@ -131,8 +134,12 @@ showWebinarDialog(BuildContext context, Webinar? webinar) {
                       text: "Join Now",
                       radius: 15,
                       press: () {
-                        launchYoutube(webinar?.url ?? "");
-                       // Utils.launchURL(webinar?.url ?? "");
+                        if(webinar?.url?.isNotEmpty==true){
+                          launchYoutube(webinar?.url ?? "");
+                        }else{
+                          showToastMsg("Oops! Webinar link not found!");
+                        }
+
                       })
                 ],
               ),
@@ -539,24 +546,25 @@ logoutDialogue(BuildContext context) {
                             ),
                             onPressed: () async {
                              await storage.erase();
-                             await storage.remove('token');
-                             await storage.remove('id');
-                             await storage.remove('role');
-                             await storage.remove('name');
-                             await storage.remove('first_name');
-                             await storage.remove('reffercode');
-                             await storage.remove('email');
-                             await storage.remove('last_name');
-                             await storage.remove('mobile');
-                             await storage.remove('profile_pic');
-                             await storage.remove('ranking');
-                             await storage.remove('earning');
-                             await storage.remove('total_wallet_amount');
-                             await storage.remove('current_wallet_amout');
-                             await storage.remove('status');
-                             await storage.remove('approve');
-                             await storage.remove('kyc_status');
-                             Get.offAll(Login());
+                             await storage.remove(KeyConstants.isLoginKey);
+                             await storage.remove(KeyConstants.firebaseTokenKey);
+                             await storage.remove(KeyConstants.userIdKey);
+                             await storage.remove(KeyConstants.nameKey);
+                             await storage.remove(KeyConstants.refCodeKey);
+                             await storage.remove(KeyConstants.emailKey);
+                             await storage.remove(KeyConstants.mobileKey);
+                             await storage.remove(KeyConstants.profilePicKey);
+                             await storage.remove(KeyConstants.partnerIdKey);
+                             await storage.remove(KeyConstants.earningKey);
+                             await storage.remove(KeyConstants.totalWalletAmountKey);
+                             await storage.remove(KeyConstants.currentWalletAmountKey);
+                             await storage.remove(KeyConstants.accountStatusKey);
+                             await storage.remove(KeyConstants.kycStatusKey);
+                             await Utils.deleteCacheDir();
+                             await Utils.deleteAppDir();
+                             await storage.save();
+                             Restart.restartApp();
+                             // Get.offAll(const Spalsh());
                             },
                             child: Text(
                               "Confirm",

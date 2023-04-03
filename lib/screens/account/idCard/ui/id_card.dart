@@ -101,17 +101,20 @@ class _IdCardState extends State<IdCard> {
                               ),
                             ),
                           ),
-                          SizedBox(
+
+                          const SizedBox(
                             height: 10,
                           ),
+
                           Text(
-                           ( idCardController.idCardResponse.value.data?.name ?? "").toUpperCase(),
+                           (idCardController.idCardResponse.value.data?.name ?? "").toUpperCase(),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 foreground: Paint()..shader = linearGradient,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500),
                           ),
+
                           Text(
                             "Sales Partner",
                             textAlign: TextAlign.center,
@@ -120,14 +123,16 @@ class _IdCardState extends State<IdCard> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
+
                           Text(
-                            "Partner ID: ${ idCardController.idCardResponse.value.data?.partnerId}",
+                            "Partner ID: GS${ idCardController.idCardResponse.value.data?.partnerId}",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 color: kWhiteColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
+
                           Row(
                             children: [
                               Icon(

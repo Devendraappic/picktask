@@ -667,7 +667,7 @@ class _ApiClient implements ApiClient {
       jsonEncode(data),
     ));
     _data.files.addAll(images.map((i) => MapEntry(
-        'images',
+        'images[]',
         MultipartFile.fromFileSync(
           i.path,
           filename: i.path.split(Platform.pathSeparator).last,

@@ -32,34 +32,27 @@ class Account extends StatefulWidget {
   State<Account> createState() => _AccountState();
 }
 
-class _AccountState extends State<Account> {
+class _AccountState extends State<Account>with WidgetsBindingObserver  {
   final picker = ImagePicker();
   var accountsController= Get.put(AccountsController());
-  String kycStatusTxt="Pending";
   Future<void> _pullRefresh() async {
     accountsController.getMyAccountDetail();
   }
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
     accountsController.isLoading(false);
-    accountsController.getMyAccountDetail();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      accountsController.getMyAccountDetail();
+    });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
     return RefreshIndicator(
       onRefresh: _pullRefresh,
       child: Obx(() {
-        if(kycStatus==4){
-          kycStatusTxt = "Rejected";
-        }if(kycStatus==3){
-          kycStatusTxt = "Not Updated";
-        }if(kycStatus==2){
-          kycStatusTxt = "In-Progress";
-        }if(kycStatus==1){
-          kycStatusTxt = "Completed";
-        }if(kycStatus==0){
-          kycStatusTxt = "Pending";
-        }
-
-        //kycStatus=> 3=not updated, 2="in-progress",1='approved' , 0='pending', 4='reject'
-
         return accountsController.isLoading.value==true?loader:Scaffold(
               body: SingleChildScrollView(
             child: Padding(
@@ -128,7 +121,7 @@ class _AccountState extends State<Account> {
                   ),
                   space(h * 0.01),
                   Text(
-                    "Partner Code: GSI",
+                    "Partner Code: GS$partnerId",
                     style: GoogleFonts.poppins(
                         color: kWhiteColor,
                         fontSize: w * 0.035,
@@ -169,7 +162,9 @@ class _AccountState extends State<Account> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => Kyc());
+                            if(accountsController.kycStatus.value!=2){
+                              Get.to(() => Kyc());
+                            }
                           },
                           child: Container(
                             height: h * 0.03,
@@ -192,7 +187,7 @@ class _AccountState extends State<Account> {
                             ),
                             child: Center(
                               child: Text(
-                                kycStatusTxt,
+                                accountsController.kycStatusTxt.value,
                                 style: GoogleFonts.poppins(
                                     color: kWhiteColor,
                                     fontSize: w * 0.04,
@@ -459,6 +454,34 @@ class _AccountState extends State<Account> {
         }
       ),
     );
+  }
+
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+        print('appLifeCycleState inactive');
+        break;
+      case AppLifecycleState.resumed:
+        print('appLifeCycleState resumed');
+        break;
+      case AppLifecycleState.paused:
+        print('appLifeCycleState paused');
+        break;
+      // case AppLifecycleState.suspending:
+      //   print('appLifeCycleState suspending');
+      //   break;
+      case AppLifecycleState.detached:
+        print('appLifeCycleState detaching');
+        break;
+    }
   }
 
    void _showPicker(BuildContext context) {

@@ -12,7 +12,7 @@ class RegisterResponse {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     name = json['name'];
-    message = json['message'];
+    message = json['msg'];
     token = json['token'];
   }
 
@@ -23,7 +23,7 @@ class RegisterResponse {
       data['data'] = this.data!.toJson();
     }
     data['name'] = this.name;
-    data['message'] = this.message;
+    data['msg'] = this.message;
     data['token'] = this.token;
     return data;
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/components/category_card.dart';
+import 'package:picktask/constants/app_strings.dart';
 import 'package:picktask/screens/task/controller/task_controller.dart';
 import 'package:picktask/screens/task/ui/task_card.dart';
 import 'package:picktask/utils/color.dart';
@@ -42,20 +43,31 @@ class _MyTasksState extends State<MyTasks> {
         ),
       ),
       body: Obx( () {
-          return taskController.isLoading.value==true?loader:ListView.builder(
-            itemCount: taskController.taskList.length,
-            shrinkWrap: true,
-            controller: scrollController,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
-                child: TaskCard(
-                  taskData:taskController.taskList[index]
-                ),
-              );
-            },
-          );
+          return taskController.isLoading.value==true?loader:buildUI();
         }
+      ),
+    );
+  }
+  Widget buildUI(){
+    return taskController.taskList.isNotEmpty? ListView.builder(
+      itemCount: taskController.taskList.length,
+      shrinkWrap: true,
+      controller: scrollController,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: h * 0.01),
+          child: TaskCard(
+              taskData:taskController.taskList[index]
+          ),
+        );
+      },
+    ): Center(
+      child: Text(
+       AppStrings.txtNoDataFound,
+        style: GoogleFonts.poppins(
+            color: kWhiteColor,
+            fontSize: w * 0.045,
+            fontWeight: FontWeight.w500),
       ),
     );
   }

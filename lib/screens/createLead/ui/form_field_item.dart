@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:picktask/screens/createLead/controller/create_lead_controller.dart';
 import 'package:picktask/screens/createLead/model/create_lead_form_model.dart';
@@ -22,12 +23,24 @@ class CustomFormField extends StatelessWidget {
     Widget fieldWidget;
     switch (fieldData.value) {
       case "text":
+        TextInputType? keyBoardType;
+        List<TextInputFormatter>? inputFormatters;
+        if(fieldData.field=="Pincode" ||fieldData.field?.toLowerCase().contains("mobile")==true){
+          keyBoardType =TextInputType.number;
+          inputFormatters=<TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ];
+        }else{
+          keyBoardType = TextInputType.text;
+          inputFormatters=null;
+        }
         fieldData.fieldTextController = TextEditingController();
         fieldWidget = TextFormField(
           controller: fieldData.fieldTextController,
           style: GoogleFonts.poppins(
               color: kWhiteColor, fontSize: 16, fontWeight: FontWeight.w400),
-          keyboardType: TextInputType.text,
+          keyboardType:keyBoardType,
+          inputFormatters:  inputFormatters,
           cursorColor: kWhiteColor,
           decoration: InputDecoration(
             fillColor: kPrimaryColor,

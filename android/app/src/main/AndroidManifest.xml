@@ -18,10 +18,13 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:label="picktask"
+        android:label="PickTask"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:fullBackupOnly="false"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
        >
@@ -45,6 +48,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <uses-library

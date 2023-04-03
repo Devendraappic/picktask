@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -9,8 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:picktask/constants/key_constants.dart';
 import 'package:picktask/controller/onboarding/onboarding_controller.dart';
 import 'package:picktask/screens/onboarding/splash.dart';
+import 'package:picktask/utils/utils.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -32,6 +36,14 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
         'notification action tapped with input: ${notificationResponse.input}');
   }
 }
+
+
+
+Future<Uint8List> _getByteArrayFromUrl(String url) async {
+  final http.Response response = await http.get(Uri.parse(url));
+  return response.bodyBytes;
+}
+
 void main() async {
   runZonedGuarded(() async {
     //for register services
@@ -59,7 +71,7 @@ void main() async {
     //If subscribe based sent notification then use this token
     final fcmToken = await messaging.getToken();
     print("firebase token::: $fcmToken");
-    await storage.write('firebase_token', fcmToken);
+    await storage.write(KeyConstants.firebaseTokenKey, fcmToken);
     //If subscribe based on topic then use this
    // await messaging.subscribeToTopic('flutter_notification');
 
@@ -112,6 +124,8 @@ class Picktask extends StatefulWidget {
 }
 
 class _PicktaskState extends State<Picktask> {
+
+
   @override
   void initState() {
     super.initState();
@@ -132,6 +146,19 @@ class _PicktaskState extends State<Picktask> {
 
       if (notification != null && android != null && !kIsWeb) {
         String action = jsonEncode(message.data);
+        // final String largeIconPath =
+        // await Utils.downloadAndSaveFile('https://dummyimage.com/48x48', 'largeIcon');
+        final String bigPicturePath = await Utils.downloadAndSaveFile(
+            notification.android?.imageUrl??"", 'bigPicture');
+        final BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(
+            FilePathAndroidBitmap(bigPicturePath),
+            hideExpandedLargeIcon: true,
+            contentTitle: '<b>${notification.title}</b>',
+            htmlFormatContentTitle: true,
+            summaryText: notification.body,
+            htmlFormatSummaryText: true);
+
 
         flutterLocalNotificationsPlugin!.show(
             notification.hashCode,
@@ -144,8 +171,8 @@ class _PicktaskState extends State<Picktask> {
                 priority: Priority.high,
                 importance: Importance.max,
                 setAsGroupSummary: true,
-                styleInformation: DefaultStyleInformation(true, true),
-                largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+                styleInformation: bigPictureStyleInformation,
+               // largeIcon:  FilePathAndroidBitmap(largeIconPath),
                 channelShowBadge: true,
                 autoCancel: true,
                 icon: '@drawable/ic_notifications_icon',
@@ -154,7 +181,7 @@ class _PicktaskState extends State<Picktask> {
             payload: action);
       }
       print('A new event was published!');
-      print('Handling a background message ${message.notification?.body}');
+      print('Handling a background message ${message.toMap()}');
     });
 
     FirebaseMessaging.onMessageOpenedApp
@@ -183,6 +210,8 @@ class _PicktaskState extends State<Picktask> {
 
   @override
   Widget build(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
