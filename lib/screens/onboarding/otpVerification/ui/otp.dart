@@ -10,8 +10,9 @@ import 'package:picktask/screens/onboarding/otpVerification/controller/otp_contr
 import 'package:picktask/utils/color.dart';
 import 'package:picktask/utils/dialog_helper.dart';
 import 'package:picktask/utils/extra_widget.dart';
-import 'package:alt_sms_autofill/alt_sms_autofill.dart';
+// import 'package:alt_sms_autofill/alt_sms_autofill.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
 class Otp extends StatefulWidget {
   String number;
 
@@ -31,24 +32,28 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   TextEditingController? textEditingController1;
 
   String _comingSms = 'Unknown';
-  String otp="";
+  String otp = "";
 
   Future<void> initSmsListener() async {
-
     String? comingSms;
     try {
-      comingSms = await AltSmsAutofill().listenForSms;
+      // comingSms = await AltSmsAutofill().listenForSms;
     } on PlatformException {
       comingSms = 'Failed to get Sms.';
     }
     if (!mounted) return;
     setState(() {
-      _comingSms = comingSms??"";
+      _comingSms = comingSms ?? "";
       print("====>Message: ${_comingSms}");
-      print("${_comingSms[32]}");
-      textEditingController1?.text = _comingSms[16] + _comingSms[17] + _comingSms[18] + _comingSms[19]; //used to set the code in the message to a string and setting it to a textcontroller. message length is 38. so my code is in string index 32-37.
+      // print("${_comingSms[32]}");
+      textEditingController1?.text = _comingSms[16] +
+          _comingSms[17] +
+          _comingSms[18] +
+          _comingSms[
+              19]; //used to set the code in the message to a string and setting it to a textcontroller. message length is 38. so my code is in string index 32-37.
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -76,7 +81,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
     super.dispose();
     timer.cancel();
     textEditingController1?.dispose();
-    AltSmsAutofill().unregisterListener();
+    // AltSmsAutofill().unregisterListener();
   }
 
   void nextField(String value, FocusNode focusNode) {
@@ -146,11 +151,10 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                       fieldWidth: 40,
                       inactiveFillColor: Colors.white,
                       inactiveColor: Colors.grey,
-                      selectedColor:Colors.grey,
+                      selectedColor: Colors.grey,
                       selectedFillColor: Colors.white,
                       activeFillColor: Colors.white,
-                      activeColor: Colors.grey
-                  ),
+                      activeColor: Colors.grey),
                   cursorColor: Colors.black,
                   animationDuration: Duration(milliseconds: 300),
                   enableActiveFill: true,
@@ -164,19 +168,19 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                     )
                   ],
                   onCompleted: (v) {
-                    if (v.length == 4) {
-                      oTpVerificationController.verifyOTP(context,
-                          v, widget.number.toString());
-                    } else {
-                      showToastMsg("Please enter 4 digit OTP");
-                    }
+                    // if (v.length == 4) {
+                    //   oTpVerificationController.verifyOTP(
+                    //       context, v, widget.number.toString());
+                    // } else {
+                    //   showToastMsg("Please enter 4 digit OTP");
+                    // }
                     //do something or move to next screen when code complete
                   },
                   onChanged: (value) {
                     print(value);
                     setState(() {
                       print('$value');
-                      otp=value;
+                      otp = value;
                     });
                   },
                 ),
@@ -205,43 +209,42 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                 children: <Widget>[
                   remainingTime == 0
                       ? GestureDetector(
-                    onTap: () {
-                      otp="";
-                      oTpVerificationController
-                          .sendOTP(context, widget.number)
-                          .then((value) {
-                            remainingTime=60;
-                            initTimer();
-
-
-                      });
-                    },
-                    child:  Text(
-                      "Resend OTP",
-                      style: GoogleFonts.poppins(
-                          color: kWhiteColor,
-                          fontSize: w * 0.04,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  )
-                      : RichText(
-                    text: TextSpan(
-                        style: GoogleFonts.poppins(
-                            color: kWhiteColor,
-                            fontSize: w * 0.04,
-                            fontWeight: FontWeight.w500),
-                      text: "Resend OTP in ",
-                      children: <InlineSpan>[
-                        TextSpan(
-                          text: "${remainingTime}s",
+                          onTap: () {
+                            otp = "";
+                            textEditingController1!.clear();
+                            oTpVerificationController
+                                .sendOTP(context, widget.number)
+                                .then((value) {
+                              remainingTime = 60;
+                              initTimer();
+                            });
+                          },
+                          child: Text(
+                            "Resend OTP",
                             style: GoogleFonts.poppins(
                                 color: kWhiteColor,
                                 fontSize: w * 0.04,
                                 fontWeight: FontWeight.w500),
+                          ),
+                        )
+                      : RichText(
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
+                                color: kWhiteColor,
+                                fontSize: w * 0.04,
+                                fontWeight: FontWeight.w500),
+                            text: "Resend OTP in ",
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: "${remainingTime}s",
+                                style: GoogleFonts.poppins(
+                                    color: kWhiteColor,
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ],
